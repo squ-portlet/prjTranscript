@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+ * Project 				:	prjTranscript
+ * Organization 		:	Sultan Qaboos University
+ * Centre				:	Centre for Information System
+ * Department 			:	Web & E-Services
+ * Author				:	Bhabesh
+ * 
+ * FrameWork			:	Spring 3.2.3 (Annotation) Portlet
+ * 
+ * File Name			:	portlet.xml
+ * 
+ * Date of Modification	:	14-March-2016
+ *  
+ * Summary				:	web context file
+ *
+ * Copyright 2016 the original author or authors.
+ *
+ * Licensed under the SQU, CIS policy
+ * you may not use this file except in compliance with the License.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+--> 
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
+	<portlet>
+		<portlet-name>prjTranscript</portlet-name>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		
+		<init-param>
+         <name>contextConfigLocation</name>
+         <value>/WEB-INF/context/transcript-portlet.xml</value>
+      	</init-param>
+      	<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+         	<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>en</supported-locale>
+        <supported-locale>ar</supported-locale>		
+		<resource-bundle>messages</resource-bundle>
+		<portlet-info>
+			<title>TODO - Test Message</title>
+		</portlet-info>
+	</portlet>
+</portlet-app>

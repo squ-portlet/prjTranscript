@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Transcript Queries</comment>
+    <entry key="transcript.select.student.details">
+		    SELECT
+						STD_ID											AS		STD_ID
+					,	STDNO											AS		STDNO
+					,	STDSTATCD										AS		STDSTATCD				
+					,	GENDER											AS		GENDER
+					,	COHORT											AS		COHORT
+					,	DECODE
+								(
+									:paramLocale
+									,	'ar',	A_STD_NAME
+									,	STD_NAME
+								)										AS		STD_NAME
+					,	COLLEGE_CODE									AS		COLLEGE_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	A_COLLEGENM
+									,	COLLEGENM
+								)										AS		COLLEGE_NAME
+					,	MAJOR_CODE										AS		MAJOR_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	A_MAJORNAME
+									,	MAJORNAME
+								)										AS		MAJOR_NAME
+					,	MINOR_CODE										AS		MINOR_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	A_MINORNAME
+									,	MINORNAME
+								)										AS		MINOR_NAME
+					,	SPEC_CODE										AS		SPEC_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	A_SPECNAME
+									,	SPECNAME
+								)										AS		SPEC_NAME
+					,	ADVISOR											AS		ADVISOR01_EMP_NO
+					,	ADVISOR1										AS		ADVISOR02_EMP_NO
+					,	L_ABR_STATUS									AS		L_ABR_STATUS
+					,	ACTIVE											AS		ACTIVE
+			FROM
+					V_STDINFO_PORTAL
+			WHERE
+					STD_ID	=	:paramStdId
+			
+			ORDER BY	COHORT DESC
+    </entry>
+    
+</properties>

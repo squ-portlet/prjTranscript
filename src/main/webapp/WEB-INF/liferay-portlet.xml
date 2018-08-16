@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--  
+ * Project 				:	Leave Balance Portlet
+ * Organisation 		:	Sultan Qaboos University
+ * Center				:	Center for Information System
+ * Department 			:	Planning & Development
+ * Author				:	Bhabesh
+ * 
+ * FrameWork			:	Spring 2.5 (Annotation) Portlet
+ * 
+ * File Name			:	liferay-portlet.xml
+ * 
+ * Date of Modification	:	06-July-2011
+ *  
+ * Summary				:	This file is needed for liferay portal deployment
+ *
+ * Copyright 2011 the original author or authors.
+ *
+ * Licensed under the SQU, CIS policy
+ * you may not use this file except in compliance with the License.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+-->
+
+
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>prjTranscript</portlet-name>
+		<instanceable>true</instanceable>
+		<remoteable>true</remoteable>
+		<user-principal-strategy>screenName</user-principal-strategy> <!-- This tag for liferay screen name as remote user name -->
+		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+	</portlet>
+
+</liferay-portlet-app>

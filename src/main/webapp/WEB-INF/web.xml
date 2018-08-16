@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+ * Project 				:	prjTranscript
+ * Organization 		:	Sultan Qaboos University
+ * Centre				:	Centre for Information System
+ * Department 			:	Web & E-Services
+ * Author				:	Bhabesh
+ * 
+ * FrameWork			:	Spring 3.2.3 (Annotation) Portlet
+ * 
+ * File Name			:	web.xml
+ * 
+ * Date of Modification	:	14-March-2016
+ *  
+ * Summary				:	web context file
+ *
+ * Copyright 2016 the original author or authors.
+ *
+ * Licensed under the SQU, CIS policy
+ * you may not use this file except in compliance with the License.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+-->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>prjTranscript</display-name>
+  <description>Transcript Portlet</description>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/context/common.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>ViewRendererServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.ViewRendererServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewRendererServlet</servlet-name>
+    <url-pattern>/WEB-INF/servlet/view</url-pattern>
+  </servlet-mapping>
+</web-app>

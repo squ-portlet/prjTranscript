@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+ * Project 				:	prjTranscript
+ * Organization 		:	Sultan Qaboos University
+ * Centre				:	Centre for Information System
+ * Department 			:	Web & E-Services
+ * Author				:	Bhabesh
+ * 
+ * FrameWork			:	Spring 3.2.3 (Annotation) Portlet
+ * 
+ * File Name			:	common.xml
+ * 
+ * Date of Modification	:	17-March-2016
+ *  
+ * Summary				:	web context file
+ *
+ * Copyright 2016 the original author or authors.
+ *
+ * Licensed under the SQU, CIS policy
+ * you may not use this file except in compliance with the License.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+--> 
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xsi:schemaLocation="
+     http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/tx 
+     http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop 
+     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    	<!-- View resolver -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- property name="cache" value="true" /-->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="requestContextAttribute"><value>rc</value></property>
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- Message source for this context, loaded from localized "messages_xx" files -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>messages</value>
+			</list>
+		</property>	
+	</bean>
+	
+	<!-- LDAP source for this context, loaded from "ldap.properties" files -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+					<!-- 
+					<value>classpath:jdbc.properties</value>
+					 -->
+					<value>classpath:ldap.properties</value>
+			</list>
+		</property>
+	</bean>
+   
+	 <bean id="queryProps" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    	<property name="locations" value="classpath:sql/query.xml" />
+	</bean>
+
+ 
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+    	<property name="jndiName" value="java:comp/env/jdbc/pool/DSSISPORTAL"/> 
+ 	</bean> 
+	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">  
+		<constructor-arg ref="dataSource"></constructor-arg>  
+	</bean>
+
+ 
+ 	
+
+
+<!-- Servlet Configuration -->
+<!-- 
+	<bean class="org.springframework.web.context.support.ServletContextAttributeExporter"> 
+		  <property name="attributes"> 
+		    <map> 
+		      <entry key="srvDataSource"> 
+		        <ref bean="dataSource"/> 
+		      </entry> 
+		    </map> 
+		  </property> 
+	</bean>
+ -->
+ 
+<!-- LDAP - SQU Oracle Internet Directory Configuration -->
+	<!-- PRIMARY LDAP - SQU Oracle Internet Directory Configuration -->
+		<bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource"> 
+		   <property name="url" value="${urls}" /> 
+		    <property name="base" value="${base}" /> 
+		</bean> 
+		<bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+			<constructor-arg ref="contextSource" />
+		</bean>
+	<!-- ************************************* -->
+	<!-- ALTERNATE LDAP - SQU Oracle Internet Directory Configuration -->
+		<bean id="contextSource2"  class="org.springframework.ldap.core.support.LdapContextSource">
+		  <property name="url" value="${url2}"/>
+		   <property name="base" value="${base}" /> 
+		  <property name="userDn" value="${userdn}"/>
+		  <property name="password" value="${pwd}"/>
+		</bean>
+
+		<bean id="ldapTemplate2" class="org.springframework.ldap.core.LdapTemplate">
+			<constructor-arg ref="contextSource2" />
+		</bean>
+	<!-- ************************************* -->	
+	
+		<bean id="ldapDao"
+			class="om.edu.squ.squportal.portlet.transcript.dao.ldap.LdapDaoImpl">
+			<property name="ldapTemplate" ref="ldapTemplate" />
+			<property name="ldapTemplate2" ref="ldapTemplate2" />
+		</bean>
+
+		
+<!-- ************************************* -->		
+	<!-- Default ExceptionHandler -->
+<!-- 	<bean id="defaultExceptionHandler" class="org.springframework.web.portlet.handler.SimpleMappingExceptionResolver"> -->
+<!--     <property name="order" value="10"/> -->
+<!-- 		<property name="defaultErrorView" value="error"/> -->
+<!-- 		<property name="exceptionMappings"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="javax.portlet.PortletSecurityException">unauthorized</prop> -->
+<!-- 				<prop key="javax.portlet.UnavailableException">unavailable</prop> -->
+<!-- 				<prop key="org.springframework.jdbc.CannotGetJdbcConnectionException">dbunavailable</prop> -->
+<!-- 				<prop key="org.springframework.ldap.CommunicationException">dbunavailable</prop> -->
+<!-- 			</props> -->
+<!-- 		</property>   -->
+<!-- 	</bean> -->
+    
+</beans>    
