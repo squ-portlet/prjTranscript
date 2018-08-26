@@ -67,6 +67,8 @@ public interface Constants
 	public static final	String	COST_COL_MINOR_NAME								=	"MINOR_NAME";
 	public static final	String	COST_COL_SPEC_CODE								=	"SPEC_CODE";
 	public static final	String	COST_COL_SPEC_NAME								=	"SPEC_NAME";
+	public static final	String	COST_COL_DEGREE_NUMBER							=	"DEGREE_NUMBER";
+	public static final	String	COST_COL_DEGREE_NAME							=	"DEGREE_NAME";
 	public static final	String	COST_COL_ADVISOR01_EMP_NO						=	"ADVISOR01_EMP_NO";
 	public static final	String	COST_COL_ADVISOR02_EMP_NO						=	"ADVISOR02_EMP_NO";
 	public static final	String	COST_COL_L_ABR_STATUS							=	"L_ABR_STATUS";

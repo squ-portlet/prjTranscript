@@ -48,26 +48,21 @@
 					
 					var htmlData='';
 					var students = JSON.parse(data);
+					var student;
 					
 					var i = 1;
 					for (var key in students)
 					{
-						
-						//student=students[key];
+
 						student={student:students[key],countDegree:i++};
 
 						htmlData = htmlData +  dataLoadHtml(student,'#hbSummary');
 						
 					}
 					
+					dataLoad(student, '#hbStudentDetail', '#divStudentDetail');
 					$('#divStdSummary').html(htmlData);
-					
-					/*
-					tblRowDataApprover.visitedAdvisor.advisorVisited = $('[id=visitedAdvisor]').val();
-					tblRowDataApprover.visitedAdvisor.comment=$('#comment').val();
-					varTblProblistStudent.row( tblRowIndexApprover ).data(tblRowDataApprover).draw();
-					$('#modalApprovForm').modal('toggle');
-					*/
+
 				},
 				error	:	function(xhr, status, error)
 				{
@@ -81,6 +76,7 @@
 		/* Handlebar data load */		
 		function dataLoad(dataJson, hbTemplateId, tableId)
 		{
+			event.preventDefault();
 			if ($.trim(dataJson))
 			{
 				var theAlertTemplate=$(hbTemplateId).html();
@@ -94,6 +90,7 @@
 		/* Handlebar data load */		
 		function dataLoadHtml(dataJson, hbTemplateId)
 		{
+			event.preventDefault();
 			if ($.trim(dataJson))
 			{
 				var theAlertTemplate=$(hbTemplateId).html();

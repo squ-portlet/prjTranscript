@@ -117,6 +117,8 @@ public class TranscriptDbImpl implements TranscriptDbDao
 						student.setMinorName(rs.getString(Constants.COST_COL_MINOR_NAME));
 						student.setSpecCode(rs.getString(Constants.COST_COL_SPEC_CODE));
 						student.setSpecName(rs.getString(Constants.COST_COL_SPEC_NAME));
+						student.setDegreeNumber(rs.getInt(Constants.COST_COL_DEGREE_NUMBER));
+						student.setDegreeName(rs.getString(Constants.COST_COL_DEGREE_NAME));
 						student.setEmpNumberAdvisor(rs.getString(Constants.COST_COL_ADVISOR01_EMP_NO));
 						student.setEmpNumberAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NO));
 						student.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));

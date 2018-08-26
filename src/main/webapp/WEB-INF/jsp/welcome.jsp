@@ -58,6 +58,9 @@
 		</form>
 	</div>
   </div>
+  
+  <div id="divStudentDetail"></div>
+  
 </div>
 
 <div id="divStdSummary" class="container-fluid"/>

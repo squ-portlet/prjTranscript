@@ -49,6 +49,8 @@ public class Student
 	private	String	minorName;
 	private	String	specCode;
 	private	String	specName;
+	private	int		degreeNumber;
+	private	String	degreeName;
 	private	String	empNumberAdvisor;
 	private	String	empNumberAdvisor2;
 	private	String	lAbrStatus;
@@ -333,6 +335,47 @@ public class Student
 	{
 		this.specName = specName;
 	}
+	
+	/**
+	 * Getter Method	: getDegreeNumber
+	 * @return the degreeNumber
+	 * 
+	 * Date				: Aug 26, 2018
+	 */
+	public int getDegreeNumber()
+	{
+		return this.degreeNumber;
+	}
+	/**
+	 * Setter method : setDegreeNumber
+	 * @param degreeNumber the degreeNumber to set
+	 * 
+	 * Date          : Aug 26, 2018 10:20:28 AM
+	 */
+	public void setDegreeNumber(int degreeNumber)
+	{
+		this.degreeNumber = degreeNumber;
+	}
+	/**
+	 * Getter Method	: getDegreeName
+	 * @return the degreeName
+	 * 
+	 * Date				: Aug 26, 2018
+	 */
+	public String getDegreeName()
+	{
+		return this.degreeName;
+	}
+	/**
+	 * Setter method : setDegreeName
+	 * @param degreeName the degreeName to set
+	 * 
+	 * Date          : Aug 26, 2018 10:20:28 AM
+	 */
+	public void setDegreeName(String degreeName)
+	{
+		this.degreeName = degreeName;
+	}
 	/**
 	 * Getter Method	: getEmpNumberAdvisor
 	 * @return the empNumberAdvisor
@@ -428,10 +471,11 @@ public class Student
 				+ this.majorName + ", minorCode=" + this.minorCode
 				+ ", minorName=" + this.minorName + ", specCode="
 				+ this.specCode + ", specName=" + this.specName
-				+ ", empNumberAdvisor=" + this.empNumberAdvisor
-				+ ", empNumberAdvisor2=" + this.empNumberAdvisor2
-				+ ", lAbrStatus=" + this.lAbrStatus + ", active=" + this.active
-				+ "]";
+				+ ", degreeNumber=" + this.degreeNumber + ", degreeName="
+				+ this.degreeName + ", empNumberAdvisor="
+				+ this.empNumberAdvisor + ", empNumberAdvisor2="
+				+ this.empNumberAdvisor2 + ", lAbrStatus=" + this.lAbrStatus
+				+ ", active=" + this.active + "]";
 	}
 	
 	
