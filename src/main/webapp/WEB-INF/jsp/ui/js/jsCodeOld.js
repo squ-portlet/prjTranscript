@@ -32,20 +32,13 @@
 
 
 
-
 <script type="text/javascript">
 
 	$(function(){
-		
-
-		
-		
 		$(document).on('click','#bttnSearch',function(event){
 			event.preventDefault();
 			var varStudentId			=	$('#txtStudentId').val();
 			var	varStudentDTO	 		=	{studentId :  varStudentId };
-			
-			
 			
 			
 			
@@ -80,9 +73,6 @@
 
 				}
 			});
-			
-			
-			
 		});
 
 		/* Transcript */
@@ -123,7 +113,7 @@
 		
 
 		/* Transcript */
-		$(document).on('click','.bttnClsTranscriptDownload_TODO',function(event){
+		$(document).on('click','.bttnClsTranscriptDownload',function(event){
 			//event.preventDefault();
 			var	varStdStatCode		=	this.getAttribute("stdStatCode");
 			var varStudentDTO		= 	{stdStatCode:varStdStatCode};

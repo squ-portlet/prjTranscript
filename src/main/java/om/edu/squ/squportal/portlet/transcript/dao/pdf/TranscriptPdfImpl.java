@@ -39,15 +39,23 @@ import java.util.Locale;
 import javax.portlet.ResourceResponse;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
 import om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao;
+import om.edu.squ.squportal.portlet.transcript.utility.Constants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.PdfWriter;
 
 /**
  * @author Bhabesh
@@ -57,29 +65,67 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	private static final int INCH = 72;
 
+    final private static float MARGIN_TOP = INCH / 4;
+    final private static float MARGIN_BOTTOM = INCH / 2;
+	
+    private static final Rectangle PAGE_SIZE = PageSize.LETTER;
+    private static final Rectangle TEMPLATE_SIZE = PageSize.LETTER;
+
+    
 	@Autowired
 	TranscriptDbDao		transcriptDbDao;
 	
 	/*
 	 * (non-Javadoc)
-	 * @see om.edu.squ.squportal.portlet.transcript.dao.pdf.TranscriptPdfDao#getPdfTranscript(java.lang.String, java.io.ByteArrayOutputStream, java.io.InputStream, javax.portlet.ResourceResponse, java.util.Locale)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.pdf.TranscriptPdfDao#getPdfTranscript(java.lang.String, java.lang.String, java.io.ByteArrayOutputStream, java.io.InputStream, javax.portlet.ResourceResponse, java.util.Locale)
 	 */
-	public OutputStream getPdfTranscript(String studentId, ByteArrayOutputStream	byos,  InputStream	inputStream, ResourceResponse res, Locale locale) throws IOException, DocumentException
+	public OutputStream getPdfTranscript(String stdStatCode, String collegeName,  ByteArrayOutputStream	byos, InputStream	inputStream, ResourceResponse res, Locale locale) throws IOException
 	{
+		logger.info("stdStatCode : "+stdStatCode);
+		logger.info("locale - language: "+locale.getLanguage());
 		
-		PdfReader		pdfTemplate			=	new PdfReader(inputStream);
+		Document				document				=	new	Document(PAGE_SIZE);
 		
-		List<Student>  studentDetails 	=	transcriptDbDao.getStudentList(studentId, locale);	
-		for (Student student: studentDetails)
-			{
+		
+		InputStream				inputStreamCourse		=	null;
+		Resource				resourceCourse			=	null;
+		
+		
+		
+		PdfReader			pdfTemplate				=	new PdfReader(inputStream);
+		
+		Student  			student				 	=	transcriptDbDao.getStudent(stdStatCode, locale);	
+		List<StudentStatus> statusList				=	transcriptDbDao.getStudentStatusList(stdStatCode, collegeName);
+		
 				logger.info("student id : {}, student statcode : {}", student.getStudentId(), student.getStdStatCode());
+				logger.info("student : "+student);
 				
+		try
+		{
+			
+				PdfWriter				pdfWriter				=	PdfWriter.getInstance(document, byos);
+			
 				PdfStamper		pdfStamper			=	new PdfStamper(pdfTemplate, byos );
 				
+				pdfStamper.getAcroFields().setField("txtFrmStudentId", student.getStudentId());
+				pdfStamper.getAcroFields().setField("txtFrmDOB", student.getBirthDay());
+				
+				pdfStamper.getAcroFields().setField("txtFrmStudentName", student.getStudentName());
+				pdfStamper.getAcroFields().setField("txtFrmGender", student.getGender());
+				
+				pdfStamper.getAcroFields().setField("txtCollege", student.getCollegeName());
+				pdfStamper.getAcroFields().setField("txtFrmAdmissionCollege", student.getFirstCollege());
+				
+				pdfStamper.getAcroFields().setField("txtFrmMajor", student.getMajorName());
+				pdfStamper.getAcroFields().setField("txtFrmFirstMajor", student.getFirstMajor());
+				pdfStamper.getAcroFields().setField("txtFrmStream", "-");
 				
 				
-				pdfStamper.getAcroFields().setField("txtFrmStudentId", studentId);
+				pdfStamper.getAcroFields().setField("txtDegreeName", student.getDegreeName());
+				pdfStamper.getAcroFields().setField("txtAdvisor01", "-");
+				pdfStamper.getAcroFields().setField("txtAdvisor02", "-");
 				
 				
 				
@@ -89,10 +135,22 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				pdfStamper.setFormFlattening(true);
 				pdfStamper.close();
 				
-			}
+		}
+		catch(DocumentException exception)
+		{
+			logger.error("DocumentException. Details : {}",exception);
+		}
 		
 		
 		pdfTemplate.close();
+		
+		
+		
+							resourceCourse			=	new ClassPathResource(Constants.CONST_FILE_PDF_TEMPLATE_COURSE_EN);
+							inputStreamCourse		=	resourceCourse.getInputStream();
+		PdfReader			pdfTemplateCourse		=	new PdfReader(inputStreamCourse);
+		
+		
 		
 		
 		res.setContentType("application/pdf");

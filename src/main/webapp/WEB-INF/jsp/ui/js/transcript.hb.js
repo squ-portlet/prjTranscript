@@ -41,7 +41,7 @@
 		    <div style="text-align:center"><span class="dot">{{countDegree}}</span></div>
 		      
 		      <div class="caption">
-		        <h3>{{student.degreeName}}/{{student.cohort}}</h3>
+		        <h3>{{student.degreeName}} ({{student.cohort}})</h3>
 		        <p>
 		        	<div class="row">
 		        		<div class="col-sm-12"><h5>{{student.collegeName}}</h5></div>
@@ -53,28 +53,40 @@
 		        		<div class="col-sm-2"><b>Advisor</b></div><div class="col-sm-6">{{student.empNumberAdvisor}}</div>
 		        	</div>		        		
 		        </p>
-		        <p><a href="#" class="btn btn-primary" role="button">Transcript</a> </p>
+		        <p>
+			        <div class="row">
+			        	<div class="col-sm-8">
+			        	
+			        		<a stdStatCode={{student.stdStatCode}}  class="bttnClsTranscriptDownload btn btn-primary" role="button" >Download</a>
+			        	</div>
+<!--			        	
+			        	<div class="col-sm-4">
+	        				<a stdStatCode={{student.stdStatCode}}  class="bttnClsTranscript btn btn-primary" role="button">Transcript</a>
+	        			</div>
+-->
+
+			        </div>
+		        </p>
 		      </div>
 		     </div>
 		</div> 		
- 
  </script>
  
  <script id="hbStudentDetail" type="text/x-handlebars-template">
  	<div class="panel-footer">
  		<div class="row">
- 			<div class="col-sm-1">Student Id</div>
+ 			<div class="col-sm-2">Student Id</div>
  			<div class="col-sm-1"><h4>{{student.studentId}}</h4></div>
  			
  			<div class="col-sm-1">Name</div>
- 			<div class="col-sm-6"><h4>{{student.studentName}}</h4></div>
+ 			<div class="col-sm-5"><h4>{{student.studentName}}</h4></div>
  		</div>
  		<div class="row">
-			<div class="col-sm-1">Date of Birth</div>
-			<div class="col-sm-1"><h5>- </h5></div>
+			<div class="col-sm-2">Date of Birth</div>
+			<div class="col-sm-1"><h5>{{student.birthDay}}</h5></div>
 			
 			<div class="col-sm-1">Gender</div>
-			<div class="col-sm-6"><h5>{{student.gender}}</h5></div>
+			<div class="col-sm-5"><h5>{{student.gender}}</h5></div>
 		</div> 		
  		
  	</div>

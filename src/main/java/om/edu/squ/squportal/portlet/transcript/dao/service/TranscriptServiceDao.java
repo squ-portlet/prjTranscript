@@ -50,7 +50,8 @@ public interface TranscriptServiceDao
 	/**
 	 * 
 	 * method name  : getPdfTranscript
-	 * @param studentId
+	 * @param stdStatCode
+	 * @param collegeName TODO
 	 * @param byos
 	 * @param res
 	 * @param locale
@@ -64,7 +65,7 @@ public interface TranscriptServiceDao
 	 *
 	 * Date    		:	Aug 13, 2018 12:08:00 PM
 	 */
-	public OutputStream getPdfTranscript(String studentId, ByteArrayOutputStream	byos, ResourceResponse res, Locale locale) throws IOException, DocumentException;
+	public OutputStream getPdfTranscript(String stdStatCode, String collegeName, ByteArrayOutputStream	byos, ResourceResponse res, Locale locale) throws IOException, DocumentException;
 	
 	
 	/**
@@ -81,4 +82,19 @@ public interface TranscriptServiceDao
 	 * Date    		:	Aug 13, 2018 11:34:40 AM
 	 */
 	public List<Student> getStudentList(String studentId, Locale locale);
+	
+	/**
+	 * 
+	 * method name  : getStudent
+	 * @param stdStatCode
+	 * @param locale
+	 * @return
+	 * TranscriptServiceDao
+	 * return type  : Student
+	 * 
+	 * purpose		:  Get student details of particular degree
+	 *
+	 * Date    		:	Sep 5, 2018 4:12:09 PM
+	 */
+	public Student getStudent(String stdStatCode, Locale locale);
 }

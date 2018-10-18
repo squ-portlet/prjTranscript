@@ -2,59 +2,160 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
     <comment>Transcript Queries</comment>
-    <entry key="transcript.select.student.details">
+    <entry key="transcript.select.student.details.list">
 		    SELECT
-						STD_ID											AS		STD_ID
-					,	STDNO											AS		STDNO
-					,	STDSTATCD										AS		STDSTATCD				
-					,	GENDER											AS		GENDER
-					,	COHORT											AS		COHORT
+						VSP.STD_ID											AS		STD_ID
+					,	VSP.STDNO											AS		STDNO
+					,	VSP.STDSTATCD										AS		STDSTATCD				
+					,	VSP.GENDER											AS		GENDER
+          			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  				AS 		BIRTH_DAY
+					,	VSP.COHORT											AS		COHORT
 					,	DECODE
 								(
 									:paramLocale
-									,	'ar',	A_STD_NAME
-									,	STD_NAME
-								)										AS		STD_NAME
-					,	COLLEGE_CODE									AS		COLLEGE_CODE
+									,	'ar',	VSP.A_STD_NAME
+									,	VSP.STD_NAME
+								)											AS		STD_NAME
+					,	VSP.COLLEGE_CODE									AS		COLLEGE_CODE
 					,	DECODE	(
 									:paramLocale
-									,	'ar',	A_COLLEGENM
-									,	COLLEGENM
-								)										AS		COLLEGE_NAME
-					,	MAJOR_CODE										AS		MAJOR_CODE
+									,	'ar',	VSP.A_COLLEGENM
+									,	VSP.COLLEGENM
+								)											AS		COLLEGE_NAME
+					,	VSP.MAJOR_CODE										AS		MAJOR_CODE
 					,	DECODE	(
 									:paramLocale
-									,	'ar',	A_MAJORNAME
-									,	MAJORNAME
-								)										AS		MAJOR_NAME
-					,	MINOR_CODE										AS		MINOR_CODE
+									,	'ar',	VSP.A_MAJORNAME
+									,	VSP.MAJORNAME
+								)											AS		MAJOR_NAME
+					,	VSP.MINOR_CODE										AS		MINOR_CODE
 					,	DECODE	(
 									:paramLocale
-									,	'ar',	A_MINORNAME
-									,	MINORNAME
-								)										AS		MINOR_NAME
-					,	SPEC_CODE										AS		SPEC_CODE
+									,	'ar',	VSP.A_MINORNAME
+									,	VSP.MINORNAME
+								)											AS		MINOR_NAME
+					,	VSP.SPEC_CODE										AS		SPEC_CODE
 					,	DECODE	(
 									:paramLocale
-									,	'ar',	A_SPECNAME
-									,	SPECNAME
-								)										AS		SPEC_NAME
-					,	DEG_NUMBER										AS		DEGREE_NUMBER
+									,	'ar',	VSP.A_SPECNAME
+									,	VSP.SPECNAME
+								)											AS		SPEC_NAME
+					,	VSP.DEG_NUMBER										AS		DEGREE_NUMBER
 					,	DECODE	(
 									:paramLocale
-									,	'ar',	A_DEGREE_NAME
-									,	DEGREE_NAME
-								)										AS		DEGREE_NAME
-					,	ADVISOR											AS		ADVISOR01_EMP_NO
-					,	ADVISOR1										AS		ADVISOR02_EMP_NO
-					,	L_ABR_STATUS									AS		L_ABR_STATUS
-					,	ACTIVE											AS		ACTIVE
+									,	'ar',	VSP.A_DEGREE_NAME
+									,	VSP.DEGREE_NAME
+								)											AS		DEGREE_NAME
+					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
+					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
+					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
+					,	VSP.ACTIVE											AS		ACTIVE
 			FROM
-					V_STDINFO_PORTAL
+              V_STDINFO_PORTAL    VSP
+            , STD                 STD
+          
 			WHERE
-					STD_ID	=	:paramStdId
+              VSP.STDNO = STD.STDNO
+					AND STD_ID	=	:paramStdId
 			
 			ORDER BY	COHORT DESC
     </entry>
-    
+    <entry key="transcript.select.student.details">
+		    SELECT
+						VSP.STD_ID											AS		STD_ID
+					,	VSP.STDNO											AS		STDNO
+					,	VSP.STDSTATCD										AS		STDSTATCD				
+					,	VSP.GENDER											AS		GENDER
+          			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  				AS 		BIRTH_DAY
+					,	VSP.COHORT											AS		COHORT
+					,	DECODE
+								(
+									:paramLocale
+									,	'ar',	VSP.A_STD_NAME
+									,	VSP.STD_NAME
+								)											AS		STD_NAME
+					,	VSP.COLLEGE_CODE									AS		COLLEGE_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	VSP.A_COLLEGENM
+									,	VSP.COLLEGENM
+								)											AS		COLLEGE_NAME
+					,	VSP.MAJOR_CODE										AS		MAJOR_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	VSP.A_MAJORNAME
+									,	VSP.MAJORNAME
+								)											AS		MAJOR_NAME
+					,	MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'COL') 		AS		FIRST_COL
+					, 	MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'MAJ') 		AS		FIRST_MAJ								
+					,	VSP.MINOR_CODE										AS		MINOR_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	VSP.A_MINORNAME
+									,	VSP.MINORNAME
+								)											AS		MINOR_NAME
+					,	VSP.SPEC_CODE										AS		SPEC_CODE
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	VSP.A_SPECNAME
+									,	VSP.SPECNAME
+								)											AS		SPEC_NAME
+					,	VSP.DEG_NUMBER										AS		DEGREE_NUMBER
+					,	DECODE	(
+									:paramLocale
+									,	'ar',	VSP.A_DEGREE_NAME
+									,	VSP.DEGREE_NAME
+								)											AS		DEGREE_NAME
+					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
+					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
+					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
+					,	VSP.ACTIVE											AS		ACTIVE
+			FROM
+              V_STDINFO_PORTAL    VSP
+            , STD                 STD
+          
+			WHERE
+              		VSP.STDNO = STD.STDNO
+				AND VSP.STDSTATCD	=	:paramStdStatCode
+    </entry>    
+
+	<entry key="transcript.select.student.status.list">
+			SELECT 
+						TO_CHAR(SSS.SEMGPA,'0.00') 							AS		SEM_GPA
+					,	TO_CHAR(SSS.CUMGPA,'0.00') 							AS		CUM_GPA
+					,	SSS.CREDITSEARNED									AS		CREDITS_EARNED
+					,	SSS.CREDITSTAKEN									AS		CREDITS_TAKEN
+					,	SSS.CCYRCD											AS		CCYRCD
+					,	SSS.SEMCD											AS		SEMCD
+					,	SSS.GRADEPTS										AS		GRADE_PTS								
+					,	SSS.CUMGRADEPTS										AS		CUM_GRADE_PTS
+					,	SEM.SEMNM											AS		SEMESTER_NAME
+					,	SSS.CUMCREDITSTAKEN									AS		CUM_CREDITS_TAKEN
+					,	SC.CODENM											AS		SEMESTER_LOAD_STATUS 			
+					,	SC1.CODENM											AS		STD_LOAD_STAT 
+					,	NVL(SC2.CODENM, ' ') 								AS		HON_DIST
+					,	NVL(SC3.CODENM, ' ') 								AS		EXCLIST 
+					,	MISC_PKG.STD_DEGREE_HISTORY(
+															SSS.STDSTATCD
+														, 	SSS.CCYRCD
+														, 	SSS.SEMCD
+														, 	:paramCollegeName
+													) 						AS		HISTORY
+			FROM 
+						STD_STATUS_SEM SSS
+					,	SEM
+					,	SIS_CODES SC
+					,	SIS_CODES SC1
+					,	SIS_CODES SC2
+					,	SIS_CODES SC3
+			WHERE 
+						SEM.SEMCD         		= 	SSS.SEMCD
+					AND SSS.CRSLOADSTATCD   	= 	SC.SISCODECD
+					AND SSS.STDCRSLOADSTATCD	=	SC1.SISCODECD(+)
+					AND SSS.HONDISTCD       	=	SC2.SISCODECD(+)
+					AND SSS.EXCELLENTSTDCD  	= 	SC3.SISCODECD(+)
+					AND STDSTATCD           	= 	:paramStdStatCode
+					ORDER BY SSS.CCYRCD, SSS.SEMCD;	
+	
+	</entry>    
 </properties>

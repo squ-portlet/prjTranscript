@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
 
 import org.slf4j.Logger;
@@ -95,7 +96,7 @@ public class TranscriptDbImpl implements TranscriptDbDao
 	 */
 	public List<Student> getStudentList(String studentId, Locale locale)
 	{
-		String SQL_STUDENT_DETAIL		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_DETAIL);
+		String SQL_STUDENT_DETAIL		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_DETAIL_LIST);
 		
 		RowMapper<Student> 	rowMapper		=	new RowMapper<Student>()
 		{
@@ -108,6 +109,7 @@ public class TranscriptDbImpl implements TranscriptDbDao
 						student.setStudentName(rs.getString(Constants.COST_COL_STD_NAME));
 						student.setStdStatCode(rs.getString(Constants.COST_COL_STDSTATCD));
 						student.setGender(rs.getString(Constants.COST_COL_GENDER));
+						student.setBirthDay(rs.getString(Constants.COST_COL_BIRTH_DAY));
 						student.setCohort(rs.getInt(Constants.COST_COL_COHORT));
 						student.setCollegeCode(rs.getString(Constants.COST_COL_COLLEGE_CODE));
 						student.setCollegeName(rs.getString(Constants.COST_COL_COLLEGE_NAME));
@@ -134,4 +136,101 @@ public class TranscriptDbImpl implements TranscriptDbDao
 		
 		return namedParameterJdbcTemplate.query(SQL_STUDENT_DETAIL, paramMap, rowMapper);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudent(java.lang.String, java.util.Locale)
+	 */
+	public Student getStudent(String stdStatCode, Locale locale)
+	{
+		String SQL_STUDENT_DETAIL		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_DETAIL);
+		
+		RowMapper<Student> 	rowMapper		=	new RowMapper<Student>()
+		{
+			@Override
+			public Student mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				Student	student	=	new Student();
+						student.setStudentId(rs.getString(Constants.COST_COL_STD_ID));
+						student.setStudentNo(rs.getString(Constants.COST_COL_STDNO));
+						student.setStudentName(rs.getString(Constants.COST_COL_STD_NAME));
+						student.setStdStatCode(rs.getString(Constants.COST_COL_STDSTATCD));
+						student.setGender(rs.getString(Constants.COST_COL_GENDER));
+						student.setBirthDay(rs.getString(Constants.COST_COL_BIRTH_DAY));
+						student.setCohort(rs.getInt(Constants.COST_COL_COHORT));
+						student.setCollegeCode(rs.getString(Constants.COST_COL_COLLEGE_CODE));
+						student.setCollegeName(rs.getString(Constants.COST_COL_COLLEGE_NAME));
+						student.setMajorCode(rs.getString(Constants.COST_COL_MAJOR_CODE));
+						student.setMajorName(rs.getString(Constants.COST_COL_MAJOR_NAME));
+						student.setMinorCode(rs.getString(Constants.COST_COL_MINOR_CODE));
+						student.setMinorName(rs.getString(Constants.COST_COL_MINOR_NAME));
+						student.setFirstCollege(rs.getString(Constants.COST_COL_FIRST_COLLEGE));
+						student.setFirstMajor(rs.getString(Constants.COST_COL_FIRST_MAJOR));
+						student.setSpecCode(rs.getString(Constants.COST_COL_SPEC_CODE));
+						student.setSpecName(rs.getString(Constants.COST_COL_SPEC_NAME));
+						student.setDegreeNumber(rs.getInt(Constants.COST_COL_DEGREE_NUMBER));
+						student.setDegreeName(rs.getString(Constants.COST_COL_DEGREE_NAME));
+						student.setEmpNumberAdvisor(rs.getString(Constants.COST_COL_ADVISOR01_EMP_NO));
+						student.setEmpNumberAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NO));
+						student.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));
+						
+				return student;
+			}
+		};
+		
+		Map<String, String> paramMap	=	new HashMap<String, String>();
+		paramMap.put("paramLocale", locale.getLanguage());
+		paramMap.put("paramStdStatCode", stdStatCode);
+		
+		
+		return namedParameterJdbcTemplate.queryForObject(SQL_STUDENT_DETAIL, paramMap, rowMapper);
+	}
+
+	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudentStatusList(java.lang.String, java.lang.String)
+	 */
+	public List<StudentStatus>	getStudentStatusList(String stdStatCode, String collegeName)
+	{
+		String	SQL_STUDENT_STATUS_LIST		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_STATUS_LIST);
+		
+		RowMapper<StudentStatus> rowMapper		= new RowMapper<StudentStatus>()
+		{
+			
+			@Override
+			public StudentStatus mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				StudentStatus	studentStatus	=	new StudentStatus();
+								studentStatus.setSemGPA(rs.getFloat(Constants.COST_COL_SEM_GPA));
+								studentStatus.setCumGPA(rs.getFloat(Constants.COST_COL_CUM_GPA));
+								studentStatus.setCreditEarned(rs.getInt(Constants.COST_COL_CREDITS_EARNED));
+								studentStatus.setCreditTaken(rs.getInt(Constants.COST_COL_CREDITS_TAKEN));
+								studentStatus.setCourseYear(rs.getInt(Constants.COST_COL_CCYRCD));
+								studentStatus.setSemesterCode(rs.getInt(Constants.COST_COL_SEMCD));
+								studentStatus.setGradePoint(rs.getFloat(Constants.COST_COL_GRADE_PTS));
+								studentStatus.setGradePointCummulative(rs.getFloat(Constants.COST_COL_CUM_GRADE_PTS));
+								studentStatus.setSemesterName(rs.getString(Constants.COST_COL_SEMESTER_NAME));
+								studentStatus.setCreditTaken(rs.getInt(Constants.COST_COL_CUM_CREDITS_TAKEN));
+								studentStatus.setLoadStatusSemester(rs.getString(Constants.COST_COL_SEMESTER_LOAD_STATUS));
+								studentStatus.setLoadStatusStudent(rs.getString(Constants.COST_COL_STD_LOAD_STAT));
+								studentStatus.setHonorDistinction(rs.getString(Constants.COST_COL_HON_DIST));
+								studentStatus.setExcellentList(rs.getString(Constants.COST_COL_EXCLIST));
+								studentStatus.setHistory(rs.getString(Constants.COST_COL_HISTORY));
+								
+				return studentStatus;
+			}
+		};
+		
+		
+		Map<String,String> paramMap	=	new HashMap<String, String>();
+		paramMap.put("paramStdStatCode", stdStatCode);
+		paramMap.put("paramCollegeName", collegeName);
+		
+		
+		
+		return namedParameterJdbcTemplate.query(SQL_STUDENT_STATUS_LIST, paramMap, rowMapper);
+	}
+	
+	
 }

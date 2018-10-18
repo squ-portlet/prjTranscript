@@ -31,6 +31,8 @@
 
 <spring:message code="url.squ.cdn" var="urlCdn"/>
 
+
+
 <!-- ******************** CSS Declaration************************ --> 
 <c:url value="${urlCdn}/bootstrap/3.1.1/dist/css/bootstrap.css" var="urlCssBootstrap"/>
 <c:url value="${urlCdn}/bootstrap/3.1.1/dist/css/bootstrap-theme.min.css" var="urlCssBootstrapThemeMin"/>
@@ -58,6 +60,7 @@
 <c:url value="${urlCdn}/DataTables/1.10.11/Buttons-1.1.2/css/buttons.bootstrap.min.css" var="urlCssDataTableBttnBS"/>
 
 <!-- ******************** JS Declaration************************ -->
+
 <c:url value="${urlCdn}/bootstrap/3.3.6/dist/js/bootstrap.min.js" var="urlJsBootStrapMin"/>
 <c:url value="${urlCdn}/bootstrap/3.3.6/js/button.js" var="urlJsBootStrapButton"/>
 <c:url value="${urlCdn}/bootstrap/3.3.6/js/modal.js" var="urlJsBootStrapModal"/>
@@ -66,6 +69,8 @@
 <c:url value="${urlCdn}/jqueryui/1.11.4/jquery-ui.min.js" var="urlJsJqueryUIMin"/>
 <c:url value="${urlCdn}/jqueryvalidation/1.13.1/jquery.validate.min.js" var="urlJsValidatorJquery"/>
 <c:url value="${urlCdn}/jqueryvalidation/1.13.1/additional-methods.min.js" var="urlJsValidatorJqueryAddl"/>
+
+<c:url value="/ui/js/download.js" var="urlJsDownloadJS"/>
 
 	<!-- ------------ Data Table js declaration -->
 <c:url value="${urlCdn}/DataTables/1.10.11/DataTables-1.10.11/js/jquery.dataTables.min.js" var="urlJsDataTableJQueryMin"/>
@@ -151,6 +156,9 @@
 
 	<!-- ------------ jszip js implementation -->	
 <script type="text/javascript" src="${urlJsJsZIP}"></script>
+
+<script type="text/javascript" src="${urlJsDownloadJS}"></script>
+
  
  <style>
  

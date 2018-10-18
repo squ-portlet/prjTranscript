@@ -39,6 +39,7 @@ public class Student
 	private	String	studentNo;
 	private	String	stdStatCode;
 	private	String	gender;
+	private	String	birthDay;
 	private	int		cohort;
 	private	String	studentName;
 	private	String	collegeCode;
@@ -47,6 +48,8 @@ public class Student
 	private	String	majorName;
 	private	String	minorCode;
 	private	String	minorName;
+	private	String	firstMajor;
+	private	String	firstCollege;
 	private	String	specCode;
 	private	String	specName;
 	private	int		degreeNumber;
@@ -124,6 +127,27 @@ public class Student
 	public String getGender()
 	{
 		return this.gender;
+	}
+	
+	/**
+	 * Getter Method	: getBirthDay
+	 * @return the birthDay
+	 * 
+	 * Date				: Aug 27, 2018
+	 */
+	public String getBirthDay()
+	{
+		return this.birthDay;
+	}
+	/**
+	 * Setter method : setBirthDay
+	 * @param birthDay the birthDay to set
+	 * 
+	 * Date          : Aug 27, 2018 9:46:23 AM
+	 */
+	public void setBirthDay(String birthDay)
+	{
+		this.birthDay = birthDay;
 	}
 	/**
 	 * Setter method : setGender
@@ -295,6 +319,47 @@ public class Student
 	{
 		this.minorName = minorName;
 	}
+	
+	/**
+	 * Getter Method	: getFirstMajor
+	 * @return the firstMajor
+	 * 
+	 * Date				: Oct 14, 2018
+	 */
+	public String getFirstMajor()
+	{
+		return this.firstMajor;
+	}
+	/**
+	 * Setter method : setFirstMajor
+	 * @param firstMajor the firstMajor to set
+	 * 
+	 * Date          : Oct 14, 2018 9:37:57 AM
+	 */
+	public void setFirstMajor(String firstMajor)
+	{
+		this.firstMajor = firstMajor;
+	}
+	/**
+	 * Getter Method	: getFirstCollege
+	 * @return the firstCollege
+	 * 
+	 * Date				: Oct 14, 2018
+	 */
+	public String getFirstCollege()
+	{
+		return this.firstCollege;
+	}
+	/**
+	 * Setter method : setFirstCollege
+	 * @param firstCollege the firstCollege to set
+	 * 
+	 * Date          : Oct 14, 2018 9:37:57 AM
+	 */
+	public void setFirstCollege(String firstCollege)
+	{
+		this.firstCollege = firstCollege;
+	}
 	/**
 	 * Getter Method	: getSpecCode
 	 * @return the specCode
@@ -464,12 +529,14 @@ public class Student
 	{
 		return "Student [studentId=" + this.studentId + ", studentNo="
 				+ this.studentNo + ", stdStatCode=" + this.stdStatCode
-				+ ", gender=" + this.gender + ", cohort=" + this.cohort
-				+ ", studentName=" + this.studentName + ", collegeCode="
-				+ this.collegeCode + ", collegeName=" + this.collegeName
-				+ ", majorCode=" + this.majorCode + ", majorName="
-				+ this.majorName + ", minorCode=" + this.minorCode
-				+ ", minorName=" + this.minorName + ", specCode="
+				+ ", gender=" + this.gender + ", birthDay=" + this.birthDay
+				+ ", cohort=" + this.cohort + ", studentName="
+				+ this.studentName + ", collegeCode=" + this.collegeCode
+				+ ", collegeName=" + this.collegeName + ", majorCode="
+				+ this.majorCode + ", majorName=" + this.majorName
+				+ ", minorCode=" + this.minorCode + ", minorName="
+				+ this.minorName + ", firstMajor=" + this.firstMajor
+				+ ", firstCollege=" + this.firstCollege + ", specCode="
 				+ this.specCode + ", specName=" + this.specName
 				+ ", degreeNumber=" + this.degreeNumber + ", degreeName="
 				+ this.degreeName + ", empNumberAdvisor="

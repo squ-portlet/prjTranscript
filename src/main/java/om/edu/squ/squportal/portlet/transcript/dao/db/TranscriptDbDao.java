@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
 
 /**
  * @author Bhabesh
@@ -54,4 +55,34 @@ public interface TranscriptDbDao
 	 * Date    		:	Aug 13, 2018 10:45:54 AM
 	 */
 	public List<Student> getStudentList(String studentId, Locale locale);
+	
+	/**
+	 * 
+	 * method name  : getStudent
+	 * @param stdStatCode
+	 * @param locale
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : Student
+	 * 
+	 * purpose		:	Get student details of particular degree
+	 *
+	 * Date    		:	Sep 5, 2018 3:59:42 PM
+	 */
+	public Student getStudent(String stdStatCode, Locale locale);
+	
+	/**
+	 * 	
+	 * method name  : getStudentStatusList
+	 * @param stdStatCode
+	 * @param collegeName
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : List<StudentStatus>
+	 * 
+	 * purpose		: Get Status of student
+	 *
+	 * Date    		:	Oct 15, 2018 12:49:47 PM
+	 */
+	public List<StudentStatus>	getStudentStatusList(String stdStatCode, String collegeName);
 }
