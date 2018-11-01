@@ -217,7 +217,7 @@ public class TranscriptController
 		logger.info("stdStatCode : {} ",student.getStdStatCode());
 		
 		ByteArrayOutputStream	byos			=	new ByteArrayOutputStream();
-		OutputStream			outputStream	=	transcriptService.getPdfTranscript(student.getStdStatCode(), student.getCollegeName(), byos, response, locale);
+		OutputStream			outputStream	=	transcriptService.getPdfTranscript(student.getStudentNo(), student.getStdStatCode(), student.getCollegeName(), byos, response, locale);
 		response.setContentType("application/pdf");
 		response.setContentLength(byos.size());
 		response.setProperty(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=\"" + "Transcript.pdf" + "\"");

@@ -57,6 +57,7 @@ public class Student
 	private	String	empNumberAdvisor;
 	private	String	empNumberAdvisor2;
 	private	String	lAbrStatus;
+	private	String	statusName;
 	private	boolean	active;
 	/**
 	 * Getter Method	: getStudentId
@@ -502,6 +503,26 @@ public class Student
 		this.lAbrStatus = lAbrStatus;
 	}
 	/**
+	 * Getter Method	: getStatusName
+	 * @return the statusName
+	 * 
+	 * Date				: Nov 1, 2018
+	 */
+	public String getStatusName()
+	{
+		return this.statusName;
+	}
+	/**
+	 * Setter method : setStatusName
+	 * @param statusName the statusName to set
+	 * 
+	 * Date          : Nov 1, 2018 10:43:47 AM
+	 */
+	public void setStatusName(String statusName)
+	{
+		this.statusName = statusName;
+	}
+	/**
 	 * Getter Method	: isActive
 	 * @return the active
 	 * 
@@ -542,7 +563,8 @@ public class Student
 				+ this.degreeName + ", empNumberAdvisor="
 				+ this.empNumberAdvisor + ", empNumberAdvisor2="
 				+ this.empNumberAdvisor2 + ", lAbrStatus=" + this.lAbrStatus
-				+ ", active=" + this.active + "]";
+				+ ", statusName=" + this.statusName + ", active=" + this.active
+				+ "]";
 	}
 	
 	

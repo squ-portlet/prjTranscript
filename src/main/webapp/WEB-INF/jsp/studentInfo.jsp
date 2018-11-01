@@ -102,6 +102,7 @@
 
 			        	<portlet:resourceURL id="pdfTranscript" var="urlPdfTranscript" escapeXml="false">
 							<portlet:param name="stdStatCode" value="${student.stdStatCode}"/>
+							<portlet:param name="studentNo" value="${student.studentNo}"/>
 							<portlet:param name="collegeName" value="${student.collegeName}"/>
 						</portlet:resourceURL>
 			        	

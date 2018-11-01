@@ -50,6 +50,7 @@ public interface TranscriptServiceDao
 	/**
 	 * 
 	 * method name  : getPdfTranscript
+	 * @param studentNo TODO
 	 * @param stdStatCode
 	 * @param collegeName TODO
 	 * @param byos
@@ -65,7 +66,7 @@ public interface TranscriptServiceDao
 	 *
 	 * Date    		:	Aug 13, 2018 12:08:00 PM
 	 */
-	public OutputStream getPdfTranscript(String stdStatCode, String collegeName, ByteArrayOutputStream	byos, ResourceResponse res, Locale locale) throws IOException, DocumentException;
+	public OutputStream getPdfTranscript(String studentNo, String stdStatCode, String collegeName, ByteArrayOutputStream	byos, ResourceResponse res, Locale locale) throws IOException, DocumentException;
 	
 	
 	/**

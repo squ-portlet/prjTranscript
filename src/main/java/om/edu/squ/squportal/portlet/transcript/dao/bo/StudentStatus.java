@@ -29,27 +29,32 @@
  */
 package om.edu.squ.squportal.portlet.transcript.dao.bo;
 
+import java.util.List;
+
 /**
  * @author Bhabesh
  *
  */
 public class StudentStatus
 {
-	private	float	semGPA;
-	private	float	cumGPA;
-	private	int		creditEarned;
-	private	int		creditTaken;
-	private	int		courseYear;
-	private	int		semesterCode;
-	private	String	semesterName;
-	private	float	gradePoint;
-	private	float	gradePointCummulative;
-	private	int		creditTakenCummulative;
-	private	String	loadStatusSemester;
-	private	String	loadStatusStudent;
-	private	String	honorDistinction;
-	private	String	excellentList;
-	private	String	history;
+	private	float				semGPA;
+	private	float				cumGPA;
+	private	int					creditEarned;
+	private	int					creditTaken;
+	private	int					courseYear;
+	private	int					semesterCode;
+	private	String				semesterName;
+	private	float				gradePoint;
+	private	float				gradePointCummulative;
+	private	int					creditTakenCummulative;
+	private	String				loadStatusSemester;
+	private	String				loadStatusStudent;
+	private	String				honorDistinction;
+	private	String				excellentList;
+	private	String				history;
+	private	List<GradeSemester>	gradeSemesters;
+	
+	
 	/**
 	 * Getter Method	: getSemGPA
 	 * @return the semGPA
@@ -350,6 +355,26 @@ public class StudentStatus
 	{
 		this.history = history;
 	}
+	/**
+	 * Getter Method	: getGradeSemesters
+	 * @return the gradeSemesters
+	 * 
+	 * Date				: Oct 28, 2018
+	 */
+	public List<GradeSemester> getGradeSemesters()
+	{
+		return this.gradeSemesters;
+	}
+	/**
+	 * Setter method : setGradeSemesters
+	 * @param gradeSemesters the gradeSemesters to set
+	 * 
+	 * Date          : Oct 28, 2018 8:26:20 AM
+	 */
+	public void setGradeSemesters(List<GradeSemester> gradeSemesters)
+	{
+		this.gradeSemesters = gradeSemesters;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -367,7 +392,8 @@ public class StudentStatus
 				+ this.loadStatusSemester + ", loadStatusStudent="
 				+ this.loadStatusStudent + ", honorDistinction="
 				+ this.honorDistinction + ", excellentList="
-				+ this.excellentList + ", history=" + this.history + "]";
+				+ this.excellentList + ", history=" + this.history
+				+ ", gradeSemesters=" + this.gradeSemesters + "]";
 	}
 	
 	
