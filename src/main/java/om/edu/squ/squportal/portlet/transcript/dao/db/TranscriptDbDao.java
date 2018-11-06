@@ -29,11 +29,19 @@
  */
 package om.edu.squ.squportal.portlet.transcript.dao.db;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import org.springframework.jdbc.core.RowMapper;
+
+import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
+import om.edu.squ.squportal.portlet.transcript.utility.Constants;
 
 /**
  * @author Bhabesh
@@ -74,6 +82,7 @@ public interface TranscriptDbDao
 	/**
 	 * 	
 	 * method name  : getStudentStatusList
+	 * @param studentNo TODO
 	 * @param stdStatCode
 	 * @param collegeName
 	 * @return
@@ -84,5 +93,22 @@ public interface TranscriptDbDao
 	 *
 	 * Date    		:	Oct 15, 2018 12:49:47 PM
 	 */
-	public List<StudentStatus>	getStudentStatusList(String stdStatCode, String collegeName);
+	public List<StudentStatus>	getStudentStatusList(String studentNo, String stdStatCode, String collegeName);
+	
+	/**
+	 * 
+	 * method name  : getStudentGradeList
+	 * @param studentNo
+	 * @param semester
+	 * @param courseYear
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : List<GradeSemester>
+	 * 
+	 * purpose		: 
+	 *
+	 * Date    		:	Oct 25, 2018 2:16:38 PM
+	 */
+	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear );
+
 }

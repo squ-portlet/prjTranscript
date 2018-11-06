@@ -37,6 +37,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
@@ -173,7 +174,9 @@ public class TranscriptDbImpl implements TranscriptDbDao
 						student.setEmpNumberAdvisor(rs.getString(Constants.COST_COL_ADVISOR01_EMP_NO));
 						student.setEmpNumberAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NO));
 						student.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));
-						
+						student.setStatusName(rs.getString(Constants.COST_COL_STATUS_NAME));
+						student.setTotalCreditTaken(rs.getInt(Constants.COST_COL_TOTAL_CREDITS_TAKEN));
+						student.setTotalCreditEarned(rs.getInt(Constants.COST_COL_TOTAL_CREDITS_EARNED));
 				return student;
 			}
 		};
@@ -191,7 +194,7 @@ public class TranscriptDbImpl implements TranscriptDbDao
 	 * (non-Javadoc)
 	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudentStatusList(java.lang.String, java.lang.String)
 	 */
-	public List<StudentStatus>	getStudentStatusList(String stdStatCode, String collegeName)
+	public List<StudentStatus>	getStudentStatusList(final String studentNo, String stdStatCode,  String collegeName)
 	{
 		String	SQL_STUDENT_STATUS_LIST		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_STATUS_LIST);
 		
@@ -211,12 +214,13 @@ public class TranscriptDbImpl implements TranscriptDbDao
 								studentStatus.setGradePoint(rs.getFloat(Constants.COST_COL_GRADE_PTS));
 								studentStatus.setGradePointCummulative(rs.getFloat(Constants.COST_COL_CUM_GRADE_PTS));
 								studentStatus.setSemesterName(rs.getString(Constants.COST_COL_SEMESTER_NAME));
-								studentStatus.setCreditTaken(rs.getInt(Constants.COST_COL_CUM_CREDITS_TAKEN));
+								studentStatus.setCreditTakenCummulative(rs.getInt(Constants.COST_COL_CUM_CREDITS_TAKEN));
 								studentStatus.setLoadStatusSemester(rs.getString(Constants.COST_COL_SEMESTER_LOAD_STATUS));
 								studentStatus.setLoadStatusStudent(rs.getString(Constants.COST_COL_STD_LOAD_STAT));
 								studentStatus.setHonorDistinction(rs.getString(Constants.COST_COL_HON_DIST));
 								studentStatus.setExcellentList(rs.getString(Constants.COST_COL_EXCLIST));
 								studentStatus.setHistory(rs.getString(Constants.COST_COL_HISTORY));
+								studentStatus.setGradeSemesters(getStudentGradeList(studentNo,String.valueOf(rs.getInt(Constants.COST_COL_SEMCD)) , rs.getInt(Constants.COST_COL_CCYRCD)));
 								
 				return studentStatus;
 			}
@@ -232,5 +236,39 @@ public class TranscriptDbImpl implements TranscriptDbDao
 		return namedParameterJdbcTemplate.query(SQL_STUDENT_STATUS_LIST, paramMap, rowMapper);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudentGradeList(java.lang.String, java.lang.String, int)
+	 */
+	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear )
+	{
+		String	SQL_STUDENT_GRADE_LIST		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_GRADE_LIST);
+		RowMapper<GradeSemester> 	rowMapper	=	new RowMapper<GradeSemester>()
+		{
+			
+			@Override
+			public GradeSemester mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				GradeSemester	gradeSemester	=	new GradeSemester();
+				gradeSemester.setCourseNo(rs.getString(Constants.COST_COL_COURSE_NO));
+				gradeSemester.setCourseName(rs.getString(Constants.COST_COL_COURSE_NAME));
+				gradeSemester.setCourseCredit(rs.getInt(Constants.COST_COL_COURSE_CREDIT));
+				gradeSemester.setCourseCreditValue(rs.getString(Constants.COST_COL_COURSE_CREDIT_VALUE));
+				gradeSemester.setCourseGradePint(rs.getInt(Constants.COST_COL_COURSE_GRADE_POINT));
+				gradeSemester.setPreviousCourseNo(rs.getString(Constants.COST_COL_PREVIOUS_COURSE_NO));
+				gradeSemester.setPreviousCourseYear(rs.getInt(Constants.COST_COL_PREVIOUS_COURSE_YEAR));
+				gradeSemester.setPreviousSemester(rs.getInt(Constants.COST_COL_PREVIOUS_SEM_CODE));
+				gradeSemester.setRepeated(rs.getString(Constants.COST_COL_REPEATED));
+				return gradeSemester;
+			}
+		};
+		
+		Map<String,String> paramMap	=	new HashMap<String, String>();
+		paramMap.put("paramStdNo", studentNo);
+		paramMap.put("paramSemester", semester);
+		paramMap.put("paramCourseYear", String.valueOf(courseYear));
+
+		return namedParameterJdbcTemplate.query(SQL_STUDENT_GRADE_LIST, paramMap, rowMapper);
+	}
 	
 }

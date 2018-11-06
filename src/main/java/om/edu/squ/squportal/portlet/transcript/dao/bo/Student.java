@@ -57,6 +57,9 @@ public class Student
 	private	String	empNumberAdvisor;
 	private	String	empNumberAdvisor2;
 	private	String	lAbrStatus;
+	private	String	statusName;
+	private	int		totalCreditTaken;
+	private	int		totalCreditEarned;
 	private	boolean	active;
 	/**
 	 * Getter Method	: getStudentId
@@ -502,6 +505,66 @@ public class Student
 		this.lAbrStatus = lAbrStatus;
 	}
 	/**
+	 * Getter Method	: getStatusName
+	 * @return the statusName
+	 * 
+	 * Date				: Nov 1, 2018
+	 */
+	public String getStatusName()
+	{
+		return this.statusName;
+	}
+	/**
+	 * Setter method : setStatusName
+	 * @param statusName the statusName to set
+	 * 
+	 * Date          : Nov 1, 2018 10:43:47 AM
+	 */
+	public void setStatusName(String statusName)
+	{
+		this.statusName = statusName;
+	}
+	/**
+	 * Getter Method	: getTotalCreditTaken
+	 * @return the totalCreditTaken
+	 * 
+	 * Date				: Nov 4, 2018
+	 */
+	public int getTotalCreditTaken()
+	{
+		return this.totalCreditTaken;
+	}
+	/**
+	 * Setter method : setTotalCreditTaken
+	 * @param totalCreditTaken the totalCreditTaken to set
+	 * 
+	 * Date          : Nov 4, 2018 1:47:54 PM
+	 */
+	public void setTotalCreditTaken(int totalCreditTaken)
+	{
+		this.totalCreditTaken = totalCreditTaken;
+	}
+	/**
+	 * Getter Method	: getTotalCreditEarned
+	 * @return the totalCreditEarned
+	 * 
+	 * Date				: Nov 4, 2018
+	 */
+	public int getTotalCreditEarned()
+	{
+		return this.totalCreditEarned;
+	}
+	/**
+	 * Setter method : setTotalCreditEarned
+	 * @param totalCreditEarned the totalCreditEarned to set
+	 * 
+	 * Date          : Nov 4, 2018 1:47:54 PM
+	 */
+	public void setTotalCreditEarned(int totalCreditEarned)
+	{
+		this.totalCreditEarned = totalCreditEarned;
+	}
+	/**
 	 * Getter Method	: isActive
 	 * @return the active
 	 * 
@@ -542,7 +605,9 @@ public class Student
 				+ this.degreeName + ", empNumberAdvisor="
 				+ this.empNumberAdvisor + ", empNumberAdvisor2="
 				+ this.empNumberAdvisor2 + ", lAbrStatus=" + this.lAbrStatus
-				+ ", active=" + this.active + "]";
+				+ ", statusName=" + this.statusName + ", totalCreditTaken="
+				+ this.totalCreditTaken + ", totalCreditEarned="
+				+ this.totalCreditEarned + ", active=" + this.active + "]";
 	}
 	
 	

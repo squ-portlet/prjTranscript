@@ -109,14 +109,22 @@
 					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
 					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
 					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
+			        , 	DECODE (
+			                    	:paramLocale
+			                    	, 'ar', VSP.A_STATUS_NAME
+			                    	, VSP.STATUS_NAME
+			          			)                                 			AS    	STATUS_NAME					
 					,	VSP.ACTIVE											AS		ACTIVE
+					, NVL(STATUS.CREDITSTAKEN,0)      						AS    	TOTAL_CREDITS_TAKEN
+          			, NVL(STATUS.CREDITSEARNED,0)     						AS    	TOTAL_CREDITS_EARNED
 			FROM
-              V_STDINFO_PORTAL    VSP
-            , STD                 STD
-          
+              			V_STDINFO_PORTAL    VSP
+            		, 	STD                 STD
+            		, 	STD_STATUS          STATUS
 			WHERE
-              		VSP.STDNO = STD.STDNO
-				AND VSP.STDSTATCD	=	:paramStdStatCode
+              			VSP.STDNO 		= 	STD.STDNO
+              	AND     VSP.STDSTATCD 	= 	STATUS.STDSTATCD(+)
+				AND 	VSP.STDSTATCD	=	:paramStdStatCode
     </entry>    
 
 	<entry key="transcript.select.student.status.list">
@@ -155,7 +163,45 @@
 					AND SSS.HONDISTCD       	=	SC2.SISCODECD(+)
 					AND SSS.EXCELLENTSTDCD  	= 	SC3.SISCODECD(+)
 					AND STDSTATCD           	= 	:paramStdStatCode
-					ORDER BY SSS.CCYRCD, SSS.SEMCD;	
+					ORDER BY SSS.CCYRCD, SSS.SEMCD	
 	
-	</entry>    
+	</entry>
+	    
+	<entry key="transcript.select.student.grade.list">
+			SELECT 
+							SG.L_ABR_CRSNO									AS		COURSE_NO
+						, 	RTRIM(CRS.CRSLNM, '       ') 					AS		COURSE_NAME
+						, 	CRS.CRSCRED										AS		COURSE_CREDIT
+						,   REG_PKG.WAS_FSP(
+													:paramStdNo
+												, 	SG.CCYRCD
+												, 	SG.SEMCD
+												, 	SG.L_ABR_CRSNO
+												, 	SG.GRADECD
+												, 	GV.L_ABR_GVAL
+											) 								AS		COURSE_CREDIT_VALUE
+						, 	CRS.CRSCRED	*	GV.GRADEPOINTS 					AS		COURSE_GRADE_POINT
+						, 	SG.PREV_L_ABR_CRSNO								AS		PREVIOUS_COURSE_NO
+						, 	SG.PREV_CCYRCD									AS		PREVIOUS_COURSE_YEAR
+						,   SG.PREV_SEMCD									AS		PREVIOUS_SEM_CODE
+						, 	SG.PREV_L_ABR_CRSNO 
+							||' '|| 
+							SG.PREV_CCYRCD 
+							||' '|| 
+							SEM.L_ABR_SEM 									AS		REPEATED 
+			FROM 
+						STD_GRADES SG
+					, 	GRADE_VAL GV
+					, 	CRS_BASIC CRS
+					, 	SEM
+					
+			WHERE 
+						CRS.CRSNO = SG.CRSNO 
+					AND GV.GRADECD = SG.GRADECD 
+					AND SEM.SEMCD(+) = SG.PREV_SEMCD 
+					AND SG.CCYRCD =  :paramCourseYear  
+					AND SG.SEMCD =  :paramSemester  
+					AND SG.STDNO =  :paramStdNo
+			ORDER BY SG.L_ABR_CRSNO	
+	</entry>	    
 </properties>

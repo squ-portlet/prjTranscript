@@ -51,6 +51,7 @@ public interface Constants
 	public	static	final	String	CONST_SQL_STUDENT_DETAIL_LIST				=	"transcript.select.student.details.list";
 	public	static	final	String	CONST_SQL_STUDENT_DETAIL					=	"transcript.select.student.details";
 	public	static	final	String	CONST_SQL_STUDENT_STATUS_LIST				=	"transcript.select.student.status.list";
+	public	static	final	String	CONST_SQL_STUDENT_GRADE_LIST				=	"transcript.select.student.grade.list";
 	
 	/******************************************************/
 	
@@ -77,6 +78,9 @@ public interface Constants
 	public static final	String	COST_COL_ADVISOR01_EMP_NO						=	"ADVISOR01_EMP_NO";
 	public static final	String	COST_COL_ADVISOR02_EMP_NO						=	"ADVISOR02_EMP_NO";
 	public static final	String	COST_COL_L_ABR_STATUS							=	"L_ABR_STATUS";
+	public static final	String	COST_COL_STATUS_NAME							=	"STATUS_NAME";
+	public static final	String	COST_COL_TOTAL_CREDITS_TAKEN					=	"TOTAL_CREDITS_TAKEN";
+	public static final	String	COST_COL_TOTAL_CREDITS_EARNED					=	"TOTAL_CREDITS_EARNED";
 	public static final	String	COST_COL_ACTIVE									=	"ACTIVE";
 	
 	public static final	String	COST_COL_SEM_GPA								=	"SEM_GPA";
@@ -94,6 +98,17 @@ public interface Constants
 	public static final	String	COST_COL_HON_DIST								=	"HON_DIST";
 	public static final	String	COST_COL_EXCLIST								=	"EXCLIST";
 	public static final	String	COST_COL_HISTORY								=	"HISTORY";
+	
+	
+	public static final	String	COST_COL_COURSE_NO								=	"COURSE_NO";
+	public static final	String	COST_COL_COURSE_NAME							=	"COURSE_NAME";
+	public static final	String	COST_COL_COURSE_CREDIT							=	"COURSE_CREDIT";
+	public static final	String	COST_COL_COURSE_CREDIT_VALUE					=	"COURSE_CREDIT_VALUE";
+	public static final	String	COST_COL_COURSE_GRADE_POINT						=	"COURSE_GRADE_POINT";
+	public static final	String	COST_COL_PREVIOUS_COURSE_NO						=	"PREVIOUS_COURSE_NO";
+	public static final	String	COST_COL_PREVIOUS_COURSE_YEAR					=	"PREVIOUS_COURSE_YEAR";
+	public static final	String	COST_COL_PREVIOUS_SEM_CODE						=	"PREVIOUS_SEM_CODE";
+	public static final	String	COST_COL_REPEATED								=	"REPEATED";
 	
 	
 	
