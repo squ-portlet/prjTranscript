@@ -79,48 +79,42 @@
 <div id="divStdSummary" class="container-fluid">
 
 	<c:forEach items="${studentSummaryList}" var="student" varStatus="status">
-	 	<div class="col-sm-5 col-md-5">
-		    <div class="thumbnail">
-		    <div style="text-align:center"><span class="dot">${status.count}</span></div>
-		      
-		      <div class="caption">
-		        <h3>${student.degreeName} (${student.cohort})</h3>
-		        <p>
-		        	<div class="row">
-		        		<div class="col-sm-12"><h5>${student.collegeName}</h5></div>
-		        	</div>
+       	<portlet:resourceURL id="pdfTranscript" var="urlPdfTranscript" escapeXml="false">
+			<portlet:param name="stdStatCode" value="${student.stdStatCode}"/>
+			<portlet:param name="studentNo" value="${student.studentNo}"/>
+			<portlet:param name="collegeName" value="${student.collegeName}"/>
+		</portlet:resourceURL>
+	
+		<div class="row">
+			<div class="col-sm-1" style="text-align:center" ><span class="dot">${status.count}</span></div>
+			<div class="col-sm-4">
+					<h5>${student.degreeName} (${student.cohort})</h5>
+			</div>
+			<div class="col-sm-4">
+					<div class="row">
+				        		<div class="col-sm-12"><h5>${student.collegeName}</h5></div>
+				    </div>
 		        	<div class="row">
 		        		<div class="col-sm-2"><b>Major</b></div><div class="col-sm-6">${student.majorName}</div>
 		        	</div>
 			        <div class="row">
 		        		<div class="col-sm-2"><b>Advisor</b></div><div class="col-sm-6">${student.empNumberAdvisor}</div>
-		        	</div>		        		
-		        </p>
-		        <p>
-			        <div class="row">
-			        	<div class="col-sm-8">
-
-			        	<portlet:resourceURL id="pdfTranscript" var="urlPdfTranscript" escapeXml="false">
-							<portlet:param name="stdStatCode" value="${student.stdStatCode}"/>
-							<portlet:param name="studentNo" value="${student.studentNo}"/>
-							<portlet:param name="collegeName" value="${student.collegeName}"/>
-						</portlet:resourceURL>
-			        	
-			        		<a href="${urlPdfTranscript}"  class="bttnClsTranscriptDownload btn btn-primary" role="button" >Download</a>
-			        	</div>
-<!--			        	
-			        	<div class="col-sm-4">
-	        				<a stdStatCode={{student.stdStatCode}}  class="bttnClsTranscript btn btn-primary" role="button">Transcript</a>
-	        			</div>
--->
-
-			        </div>
-		        </p>
-		      </div>
-		     </div>
-		</div> 	
+		        	</div>	
+			</div>
+			<div class="col-sm-1">
+					<a aurl="${urlPdfTranscript}" href="#"  class="bttnClsTranscriptDownload"  >
+						<span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+					</a>
+			</div>
+		</div>
 	</c:forEach>	
 		
 			
 
 </div>
+
+
+
+<iframe id='idIfrTranscript' src="" height="600px" width="100%" style="display: none; border: none;"></iframe>
+
+

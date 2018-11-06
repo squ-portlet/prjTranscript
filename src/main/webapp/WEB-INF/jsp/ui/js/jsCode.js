@@ -85,7 +85,16 @@
 			
 		});
 
-		/* Transcript */
+
+$(document).on('click','.bttnClsTranscriptDownload',function(event){
+	$('#idIfrTranscript').contents().find('body').html('<h3>Please Wait ..</h3>');
+	$('#idIfrTranscript').show();
+	$('#idIfrTranscript').attr('src',this.getAttribute("aurl"));
+});
+
+
+
+		/* Transcript  - idIfrTranscript*/
 /*
 		$(document).on('click','.bttnClsTranscriptDownload',function(event){
 
