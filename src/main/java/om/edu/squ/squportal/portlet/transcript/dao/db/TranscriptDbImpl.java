@@ -175,7 +175,8 @@ public class TranscriptDbImpl implements TranscriptDbDao
 						student.setEmpNumberAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NO));
 						student.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));
 						student.setStatusName(rs.getString(Constants.COST_COL_STATUS_NAME));
-						
+						student.setTotalCreditTaken(rs.getInt(Constants.COST_COL_TOTAL_CREDITS_TAKEN));
+						student.setTotalCreditEarned(rs.getInt(Constants.COST_COL_TOTAL_CREDITS_EARNED));
 				return student;
 			}
 		};
@@ -266,9 +267,7 @@ public class TranscriptDbImpl implements TranscriptDbDao
 		paramMap.put("paramStdNo", studentNo);
 		paramMap.put("paramSemester", semester);
 		paramMap.put("paramCourseYear", String.valueOf(courseYear));
-		
-		logger.info("paramMap : "+paramMap);
-		
+
 		return namedParameterJdbcTemplate.query(SQL_STUDENT_GRADE_LIST, paramMap, rowMapper);
 	}
 	

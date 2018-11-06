@@ -115,13 +115,16 @@
 			                    	, VSP.STATUS_NAME
 			          			)                                 			AS    	STATUS_NAME					
 					,	VSP.ACTIVE											AS		ACTIVE
+					, NVL(STATUS.CREDITSTAKEN,0)      						AS    	TOTAL_CREDITS_TAKEN
+          			, NVL(STATUS.CREDITSEARNED,0)     						AS    	TOTAL_CREDITS_EARNED
 			FROM
-              V_STDINFO_PORTAL    VSP
-            , STD                 STD
-          
+              			V_STDINFO_PORTAL    VSP
+            		, 	STD                 STD
+            		, 	STD_STATUS          STATUS
 			WHERE
-              		VSP.STDNO = STD.STDNO
-				AND VSP.STDSTATCD	=	:paramStdStatCode
+              			VSP.STDNO 		= 	STD.STDNO
+              	AND     VSP.STDSTATCD 	= 	STATUS.STDSTATCD(+)
+				AND 	VSP.STDSTATCD	=	:paramStdStatCode
     </entry>    
 
 	<entry key="transcript.select.student.status.list">

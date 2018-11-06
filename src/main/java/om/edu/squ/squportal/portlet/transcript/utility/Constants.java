@@ -79,6 +79,8 @@ public interface Constants
 	public static final	String	COST_COL_ADVISOR02_EMP_NO						=	"ADVISOR02_EMP_NO";
 	public static final	String	COST_COL_L_ABR_STATUS							=	"L_ABR_STATUS";
 	public static final	String	COST_COL_STATUS_NAME							=	"STATUS_NAME";
+	public static final	String	COST_COL_TOTAL_CREDITS_TAKEN					=	"TOTAL_CREDITS_TAKEN";
+	public static final	String	COST_COL_TOTAL_CREDITS_EARNED					=	"TOTAL_CREDITS_EARNED";
 	public static final	String	COST_COL_ACTIVE									=	"ACTIVE";
 	
 	public static final	String	COST_COL_SEM_GPA								=	"SEM_GPA";
