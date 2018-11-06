@@ -1,1 +1,5 @@
 /target/*
+/src/main/resources/template/pdf/template_transcript_en.odt
+/src/main/resources/template/pdf/test.odt
+/src/main/webapp/ui/js/download.js
+/target/*
