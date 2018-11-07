@@ -126,7 +126,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 			
 				PdfStamper		pdfStamper			=	new PdfStamper(pdfTemplate, byos );
 				
-				pdfStamper.getAcroFields().setField("txtFrmStudentId", student.getStudentId() + "/"+student.getCohort());
+				pdfStamper.getAcroFields().setField("txtFrmStudentId", student.getStudentId() + " / "+student.getCohort());
 				pdfStamper.getAcroFields().setField("txtFrmDOB", student.getBirthDay());
 				
 				pdfStamper.getAcroFields().setField("txtFrmStudentName", student.getStudentName());
@@ -137,12 +137,14 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				
 				pdfStamper.getAcroFields().setField("txtFrmMajor", student.getMajorName());
 				pdfStamper.getAcroFields().setField("txtFrmFirstMajor", student.getFirstMajor());
-				pdfStamper.getAcroFields().setField("txtFrmStream", "-");
+				pdfStamper.getAcroFields().setField("txtFrmSchoolCertificateType", student.getSchoolCertificateType());
+				pdfStamper.getAcroFields().setField("txtFrmSchoolStream", student.getSchoolStream());
+				pdfStamper.getAcroFields().setField("txtFrmSchoolPercent", student.getSchoolPercentage());
 				
 				
 				pdfStamper.getAcroFields().setField("txtDegreeName", student.getDegreeName());
-				pdfStamper.getAcroFields().setField("txtAdvisor01", "-");
-				pdfStamper.getAcroFields().setField("txtAdvisor02", "-");
+				pdfStamper.getAcroFields().setField("txtAdvisor01", student.getEmpNameAdvisor());
+				pdfStamper.getAcroFields().setField("txtAdvisor02", student.getEmpNameAdvisor2());
 				
 				List<StudentStatus>	studentStatusList	=	transcriptDbDao.getStudentStatusList(studentNo, stdStatCode, collegeName);
 				

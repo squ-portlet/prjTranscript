@@ -124,6 +124,8 @@ public class TranscriptDbImpl implements TranscriptDbDao
 						student.setDegreeName(rs.getString(Constants.COST_COL_DEGREE_NAME));
 						student.setEmpNumberAdvisor(rs.getString(Constants.COST_COL_ADVISOR01_EMP_NO));
 						student.setEmpNumberAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NO));
+						student.setEmpNameAdvisor(rs.getString(Constants.COST_COL_ADVISOR01_EMP_NAME));
+						student.setEmpNameAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NAME));
 						student.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));
 						
 				return student;
@@ -169,10 +171,15 @@ public class TranscriptDbImpl implements TranscriptDbDao
 						student.setFirstMajor(rs.getString(Constants.COST_COL_FIRST_MAJOR));
 						student.setSpecCode(rs.getString(Constants.COST_COL_SPEC_CODE));
 						student.setSpecName(rs.getString(Constants.COST_COL_SPEC_NAME));
+						student.setSchoolCertificateType(rs.getString(Constants.COST_COL_SCHOOL_CERT_TYPE));
+						student.setSchoolStream(rs.getString(Constants.COST_COL_SCHOOL_STREAM));
+						student.setSchoolPercentage(rs.getString(Constants.COST_COL_SCHOOL_PERC));
 						student.setDegreeNumber(rs.getInt(Constants.COST_COL_DEGREE_NUMBER));
 						student.setDegreeName(rs.getString(Constants.COST_COL_DEGREE_NAME));
 						student.setEmpNumberAdvisor(rs.getString(Constants.COST_COL_ADVISOR01_EMP_NO));
 						student.setEmpNumberAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NO));
+						student.setEmpNameAdvisor(rs.getString(Constants.COST_COL_ADVISOR01_EMP_NAME));
+						student.setEmpNameAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NAME));						
 						student.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));
 						student.setStatusName(rs.getString(Constants.COST_COL_STATUS_NAME));
 						student.setTotalCreditTaken(rs.getInt(Constants.COST_COL_TOTAL_CREDITS_TAKEN));
