@@ -250,6 +250,19 @@
 			ORDER BY SS.L_ABR_CRSNO
 	</entry>
 	
-	
+	<entry key="transcript.select.student.postpone.list">
+			SELECT  
+						 SUBSTR(SP.FROMCCYRCD,3,2) ||' '||S1.L_ABR_SEM 		FROM_YRSEM
+					, 	 SUBSTR(SP.TOCCYRCD,3,2) ||' '||S2.L_ABR_SEM 		TO_YRSEM
+					,	 TO_CHAR(SP.UPDDTE, 'DD/MM/YYYY') 					PST_DATE 
+			FROM 
+						STD_POSTPONE 	SP
+					, 	SEM 			S1
+					,	SEM 			S2 
+			WHERE 
+						SP.FROMSEMCD 	= 	S1.SEMCD 
+					AND SP.TOSEMCD		=	S2.SEMCD 
+					AND SP.STDSTATCD 	=  :paramStdStatCode
+	</entry>
 		    
 </properties>

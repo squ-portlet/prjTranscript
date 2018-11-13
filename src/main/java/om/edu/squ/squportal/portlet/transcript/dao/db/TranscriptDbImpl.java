@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.Postpone;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.RegistrationBO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
@@ -322,6 +323,32 @@ public class TranscriptDbImpl implements TranscriptDbDao
 		
 	}
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getPostponeList(java.lang.String)
+	 */
+	public List<Postpone>  getPostponeList(String stdStatCode)
+	{
+		String	SQL_STUDENT_POSTPONE_LIST			=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_POSTPONE_LIST);
+		
+		RowMapper<Postpone> rowMapper				=	new RowMapper<Postpone>()
+		{
+			
+			@Override
+			public Postpone mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				Postpone	postpone	=	new Postpone();
+				postpone.setFromYrSem(rs.getString(Constants.COST_COL_FROM_YRSEM));
+				postpone.setToYrSem(rs.getString(Constants.COST_COL_TO_YRSEM));
+				postpone.setPostponeDate(rs.getString(Constants.COST_COL_PST_DATE));
+				
+				return postpone;
+			}
+		};
+		Map<String,String> paramMap	=	new HashMap<String, String>();
+		paramMap.put("paramStdStatCode", stdStatCode);		
+		
+		return namedParameterJdbcTemplate.query(SQL_STUDENT_POSTPONE_LIST, paramMap, rowMapper);
+	}
 	
 }

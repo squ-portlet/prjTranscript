@@ -53,6 +53,7 @@ public interface Constants
 	public	static	final	String	CONST_SQL_STUDENT_STATUS_LIST				=	"transcript.select.student.status.list";
 	public	static	final	String	CONST_SQL_STUDENT_GRADE_LIST				=	"transcript.select.student.grade.list";
 	public	static	final	String	CONST_SQL_STUDENT_REG_LIST					=	"transcript.select.student.registration";
+	public static	final	String	CONST_SQL_STUDENT_POSTPONE_LIST				=	"transcript.select.student.postpone.list";
 	
 	/******************************************************/
 	
@@ -118,6 +119,12 @@ public interface Constants
 	public static final	String	COST_COL_PREVIOUS_COURSE_YEAR					=	"PREVIOUS_COURSE_YEAR";
 	public static final	String	COST_COL_PREVIOUS_SEM_CODE						=	"PREVIOUS_SEM_CODE";
 	public static final	String	COST_COL_REPEATED								=	"REPEATED";
+	
+	
+	public static final	String	COST_COL_FROM_YRSEM								=	"FROM_YRSEM";
+	public static final	String	COST_COL_TO_YRSEM								=	"TO_YRSEM";
+	public static final	String	COST_COL_PST_DATE								=	"PST_DATE";
+	
 	
 	
 	
