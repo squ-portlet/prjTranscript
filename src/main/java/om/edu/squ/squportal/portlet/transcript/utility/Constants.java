@@ -52,6 +52,7 @@ public interface Constants
 	public	static	final	String	CONST_SQL_STUDENT_DETAIL					=	"transcript.select.student.details";
 	public	static	final	String	CONST_SQL_STUDENT_STATUS_LIST				=	"transcript.select.student.status.list";
 	public	static	final	String	CONST_SQL_STUDENT_GRADE_LIST				=	"transcript.select.student.grade.list";
+	public	static	final	String	CONST_SQL_STUDENT_REG_LIST					=	"transcript.select.student.registration";
 	
 	/******************************************************/
 	

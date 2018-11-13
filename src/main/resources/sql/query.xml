@@ -214,5 +214,42 @@
 					AND SG.SEMCD =  :paramSemester  
 					AND SG.STDNO =  :paramStdNo
 			ORDER BY SG.L_ABR_CRSNO	
-	</entry>	    
+	</entry>
+	<entry key="transcript.select.student.registration">
+			SELECT 
+					DISTINCT 
+							SEM.SEMNM 										AS		SEMESTER_NAME
+						,	CYS.CCYRCD 										AS		CCYRCD
+						,	VS.L_ABR_STATUS 								AS		L_ABR_STATUS
+						,	SS.L_ABR_CRSNO 									AS		COURSE_NO
+						,	CB.CRSLNM 										AS		COURSE_NAME
+						,	CB.CRSCRED 										AS		COURSE_CREDIT
+						,	MISC_PKG.STD_DEGREE_HISTORY(
+																VS.STDSTATCD
+															, 	CYS.CCYRCD
+															, 	CYS.SEMCD
+															, 	:paramCollegeName
+														) 					AS		HISTORY
+			FROM 
+						SCHED_STD 			SS
+					,	SECT 				S
+					,	CRS_BASIC 			CB
+					,	V_STD 				VS
+					,	SEM					SEM
+					,	CURRENT_YR_SEM 		CYS
+			WHERE 
+						VS.L_ABR_STATUS IN ('REG','SUSP','PEND')
+					AND S.CCYRCD           = CYS.CCYRCD
+					AND S.SEMCD            = CYS.SEMCD
+					AND SEM.SEMCD          = S.SEMCD
+					AND S.CRSNO            = SS.CRSNO
+					AND S.SECTCD           = SS.SECTCD
+					AND VS.STDNO           = SS.STDNO
+					AND CB.CRSNO           = SS.CRSNO
+					AND VS.STDSTATCD       = :paramStdStatCode
+			ORDER BY SS.L_ABR_CRSNO
+	</entry>
+	
+	
+		    
 </properties>

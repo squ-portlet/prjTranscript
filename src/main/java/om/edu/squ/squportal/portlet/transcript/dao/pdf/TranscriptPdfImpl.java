@@ -40,6 +40,7 @@ import javax.portlet.ResourceResponse;
 import javax.swing.border.LineBorder;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.RegistrationBO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
 import om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao;
@@ -139,7 +140,11 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				pdfStamper.getAcroFields().setField("txtFrmFirstMajor", student.getFirstMajor());
 				pdfStamper.getAcroFields().setField("txtFrmSchoolCertificateType", student.getSchoolCertificateType());
 				pdfStamper.getAcroFields().setField("txtFrmSchoolStream", student.getSchoolStream());
-				pdfStamper.getAcroFields().setField("txtFrmSchoolPercent", student.getSchoolPercentage());
+				
+				if(! student.getSchoolPercentage().trim().equals("0"))
+				{
+					pdfStamper.getAcroFields().setField("txtFrmSchoolPercent", student.getSchoolPercentage()+"%");
+				}
 				
 				
 				pdfStamper.getAcroFields().setField("txtDegreeName", student.getDegreeName());
@@ -188,11 +193,25 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 										PdfPCell	cellGradeCourseCreditValue	=	setTableCell(grade.getCourseCreditValue(),PdfPCell.NO_BORDER,setFont_01());
 													cellGradeCourseCreditValue.setHorizontalAlignment(Element.ALIGN_RIGHT);
 													tableSemester.addCell(cellGradeCourseCreditValue);
-													tableSemester.addCell(setTableCell("",PdfPCell.NO_BORDER,setFont_01()));
+													if(grade.getRepeated().trim().equals(""))
+													{
+														tableSemester.addCell(setTableCell(" ",PdfPCell.NO_BORDER,setFont_01()));
+													}
+													else
+													{
+														tableSemester.addCell(
+																				setTableCell(
+																									UtilProperty.getMessage("prop.transcript.grade.repeated", null, locale)
+																								+	grade.getRepeated()
+																								,	PdfPCell.NO_BORDER
+																								,	setFont_01()
+																							)
+																			);
+													}
 													tableSemester.completeRow();
 									}									
 									
-									
+																	
 									
 									/* another loop for courses and related information */
 									tableSemester.addCell(setTableCell(UtilProperty.getMessage("prop.transcript.credits.text", null, locale),Rectangle.NO_BORDER,setFont_04()));
@@ -240,14 +259,41 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 									
 									
 								/*Semester course load status*/
-									tableSemester.addCell(setTableCell(UtilProperty.getMessage("prop.transcript.semester.course.load.status.text", null, locale)+stdStatus.getLoadStatusSemester(),Rectangle.NO_BORDER,setFont_02())).setColspan(5);
-									tableSemester.completeRow();
+									if(! stdStatus.getLoadStatusSemester().equals(stdStatus.getLoadStatusStudent()))
+									{
+										tableSemester.addCell(setTableCell(UtilProperty.getMessage("prop.transcript.semester.course.load.status.text", null, locale)+stdStatus.getLoadStatusSemester(),Rectangle.NO_BORDER,setFont_02())).setColspan(5);
+										tableSemester.completeRow();
+									}
+									
 								/*student course load status*/									
+									if(null!= stdStatus.getLoadStatusStudent())
+									{
 									PdfPCell	cellStdLoadStatus = setTableCell(UtilProperty.getMessage("prop.transcript.student.course.load.status.text", null, locale)+stdStatus.getLoadStatusStudent(),Rectangle.NO_BORDER,setFont_02());
 												cellStdLoadStatus.setColspan(5);
 												cellStdLoadStatus.setBorder(PdfPCell.BOTTOM);
 									tableSemester.addCell(cellStdLoadStatus);
 									tableSemester.completeRow();
+									}
+									
+									/*student distinction status*/									
+									if(null!= stdStatus.getHonorDistinction() && ! stdStatus.getHonorDistinction().trim().equals(""))
+									{
+									PdfPCell	cellStdHonorList = setTableCell(UtilProperty.getMessage("prop.transcript.student.honours.list", null, locale)+stdStatus.getHonorDistinction(),Rectangle.NO_BORDER,setFont_02());
+												cellStdHonorList.setColspan(5);
+												cellStdHonorList.setBorder(PdfPCell.BOTTOM);
+									tableSemester.addCell(cellStdHonorList);
+									tableSemester.completeRow();
+									}
+									/*student excellent status*/									
+									if(null!= stdStatus.getExcellentList() && ! stdStatus.getExcellentList().trim().equals(""))
+									{
+									PdfPCell	cellStdExcellentList = setTableCell(UtilProperty.getMessage("prop.transcript.student.excellent.list", null, locale)+stdStatus.getExcellentList(),Rectangle.NO_BORDER,setFont_02());
+												cellStdExcellentList.setColspan(5);
+												cellStdExcellentList.setBorder(PdfPCell.BOTTOM);
+									tableSemester.addCell(cellStdExcellentList);
+									tableSemester.completeRow();
+									}									
+																		
 									
 				}
 				
@@ -291,6 +337,44 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				tableSemester.completeRow();
 				
 				tableSemester.completeRow();
+
+				
+/***** Student Current semester registration details ********/
+				List<RegistrationBO>	registrations	=	transcriptDbDao.getRegistrationList(stdStatCode, collegeName);
+				for(RegistrationBO semester: registrations)
+				{
+					tableSemester.addCell(setTableCell(UtilProperty.getMessage("prop.transcript.semester.current", null, locale),Rectangle.NO_BORDER,setFont_02()));
+				PdfPCell	cellCurrentYrSem		=	setTableCell(semester.getStudentStatus().getCourseYear() + " " + semester.getStudentStatus().getSemesterName(),Rectangle.NO_BORDER,setFont_02());
+							cellCurrentYrSem.setColspan(4);
+				tableSemester.addCell(cellCurrentYrSem);
+				tableSemester.completeRow();
+				
+					if(! semester.getStudentStatus().getHistory().trim().equals(""))
+					{
+					PdfPCell	cellCurrentSemHistory		=	setTableCell(semester.getStudentStatus().getHistory() ,Rectangle.NO_BORDER,setFont_02());
+								cellCurrentSemHistory.setColspan(5);
+					tableSemester.addCell(cellCurrentSemHistory);
+					tableSemester.completeRow();
+					}
+					break;
+				}
+				
+				for(RegistrationBO reg: registrations)
+				{
+					tableSemester.addCell(setTableCell(reg.getGradeSemester().getCourseNo(),PdfPCell.NO_BORDER,setFont_01()));
+					tableSemester.addCell(setTableCell(reg.getGradeSemester().getCourseName(),PdfPCell.NO_BORDER,setFont_01()));
+					PdfPCell	cellRegCourseCredit =	(setTableCell(String.valueOf(reg.getGradeSemester().getCourseCredit()),PdfPCell.NO_BORDER,setFont_01()));
+					cellRegCourseCredit.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					tableSemester.addCell(cellRegCourseCredit);					
+					
+					tableSemester.addCell(setTableCell(" ",PdfPCell.NO_BORDER,setFont_01()));
+					tableSemester.addCell(setTableCell(reg.getlAbrStatus(),PdfPCell.NO_BORDER,setFont_01()));
+					
+					tableSemester.completeRow();
+				}
+				
+				
+				
 				
 				
 /**** Student status ****/		

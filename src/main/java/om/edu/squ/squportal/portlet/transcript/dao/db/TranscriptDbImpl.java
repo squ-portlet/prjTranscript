@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.RegistrationBO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
@@ -277,5 +278,50 @@ public class TranscriptDbImpl implements TranscriptDbDao
 
 		return namedParameterJdbcTemplate.query(SQL_STUDENT_GRADE_LIST, paramMap, rowMapper);
 	}
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getRegistrationList(java.lang.String, java.lang.String)
+	 */
+	public List<RegistrationBO> getRegistrationList(String stdStatCode,  String collegeName)
+	{
+		String	SQL_STUDENT_REG_LIST		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_REG_LIST);
+		RowMapper<RegistrationBO> rowMapper	=	new RowMapper<RegistrationBO>()
+		{
+			
+			@Override
+			public RegistrationBO mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				RegistrationBO	registrationBO	=	new RegistrationBO();
+				StudentStatus	studentStatus	=	new	StudentStatus();
+				GradeSemester	gradeSemester	=	new GradeSemester();
+				
+				studentStatus.setSemesterName(rs.getString(Constants.COST_COL_SEMESTER_NAME));
+				studentStatus.setCourseYear(rs.getInt(Constants.COST_COL_CCYRCD));
+				studentStatus.setHistory(rs.getString(Constants.COST_COL_HISTORY));
+				
+				gradeSemester.setCourseNo(rs.getString(Constants.COST_COL_COURSE_NO));
+				gradeSemester.setCourseName(rs.getString(Constants.COST_COL_COURSE_NAME));
+				gradeSemester.setCourseCredit(rs.getInt(Constants.COST_COL_COURSE_CREDIT));
+				
+				registrationBO.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));
+				
+				registrationBO.setGradeSemester(gradeSemester);
+				registrationBO.setStudentStatus(studentStatus);
+				
+				return registrationBO;
+			}
+		};
+		
+		Map<String,String> paramMap	=	new HashMap<String, String>();
+		paramMap.put("paramStdStatCode", stdStatCode);
+		paramMap.put("paramCollegeName", collegeName);
+		
+		return namedParameterJdbcTemplate.query(SQL_STUDENT_REG_LIST, paramMap, rowMapper);
+		
+	}
+	
+	
 	
 }

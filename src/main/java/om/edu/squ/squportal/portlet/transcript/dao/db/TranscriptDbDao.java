@@ -39,6 +39,7 @@ import java.util.Map;
 import org.springframework.jdbc.core.RowMapper;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.RegistrationBO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
@@ -110,5 +111,20 @@ public interface TranscriptDbDao
 	 * Date    		:	Oct 25, 2018 2:16:38 PM
 	 */
 	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear );
+	
+	/**
+	 * 
+	 * method name  : getRegistrationList
+	 * @param stdStatCode
+	 * @param collegeName
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : List<RegistrationBO>
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Nov 12, 2018 1:53:21 PM
+	 */
+	public List<RegistrationBO> getRegistrationList(String stdStatCode,  String collegeName);
 
 }
