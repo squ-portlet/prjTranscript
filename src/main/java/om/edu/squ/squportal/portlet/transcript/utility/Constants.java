@@ -136,5 +136,6 @@ public interface Constants
 	public static 	String	CONST_UI_STUDENT_INFO								=	"studentInfo";
 	
 	public static 	String	CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_EN				=	"template/pdf/template_transcript_en.pdf";
+	public static 	String	CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_AR				=	"template/pdf/template_transcript_ar.pdf";
 	public static 	String	CONST_FILE_PDF_TEMPLATE_COURSE_EN					=	"template/pdf/template_course_en.pdf";
 }

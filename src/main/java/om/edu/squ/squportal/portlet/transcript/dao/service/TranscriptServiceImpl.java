@@ -78,7 +78,14 @@ public class TranscriptServiceImpl implements TranscriptServiceDao
 		OutputStream			outputStream	=	null;
 		//TranscriptPdfImpl		transcriptPdf	=	new TranscriptPdfImpl();
 		
-			resource		=	new ClassPathResource(Constants.CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_EN);
+			if(locale.getLanguage().equals("en"))
+				{
+					resource		=	new ClassPathResource(Constants.CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_EN);
+				}
+			else
+				{
+					resource		=	new ClassPathResource(Constants.CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_AR);
+				}
 			inputStream		=	resource.getInputStream();
 			outputStream	=	transcriptPdf.getPdfTranscript(studentNo, stdStatCode, collegeName, byos, inputStream, res, locale);
 		
