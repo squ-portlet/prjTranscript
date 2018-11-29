@@ -87,6 +87,7 @@ public interface TranscriptDbDao
 	 * @param studentNo TODO
 	 * @param stdStatCode
 	 * @param collegeName
+	 * @param locale TODO
 	 * @return
 	 * TranscriptDbDao
 	 * return type  : List<StudentStatus>
@@ -95,7 +96,7 @@ public interface TranscriptDbDao
 	 *
 	 * Date    		:	Oct 15, 2018 12:49:47 PM
 	 */
-	public List<StudentStatus>	getStudentStatusList(String studentNo, String stdStatCode, String collegeName);
+	public List<StudentStatus>	getStudentStatusList(String studentNo, String stdStatCode, String collegeName, Locale locale);
 	
 	/**
 	 * 
@@ -103,6 +104,7 @@ public interface TranscriptDbDao
 	 * @param studentNo
 	 * @param semester
 	 * @param courseYear
+	 * @param locale TODO
 	 * @return
 	 * TranscriptDbDao
 	 * return type  : List<GradeSemester>
@@ -111,7 +113,7 @@ public interface TranscriptDbDao
 	 *
 	 * Date    		:	Oct 25, 2018 2:16:38 PM
 	 */
-	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear );
+	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear, Locale locale );
 	
 	/**
 	 * 

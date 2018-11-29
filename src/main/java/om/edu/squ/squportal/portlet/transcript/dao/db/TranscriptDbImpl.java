@@ -201,9 +201,9 @@ public class TranscriptDbImpl implements TranscriptDbDao
 	
 	/*
 	 * (non-Javadoc)
-	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudentStatusList(java.lang.String, java.lang.String)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudentStatusList(java.lang.String, java.lang.String, java.lang.String, java.util.Locale)
 	 */
-	public List<StudentStatus>	getStudentStatusList(final String studentNo, String stdStatCode,  String collegeName)
+	public List<StudentStatus>	getStudentStatusList(final String studentNo, String stdStatCode,  String collegeName, final Locale locale)
 	{
 		String	SQL_STUDENT_STATUS_LIST		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_STATUS_LIST);
 		
@@ -229,7 +229,7 @@ public class TranscriptDbImpl implements TranscriptDbDao
 								studentStatus.setHonorDistinction(rs.getString(Constants.COST_COL_HON_DIST));
 								studentStatus.setExcellentList(rs.getString(Constants.COST_COL_EXCLIST));
 								studentStatus.setHistory(rs.getString(Constants.COST_COL_HISTORY));
-								studentStatus.setGradeSemesters(getStudentGradeList(studentNo,String.valueOf(rs.getInt(Constants.COST_COL_SEMCD)) , rs.getInt(Constants.COST_COL_CCYRCD)));
+								studentStatus.setGradeSemesters(getStudentGradeList(studentNo,String.valueOf(rs.getInt(Constants.COST_COL_SEMCD)) , rs.getInt(Constants.COST_COL_CCYRCD), locale));
 								
 				return studentStatus;
 			}
@@ -237,6 +237,7 @@ public class TranscriptDbImpl implements TranscriptDbDao
 		
 		
 		Map<String,String> paramMap	=	new HashMap<String, String>();
+		paramMap.put("paramLocale", locale.getLanguage());
 		paramMap.put("paramStdStatCode", stdStatCode);
 		paramMap.put("paramCollegeName", collegeName);
 		
@@ -247,9 +248,9 @@ public class TranscriptDbImpl implements TranscriptDbDao
 	
 	/*
 	 * (non-Javadoc)
-	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudentGradeList(java.lang.String, java.lang.String, int)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#getStudentGradeList(java.lang.String, java.lang.String, int, java.util.Locale)
 	 */
-	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear )
+	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear, Locale locale )
 	{
 		String	SQL_STUDENT_GRADE_LIST		=	queryProps.getProperty(Constants.CONST_SQL_STUDENT_GRADE_LIST);
 		RowMapper<GradeSemester> 	rowMapper	=	new RowMapper<GradeSemester>()
@@ -276,6 +277,7 @@ public class TranscriptDbImpl implements TranscriptDbDao
 		paramMap.put("paramStdNo", studentNo);
 		paramMap.put("paramSemester", semester);
 		paramMap.put("paramCourseYear", String.valueOf(courseYear));
+		paramMap.put("paramLocale", locale.getLanguage());
 
 		return namedParameterJdbcTemplate.query(SQL_STUDENT_GRADE_LIST, paramMap, rowMapper);
 	}

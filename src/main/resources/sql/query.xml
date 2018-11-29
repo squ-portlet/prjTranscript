@@ -148,10 +148,22 @@
 					,	SSS.SEMCD											AS		SEMCD
 					,	SSS.GRADEPTS										AS		GRADE_PTS								
 					,	SSS.CUMGRADEPTS										AS		CUM_GRADE_PTS
-					,	SEM.SEMNM											AS		SEMESTER_NAME
+		            ,	DECODE(
+		                        :paramLocale
+		                    ,   'en', SEM.SEMNM
+		                    ,   SEM.A_SEMNM
+		                  )                     							AS		SEMESTER_NAME
 					,	SSS.CUMCREDITSTAKEN									AS		CUM_CREDITS_TAKEN
-					,	SC.CODENM											AS		SEMESTER_LOAD_STATUS 			
-					,	SC1.CODENM											AS		STD_LOAD_STAT 
+					, 	DECODE(
+                        	:paramLocale
+                     		,  'en', SC.CODENM
+                     		,  SC.A_CODENM
+                  		)                       							AS		SEMESTER_LOAD_STATUS  			
+					 , DECODE(
+                        	:paramLocale
+                     		,  'en', SC1.CODENM
+                     		,  SC1.A_CODENM
+                  		)                       							AS		STD_LOAD_STAT 
 					,	NVL(SC2.CODENM, ' ') 								AS		HON_DIST
 					,	NVL(SC3.CODENM, ' ') 								AS		EXCLIST 
 					,	MISC_PKG.STD_DEGREE_HISTORY(
@@ -180,8 +192,12 @@
 	    
 	<entry key="transcript.select.student.grade.list">
 			SELECT 
-							SG.L_ABR_CRSNO									AS		COURSE_NO
-						, 	RTRIM(CRS.CRSLNM, '       ') 					AS		COURSE_NAME
+						  SG.L_ABR_CRSNO									AS		COURSE_NO
+					  ,   DECODE(
+                    		    	  	:paramLocale
+                      				,   'en', RTRIM(CRS.CRSLNM, '       ') 					
+                      				,   TRIM(CRS.A_CRSLNM)
+                      			)                       					AS 		COURSE_NAME
 						, 	CRS.CRSCRED										AS		COURSE_CREDIT
 						,   REG_PKG.WAS_FSP(
 													:paramStdNo
