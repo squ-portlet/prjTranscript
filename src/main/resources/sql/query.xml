@@ -48,6 +48,8 @@
 								)											AS		DEGREE_NAME
 					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
 					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
+					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO')			AS		ADVISOR01_EMP_NAME
+					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO')			AS		ADVISOR02_EMP_NAME
 					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
 					,	VSP.ACTIVE											AS		ACTIVE
 			FROM
@@ -100,6 +102,13 @@
 									,	'ar',	VSP.A_SPECNAME
 									,	VSP.SPECNAME
 								)											AS		SPEC_NAME
+					,	MISC_PKG.CERT_INFO(VSP.STDNO,'CERTTYPE')			AS		SCHOOL_CERT_TYPE	
+					,	MISC_PKG.CERT_INFO(VSP.STDNO,'STREAM')				AS		SCHOOL_STREAM
+					,	NVL(
+							TO_CHAR(
+									MISC_PKG.STD_SCH_PERCENT(VSP.STDNO,'PERC')
+									)
+							,	' ')										AS		SCHOOL_PERC												
 					,	VSP.DEG_NUMBER										AS		DEGREE_NUMBER
 					,	DECODE	(
 									:paramLocale
@@ -108,6 +117,8 @@
 								)											AS		DEGREE_NAME
 					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
 					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
+					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO')			AS		ADVISOR01_EMP_NAME
+					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO')			AS		ADVISOR02_EMP_NAME
 					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
 			        , 	DECODE (
 			                    	:paramLocale
@@ -137,10 +148,22 @@
 					,	SSS.SEMCD											AS		SEMCD
 					,	SSS.GRADEPTS										AS		GRADE_PTS								
 					,	SSS.CUMGRADEPTS										AS		CUM_GRADE_PTS
-					,	SEM.SEMNM											AS		SEMESTER_NAME
+		            ,	DECODE(
+		                        :paramLocale
+		                    ,   'en', SEM.SEMNM
+		                    ,   SEM.A_SEMNM
+		                  )                     							AS		SEMESTER_NAME
 					,	SSS.CUMCREDITSTAKEN									AS		CUM_CREDITS_TAKEN
-					,	SC.CODENM											AS		SEMESTER_LOAD_STATUS 			
-					,	SC1.CODENM											AS		STD_LOAD_STAT 
+					, 	DECODE(
+                        	:paramLocale
+                     		,  'en', SC.CODENM
+                     		,  SC.A_CODENM
+                  		)                       							AS		SEMESTER_LOAD_STATUS  			
+					 , DECODE(
+                        	:paramLocale
+                     		,  'en', SC1.CODENM
+                     		,  SC1.A_CODENM
+                  		)                       							AS		STD_LOAD_STAT 
 					,	NVL(SC2.CODENM, ' ') 								AS		HON_DIST
 					,	NVL(SC3.CODENM, ' ') 								AS		EXCLIST 
 					,	MISC_PKG.STD_DEGREE_HISTORY(
@@ -169,8 +192,12 @@
 	    
 	<entry key="transcript.select.student.grade.list">
 			SELECT 
-							SG.L_ABR_CRSNO									AS		COURSE_NO
-						, 	RTRIM(CRS.CRSLNM, '       ') 					AS		COURSE_NAME
+						  SG.L_ABR_CRSNO									AS		COURSE_NO
+					  ,   DECODE(
+                    		    	  	:paramLocale
+                      				,   'en', RTRIM(CRS.CRSLNM, '       ') 					
+                      				,   TRIM(CRS.A_CRSLNM)
+                      			)                       					AS 		COURSE_NAME
 						, 	CRS.CRSCRED										AS		COURSE_CREDIT
 						,   REG_PKG.WAS_FSP(
 													:paramStdNo
@@ -203,5 +230,55 @@
 					AND SG.SEMCD =  :paramSemester  
 					AND SG.STDNO =  :paramStdNo
 			ORDER BY SG.L_ABR_CRSNO	
-	</entry>	    
+	</entry>
+	<entry key="transcript.select.student.registration">
+			SELECT 
+					DISTINCT 
+							SEM.SEMNM 										AS		SEMESTER_NAME
+						,	CYS.CCYRCD 										AS		CCYRCD
+						,	VS.L_ABR_STATUS 								AS		L_ABR_STATUS
+						,	SS.L_ABR_CRSNO 									AS		COURSE_NO
+						,	CB.CRSLNM 										AS		COURSE_NAME
+						,	CB.CRSCRED 										AS		COURSE_CREDIT
+						,	MISC_PKG.STD_DEGREE_HISTORY(
+																VS.STDSTATCD
+															, 	CYS.CCYRCD
+															, 	CYS.SEMCD
+															, 	:paramCollegeName
+														) 					AS		HISTORY
+			FROM 
+						SCHED_STD 			SS
+					,	SECT 				S
+					,	CRS_BASIC 			CB
+					,	V_STD 				VS
+					,	SEM					SEM
+					,	CURRENT_YR_SEM 		CYS
+			WHERE 
+						VS.L_ABR_STATUS IN ('REG','SUSP','PEND')
+					AND S.CCYRCD           = CYS.CCYRCD
+					AND S.SEMCD            = CYS.SEMCD
+					AND SEM.SEMCD          = S.SEMCD
+					AND S.CRSNO            = SS.CRSNO
+					AND S.SECTCD           = SS.SECTCD
+					AND VS.STDNO           = SS.STDNO
+					AND CB.CRSNO           = SS.CRSNO
+					AND VS.STDSTATCD       = :paramStdStatCode
+			ORDER BY SS.L_ABR_CRSNO
+	</entry>
+	
+	<entry key="transcript.select.student.postpone.list">
+			SELECT  
+						 SUBSTR(SP.FROMCCYRCD,3,2) ||' '||S1.L_ABR_SEM 		FROM_YRSEM
+					, 	 SUBSTR(SP.TOCCYRCD,3,2) ||' '||S2.L_ABR_SEM 		TO_YRSEM
+					,	 TO_CHAR(SP.UPDDTE, 'DD/MM/YYYY') 					PST_DATE 
+			FROM 
+						STD_POSTPONE 	SP
+					, 	SEM 			S1
+					,	SEM 			S2 
+			WHERE 
+						SP.FROMSEMCD 	= 	S1.SEMCD 
+					AND SP.TOSEMCD		=	S2.SEMCD 
+					AND SP.STDSTATCD 	=  :paramStdStatCode
+	</entry>
+		    
 </properties>

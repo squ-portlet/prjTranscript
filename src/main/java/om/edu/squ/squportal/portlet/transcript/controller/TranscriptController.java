@@ -189,33 +189,10 @@ public class TranscriptController
 									, 	Locale	locale
 							  ) throws IOException, DocumentException
 	{
-		
-		logger.info("request attributes : "+request.getAttributeNames());
-		logger.info("request parameters : "+request.getParameterNames());
+
 		
 		org.springframework.http.HttpHeaders	httpHeaders	=	new org.springframework.http.HttpHeaders();
-		
-		while (!request.getAttributeNames().hasMoreElements())
-		{
-			String attributeName = request.getAttributeNames().nextElement();
-			logger.info(" Request attributeName : {}",attributeName);
-		}
-		
-		
-		logger.info("Parameters:" + Collections.list(request.getParameterNames()));
-		
-		while (!request.getParameterNames().hasMoreElements())
-		{
-			String parameterName = request.getParameterNames().nextElement();
-			logger.info(" Request parameterName : {}",parameterName);
-		}
-		
-		
-		
-		logger.info("student : "+student);
-		//logger.info("stdStatCode : {} ",stdStatCode);
-		logger.info("stdStatCode : {} ",student.getStdStatCode());
-		
+
 		ByteArrayOutputStream	byos			=	new ByteArrayOutputStream();
 		OutputStream			outputStream	=	transcriptService.getPdfTranscript(student.getStudentNo(), student.getStdStatCode(), student.getCollegeName(), byos, response, locale);
 		response.setContentType("application/pdf");

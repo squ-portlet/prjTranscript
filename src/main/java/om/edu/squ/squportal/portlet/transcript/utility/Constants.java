@@ -52,6 +52,8 @@ public interface Constants
 	public	static	final	String	CONST_SQL_STUDENT_DETAIL					=	"transcript.select.student.details";
 	public	static	final	String	CONST_SQL_STUDENT_STATUS_LIST				=	"transcript.select.student.status.list";
 	public	static	final	String	CONST_SQL_STUDENT_GRADE_LIST				=	"transcript.select.student.grade.list";
+	public	static	final	String	CONST_SQL_STUDENT_REG_LIST					=	"transcript.select.student.registration";
+	public static	final	String	CONST_SQL_STUDENT_POSTPONE_LIST				=	"transcript.select.student.postpone.list";
 	
 	/******************************************************/
 	
@@ -77,10 +79,18 @@ public interface Constants
 	public static final	String	COST_COL_DEGREE_NAME							=	"DEGREE_NAME";
 	public static final	String	COST_COL_ADVISOR01_EMP_NO						=	"ADVISOR01_EMP_NO";
 	public static final	String	COST_COL_ADVISOR02_EMP_NO						=	"ADVISOR02_EMP_NO";
+	public static final	String	COST_COL_ADVISOR01_EMP_NAME						=	"ADVISOR01_EMP_NAME";
+	public static final	String	COST_COL_ADVISOR02_EMP_NAME						=	"ADVISOR02_EMP_NAME";
 	public static final	String	COST_COL_L_ABR_STATUS							=	"L_ABR_STATUS";
 	public static final	String	COST_COL_STATUS_NAME							=	"STATUS_NAME";
 	public static final	String	COST_COL_TOTAL_CREDITS_TAKEN					=	"TOTAL_CREDITS_TAKEN";
 	public static final	String	COST_COL_TOTAL_CREDITS_EARNED					=	"TOTAL_CREDITS_EARNED";
+	public static final	String	COST_COL_SCHOOL_CERT_TYPE						=	"SCHOOL_CERT_TYPE";
+	public static final	String	COST_COL_SCHOOL_STREAM							=	"SCHOOL_STREAM";
+	public static final	String	COST_COL_SCHOOL_PERC							=	"SCHOOL_PERC";
+	
+	
+	
 	public static final	String	COST_COL_ACTIVE									=	"ACTIVE";
 	
 	public static final	String	COST_COL_SEM_GPA								=	"SEM_GPA";
@@ -111,6 +121,12 @@ public interface Constants
 	public static final	String	COST_COL_REPEATED								=	"REPEATED";
 	
 	
+	public static final	String	COST_COL_FROM_YRSEM								=	"FROM_YRSEM";
+	public static final	String	COST_COL_TO_YRSEM								=	"TO_YRSEM";
+	public static final	String	COST_COL_PST_DATE								=	"PST_DATE";
+	
+	
+	
 	
 	/******************************************************/
 	
@@ -120,5 +136,9 @@ public interface Constants
 	public static 	String	CONST_UI_STUDENT_INFO								=	"studentInfo";
 	
 	public static 	String	CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_EN				=	"template/pdf/template_transcript_en.pdf";
+	public static 	String	CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_AR				=	"template/pdf/template_transcript_ar.pdf";
 	public static 	String	CONST_FILE_PDF_TEMPLATE_COURSE_EN					=	"template/pdf/template_course_en.pdf";
+	
+	public static 	String	CONST_FILE_FONT_ARIALUNI_REGULAR					=	"template/pdf/font/ARIALUNI.TTF";
+	
 }
