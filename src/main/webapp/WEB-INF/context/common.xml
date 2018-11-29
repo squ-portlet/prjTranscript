@@ -76,13 +76,13 @@
  
 	
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
-    	<property name="jndiName" value="java:comp/env/jdbc/pool/DSSISPORTAL"/> 
+    	<property name="jndiName" value="java:comp/env/jdbc/pool/siscl"/> 
  	</bean> 
 	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">  
 		<constructor-arg ref="dataSource"></constructor-arg>  
 	</bean>
 
- 
+
  	
 
 

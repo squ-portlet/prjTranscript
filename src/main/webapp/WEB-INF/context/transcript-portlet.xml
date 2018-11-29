@@ -44,9 +44,9 @@
 		<property name="queryProps" ref="queryProps" />
 
  	</bean>	 
-
-	<bean id="transcriptPdfDao"	class="om.edu.squ.squportal.portlet.transcript.dao.pdf.TranscriptPdfImpl" scope="prototype"/>
  
 	<bean id="transcriptService"	class="om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceImpl"/>
+	<bean id="transcriptPdf"	class="om.edu.squ.squportal.portlet.transcript.dao.pdf.TranscriptPdfImpl" scope="prototype" />
+	
  </beans>
  

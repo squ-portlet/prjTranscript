@@ -30,13 +30,24 @@
 <%@ taglib prefix="form"    uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+
+
 <script type="text/javascript">
 
 	$(function(){
+		
+
+		
+		
 		$(document).on('click','#bttnSearch',function(event){
 			event.preventDefault();
 			var varStudentId			=	$('#txtStudentId').val();
-			var	varStudentDTO	 	=	{studentId :  varStudentId };
+			var	varStudentDTO	 		=	{studentId :  varStudentId };
+			
+			
+			
+			
 			
 			$.ajax({
 				url		:	"${urlSummary}",
@@ -69,14 +80,153 @@
 
 				}
 			});
+			
+			
+			
 		});
+
+
+$(document).on('click','.bttnClsTranscriptDownload',function(event){
+	$('#idIfrTranscript').contents().find('body').html('<h3>Please Wait ..</h3>');
+	$('#idIfrTranscript').show();
+	$('#idIfrTranscript').attr('src',this.getAttribute("aurl"));
+});
+
+
+
+		/* Transcript  - idIfrTranscript*/
+/*
+		$(document).on('click','.bttnClsTranscriptDownload',function(event){
+
+			var	varStdStatCode		=	this.getAttribute("stdStatCode");
+			var varStudentDTO		= 	JSON.stringify({stdStatCode:varStdStatCode});
+			console.log ("varStudentDTO : "+varStudentDTO);
+			var student					=	{
+					stdStatCode:varStdStatCode
+				};
+			
+			console.log ("student : "+student);
+			
+			 var oReq = new XMLHttpRequest();
+			    oReq.open('POST', '${urlPdfTranscript}', true);
+			    oReq.setRequestHeader("Content-Type", "application/json");
+			    oReq.setRequestHeader("Content-length", varStudentDTO.length);
+			    oReq.setRequestHeader("Connection", "close");
+			    
+			    oReq.responseType = "blob";
+			    
+			    oReq.onload = function(oEvent) {
+			        var blob = oReq.response;
+			        console.log
+			        var link=document.createElement('a');
+			        link.href=window.URL.createObjectURL(blob);
+			        link.download="transcript.pdf";
+			        link.click();
+			    };
+
+			    oReq.send(varStudentDTO);
+
+		});
+		
+*/		
+		
+
+		/* Transcript */
+		$(document).on('click','.bttnClsTranscriptDownload_TODO',function(event){
+			//event.preventDefault();
+			var	varStdStatCode		=	this.getAttribute("stdStatCode");
+			var varStudentDTO		= 	{stdStatCode:varStdStatCode};
+			console.log ("statcode : "+varStdStatCode);
+			
+			var student					=	{
+					stdStatCode:varStdStatCode
+				};
+			$.ajaxSetup({
+					beforeSend:function(jqHHR, settings)
+					{
+						//settings.xhr().responseType='arraybuffer';
+						settings.xhr().responseType='blob';
+						settings.processData=false;
+					}
+				
+			});
+			
+			
+			$.ajax({
+				url		:	"${urlPdfTranscript}",
+				type	:	'GET',
+				cache	:	false,
+				data	:	varStudentDTO,
+				//dataType:	"binary",
+				success	:	function(data)
+				{
+					console.log('Inside success');
+					 console.log("data : "+data); //ArrayBuffer
+					 console.log("Blob : "+new Blob([data])) // Blob
+					/* 
+					 * https://stackoverflow.com/questions/1999607/download-and-open-pdf-file-using-ajax
+					 * 
+					 * http://danml.com/download.html
+					 * 
+					 */
+					 
+					  
+				//	 var blob=new Blob([data], {type: 'application/pdf'}) ;
+				   /*
+					 var link=document.createElement('a');
+				    link.href=window.URL.createObjectURL(blob);
+				    link.download="transcript"+ new Date() +".pdf";
+				    link.click();
+				    */
+			/*		 
+					 var fileURL = URL.createObjectURL(blob);
+					 console.log("fileURL : "+fileURL);
+	                    var newWin = window.open(fileURL);
+	                    newWin.focus();
+	                    newWin.reload();
+	         */
+				    
+				},
+				error : function(xhr, status, error)
+				{
+					console.log('Inside error : xhr : '+xhr);
+					console.log('Inside error : status : '+status);
+					console.log('Inside error : error : '+error);
+				}
+			});
+			
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		
+		var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+xmlhttp.open("POST", "/json-handler");
+xmlhttp.setRequestHeader("Content-Type", "application/json");
+xmlhttp.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
+		
+		
+		*/
+		
+		
+		
+		
+		
 		
 		
 		
 		/* Handlebar data load */		
 		function dataLoad(dataJson, hbTemplateId, tableId)
 		{
-			event.preventDefault();
+			//event.preventDefault();
 			if ($.trim(dataJson))
 			{
 				var theAlertTemplate=$(hbTemplateId).html();
@@ -90,7 +240,7 @@
 		/* Handlebar data load */		
 		function dataLoadHtml(dataJson, hbTemplateId)
 		{
-			event.preventDefault();
+			//event.preventDefault();
 			if ($.trim(dataJson))
 			{
 				var theAlertTemplate=$(hbTemplateId).html();

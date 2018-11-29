@@ -29,10 +29,21 @@
  */
 package om.edu.squ.squportal.portlet.transcript.dao.db;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import org.springframework.jdbc.core.RowMapper;
+
+import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.Postpone;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.RegistrationBO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
+import om.edu.squ.squportal.portlet.transcript.utility.Constants;
 
 /**
  * @author Bhabesh
@@ -54,4 +65,83 @@ public interface TranscriptDbDao
 	 * Date    		:	Aug 13, 2018 10:45:54 AM
 	 */
 	public List<Student> getStudentList(String studentId, Locale locale);
+	
+	/**
+	 * 
+	 * method name  : getStudent
+	 * @param stdStatCode
+	 * @param locale
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : Student
+	 * 
+	 * purpose		:	Get student details of particular degree
+	 *
+	 * Date    		:	Sep 5, 2018 3:59:42 PM
+	 */
+	public Student getStudent(String stdStatCode, Locale locale);
+	
+	/**
+	 * 	
+	 * method name  : getStudentStatusList
+	 * @param studentNo TODO
+	 * @param stdStatCode
+	 * @param collegeName
+	 * @param locale TODO
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : List<StudentStatus>
+	 * 
+	 * purpose		: Get Status of student
+	 *
+	 * Date    		:	Oct 15, 2018 12:49:47 PM
+	 */
+	public List<StudentStatus>	getStudentStatusList(String studentNo, String stdStatCode, String collegeName, Locale locale);
+	
+	/**
+	 * 
+	 * method name  : getStudentGradeList
+	 * @param studentNo
+	 * @param semester
+	 * @param courseYear
+	 * @param locale TODO
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : List<GradeSemester>
+	 * 
+	 * purpose		: 
+	 *
+	 * Date    		:	Oct 25, 2018 2:16:38 PM
+	 */
+	public List<GradeSemester>  getStudentGradeList(String studentNo, String semester, int courseYear, Locale locale );
+	
+	/**
+	 * 
+	 * method name  : getRegistrationList
+	 * @param stdStatCode
+	 * @param collegeName
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : List<RegistrationBO>
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Nov 12, 2018 1:53:21 PM
+	 */
+	public List<RegistrationBO> getRegistrationList(String stdStatCode,  String collegeName);
+	
+	/**
+	 * 
+	 * method name  : getPostponeList
+	 * @param stdStatCode
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : List<Postpone>
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Nov 13, 2018 12:51:26 PM
+	 */
+	public List<Postpone>  getPostponeList(String stdStatCode);
+
 }

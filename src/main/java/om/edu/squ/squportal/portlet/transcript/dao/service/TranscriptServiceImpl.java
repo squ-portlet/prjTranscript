@@ -69,18 +69,25 @@ public class TranscriptServiceImpl implements TranscriptServiceDao
 	
 	/*
 	 * (non-Javadoc)
-	 * @see om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao#getPdfTranscript(java.lang.String, java.io.ByteArrayOutputStream, javax.portlet.ResourceResponse, java.util.Locale)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao#getPdfTranscript(java.lang.String, java.lang.String, java.lang.String, java.io.ByteArrayOutputStream, javax.portlet.ResourceResponse, java.util.Locale)
 	 */
-	public OutputStream getPdfTranscript(String studentId, ByteArrayOutputStream	byos, ResourceResponse res, Locale locale) throws IOException, DocumentException
+	public OutputStream getPdfTranscript(String studentNo, String stdStatCode, String collegeName, ByteArrayOutputStream	byos, ResourceResponse res, Locale locale) throws IOException, DocumentException
 	{
 		Resource				resource		=	null;
 		InputStream				inputStream		=	null;
 		OutputStream			outputStream	=	null;
 		//TranscriptPdfImpl		transcriptPdf	=	new TranscriptPdfImpl();
 		
-			resource		=	new ClassPathResource(Constants.CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_EN);
+			if(locale.getLanguage().equals("en"))
+				{
+					resource		=	new ClassPathResource(Constants.CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_EN);
+				}
+			else
+				{
+					resource		=	new ClassPathResource(Constants.CONST_FILE_PDF_TEMPLATE_TRANSCRIPT_AR);
+				}
 			inputStream		=	resource.getInputStream();
-			outputStream	=	transcriptPdf.getPdfTranscript(studentId, byos, inputStream, res, locale);
+			outputStream	=	transcriptPdf.getPdfTranscript(studentNo, stdStatCode, collegeName, byos, inputStream, res, locale);
 		
 		return outputStream;
 	}
@@ -96,5 +103,9 @@ public class TranscriptServiceImpl implements TranscriptServiceDao
 	}
 	
 	
+	public Student getStudent(String stdStatCode, Locale locale)
+	{
+		return transcriptDbDao.getStudent(stdStatCode, locale);
+	}
 	
 }

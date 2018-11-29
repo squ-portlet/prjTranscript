@@ -34,12 +34,21 @@
 <!-- link href="http://externalcdn.com/respond-proxy.html" id="respond-proxy" rel="respond-proxy" /-->
 
 <portlet:resourceURL id="pdfTranscript" var="urlPdfTranscript"></portlet:resourceURL>
+<portlet:resourceURL id="pdfTranscript" var="urlPdfTranscriptTest">
+	<portlet:param name="stdStatCode" value="860000310"/>
+</portlet:resourceURL>
+
 <portlet:resourceURL id="resSummary" var="urlSummary"></portlet:resourceURL>
 
 <%@include file="ui/cssWelcome.jsp" %>
+<%-- 
 <%@include file="ui/js/jsCode.js" %>
 <%@include file="ui/js/transcript.hb.js" %>
+ --%>
 
+<portlet:actionURL var="varSubmitStudentInfo">
+	<portlet:param name="action" value="submitStudentInfo"/>
+</portlet:actionURL>
 
 <div class="panel panel-default container-fluid">
   <div class="panel-heading">
@@ -47,15 +56,16 @@
   </div>
   <div class="panel-body">
     <div class="row">
-    	<form class="form-inline container-fluid">
+    	<form:form modelAttribute="transcriptModel" action="${varSubmitStudentInfo}" htmlEscape="false" method="post" class="form-inline container-fluid" >
     		<div class="form-group">
     			<label for="exampleInputName2">Student Id</label>
-    			<input type="text" class="form-control" id="txtStudentId" placeholder="Student Id">
+    			<form:input path="stdId" placeholder="Student Id" class="form-control" />
+<!--     			<input type="text" class="form-control" id="stdId" placeholder="Student Id"> -->
   			</div>
-    		<button type="button" id="bttnSearch" class="btn btn-default">
+    		<button type="submit" id="bttnSearch" class="btn btn-default">
   				<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search Record
 			</button>
-		</form>
+		</form:form>
 	</div>
   </div>
   
@@ -64,7 +74,7 @@
 </div>
 
 <div id="divStdSummary" class="container-fluid"/>
-
+<a href="${urlPdfTranscriptTest}">test only</a>
 <%-- <div class="col-xs-2"><a href="${urlPdfTranscript}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Transcript</a></div> --%>
 
 

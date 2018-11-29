@@ -39,6 +39,7 @@ public class Student
 	private	String	studentNo;
 	private	String	stdStatCode;
 	private	String	gender;
+	private	String	birthDay;
 	private	int		cohort;
 	private	String	studentName;
 	private	String	collegeCode;
@@ -47,13 +48,23 @@ public class Student
 	private	String	majorName;
 	private	String	minorCode;
 	private	String	minorName;
+	private	String	firstMajor;
+	private	String	firstCollege;
 	private	String	specCode;
 	private	String	specName;
 	private	int		degreeNumber;
 	private	String	degreeName;
 	private	String	empNumberAdvisor;
 	private	String	empNumberAdvisor2;
+	private	String	empNameAdvisor;
+	private	String	empNameAdvisor2;
 	private	String	lAbrStatus;
+	private	String	statusName;
+	private	int		totalCreditTaken;
+	private	int		totalCreditEarned;
+	private	String	schoolCertificateType;
+	private	String	schoolStream;
+	private	String	schoolPercentage;
 	private	boolean	active;
 	/**
 	 * Getter Method	: getStudentId
@@ -124,6 +135,27 @@ public class Student
 	public String getGender()
 	{
 		return this.gender;
+	}
+	
+	/**
+	 * Getter Method	: getBirthDay
+	 * @return the birthDay
+	 * 
+	 * Date				: Aug 27, 2018
+	 */
+	public String getBirthDay()
+	{
+		return this.birthDay;
+	}
+	/**
+	 * Setter method : setBirthDay
+	 * @param birthDay the birthDay to set
+	 * 
+	 * Date          : Aug 27, 2018 9:46:23 AM
+	 */
+	public void setBirthDay(String birthDay)
+	{
+		this.birthDay = birthDay;
 	}
 	/**
 	 * Setter method : setGender
@@ -295,6 +327,47 @@ public class Student
 	{
 		this.minorName = minorName;
 	}
+	
+	/**
+	 * Getter Method	: getFirstMajor
+	 * @return the firstMajor
+	 * 
+	 * Date				: Oct 14, 2018
+	 */
+	public String getFirstMajor()
+	{
+		return this.firstMajor;
+	}
+	/**
+	 * Setter method : setFirstMajor
+	 * @param firstMajor the firstMajor to set
+	 * 
+	 * Date          : Oct 14, 2018 9:37:57 AM
+	 */
+	public void setFirstMajor(String firstMajor)
+	{
+		this.firstMajor = firstMajor;
+	}
+	/**
+	 * Getter Method	: getFirstCollege
+	 * @return the firstCollege
+	 * 
+	 * Date				: Oct 14, 2018
+	 */
+	public String getFirstCollege()
+	{
+		return this.firstCollege;
+	}
+	/**
+	 * Setter method : setFirstCollege
+	 * @param firstCollege the firstCollege to set
+	 * 
+	 * Date          : Oct 14, 2018 9:37:57 AM
+	 */
+	public void setFirstCollege(String firstCollege)
+	{
+		this.firstCollege = firstCollege;
+	}
 	/**
 	 * Getter Method	: getSpecCode
 	 * @return the specCode
@@ -416,6 +489,47 @@ public class Student
 	{
 		this.empNumberAdvisor2 = empNumberAdvisor2;
 	}
+	
+	/**
+	 * Getter Method	: getEmpNameAdvisor
+	 * @return the empNameAdvisor
+	 * 
+	 * Date				: Nov 7, 2018
+	 */
+	public String getEmpNameAdvisor()
+	{
+		return this.empNameAdvisor;
+	}
+	/**
+	 * Setter method : setEmpNameAdvisor
+	 * @param empNameAdvisor the empNameAdvisor to set
+	 * 
+	 * Date          : Nov 7, 2018 8:50:42 AM
+	 */
+	public void setEmpNameAdvisor(String empNameAdvisor)
+	{
+		this.empNameAdvisor = empNameAdvisor;
+	}
+	/**
+	 * Getter Method	: getEmpNameAdvisor2
+	 * @return the empNameAdvisor2
+	 * 
+	 * Date				: Nov 7, 2018
+	 */
+	public String getEmpNameAdvisor2()
+	{
+		return this.empNameAdvisor2;
+	}
+	/**
+	 * Setter method : setEmpNameAdvisor2
+	 * @param empNameAdvisor2 the empNameAdvisor2 to set
+	 * 
+	 * Date          : Nov 7, 2018 8:50:42 AM
+	 */
+	public void setEmpNameAdvisor2(String empNameAdvisor2)
+	{
+		this.empNameAdvisor2 = empNameAdvisor2;
+	}
 	/**
 	 * Getter Method	: getlAbrStatus
 	 * @return the lAbrStatus
@@ -435,6 +549,127 @@ public class Student
 	public void setlAbrStatus(String lAbrStatus)
 	{
 		this.lAbrStatus = lAbrStatus;
+	}
+	/**
+	 * Getter Method	: getStatusName
+	 * @return the statusName
+	 * 
+	 * Date				: Nov 1, 2018
+	 */
+	public String getStatusName()
+	{
+		return this.statusName;
+	}
+	/**
+	 * Setter method : setStatusName
+	 * @param statusName the statusName to set
+	 * 
+	 * Date          : Nov 1, 2018 10:43:47 AM
+	 */
+	public void setStatusName(String statusName)
+	{
+		this.statusName = statusName;
+	}
+	/**
+	 * Getter Method	: getTotalCreditTaken
+	 * @return the totalCreditTaken
+	 * 
+	 * Date				: Nov 4, 2018
+	 */
+	public int getTotalCreditTaken()
+	{
+		return this.totalCreditTaken;
+	}
+	/**
+	 * Setter method : setTotalCreditTaken
+	 * @param totalCreditTaken the totalCreditTaken to set
+	 * 
+	 * Date          : Nov 4, 2018 1:47:54 PM
+	 */
+	public void setTotalCreditTaken(int totalCreditTaken)
+	{
+		this.totalCreditTaken = totalCreditTaken;
+	}
+	/**
+	 * Getter Method	: getTotalCreditEarned
+	 * @return the totalCreditEarned
+	 * 
+	 * Date				: Nov 4, 2018
+	 */
+	public int getTotalCreditEarned()
+	{
+		return this.totalCreditEarned;
+	}
+	/**
+	 * Setter method : setTotalCreditEarned
+	 * @param totalCreditEarned the totalCreditEarned to set
+	 * 
+	 * Date          : Nov 4, 2018 1:47:54 PM
+	 */
+	public void setTotalCreditEarned(int totalCreditEarned)
+	{
+		this.totalCreditEarned = totalCreditEarned;
+	}
+	/**
+	 * Getter Method	: getSchoolCertificateType
+	 * @return the schoolCertificateType
+	 * 
+	 * Date				: Nov 7, 2018
+	 */
+	public String getSchoolCertificateType()
+	{
+		return this.schoolCertificateType;
+	}
+	/**
+	 * Setter method : setSchoolCertificateType
+	 * @param schoolCertificateType the schoolCertificateType to set
+	 * 
+	 * Date          : Nov 7, 2018 2:22:25 PM
+	 */
+	public void setSchoolCertificateType(String schoolCertificateType)
+	{
+		this.schoolCertificateType = schoolCertificateType;
+	}
+	
+	/**
+	 * Getter Method	: getSchoolStream
+	 * @return the schoolStream
+	 * 
+	 * Date				: Nov 7, 2018
+	 */
+	public String getSchoolStream()
+	{
+		return this.schoolStream;
+	}
+	/**
+	 * Setter method : setSchoolStream
+	 * @param schoolStream the schoolStream to set
+	 * 
+	 * Date          : Nov 7, 2018 2:47:30 PM
+	 */
+	public void setSchoolStream(String schoolStream)
+	{
+		this.schoolStream = schoolStream;
+	}
+	/**
+	 * Getter Method	: getSchoolPercentage
+	 * @return the schoolPercentage
+	 * 
+	 * Date				: Nov 7, 2018
+	 */
+	public String getSchoolPercentage()
+	{
+		return this.schoolPercentage;
+	}
+	/**
+	 * Setter method : setSchoolPercentage
+	 * @param schoolPercentage the schoolPercentage to set
+	 * 
+	 * Date          : Nov 7, 2018 2:47:30 PM
+	 */
+	public void setSchoolPercentage(String schoolPercentage)
+	{
+		this.schoolPercentage = schoolPercentage;
 	}
 	/**
 	 * Getter Method	: isActive
@@ -464,18 +699,27 @@ public class Student
 	{
 		return "Student [studentId=" + this.studentId + ", studentNo="
 				+ this.studentNo + ", stdStatCode=" + this.stdStatCode
-				+ ", gender=" + this.gender + ", cohort=" + this.cohort
-				+ ", studentName=" + this.studentName + ", collegeCode="
-				+ this.collegeCode + ", collegeName=" + this.collegeName
-				+ ", majorCode=" + this.majorCode + ", majorName="
-				+ this.majorName + ", minorCode=" + this.minorCode
-				+ ", minorName=" + this.minorName + ", specCode="
+				+ ", gender=" + this.gender + ", birthDay=" + this.birthDay
+				+ ", cohort=" + this.cohort + ", studentName="
+				+ this.studentName + ", collegeCode=" + this.collegeCode
+				+ ", collegeName=" + this.collegeName + ", majorCode="
+				+ this.majorCode + ", majorName=" + this.majorName
+				+ ", minorCode=" + this.minorCode + ", minorName="
+				+ this.minorName + ", firstMajor=" + this.firstMajor
+				+ ", firstCollege=" + this.firstCollege + ", specCode="
 				+ this.specCode + ", specName=" + this.specName
 				+ ", degreeNumber=" + this.degreeNumber + ", degreeName="
 				+ this.degreeName + ", empNumberAdvisor="
 				+ this.empNumberAdvisor + ", empNumberAdvisor2="
-				+ this.empNumberAdvisor2 + ", lAbrStatus=" + this.lAbrStatus
-				+ ", active=" + this.active + "]";
+				+ this.empNumberAdvisor2 + ", empNameAdvisor="
+				+ this.empNameAdvisor + ", empNameAdvisor2="
+				+ this.empNameAdvisor2 + ", lAbrStatus=" + this.lAbrStatus
+				+ ", statusName=" + this.statusName + ", totalCreditTaken="
+				+ this.totalCreditTaken + ", totalCreditEarned="
+				+ this.totalCreditEarned + ", schoolCertificateType="
+				+ this.schoolCertificateType + ", schoolStream="
+				+ this.schoolStream + ", schoolPercentage="
+				+ this.schoolPercentage + ", active=" + this.active + "]";
 	}
 	
 	
