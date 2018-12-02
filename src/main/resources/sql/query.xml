@@ -7,7 +7,11 @@
 						VSP.STD_ID											AS		STD_ID
 					,	VSP.STDNO											AS		STDNO
 					,	VSP.STDSTATCD										AS		STDSTATCD				
-					,	VSP.GENDER											AS		GENDER
+ 		            , 	DECODE (
+		                        	:paramLocale
+		                      	, 'ar', VSP.A_GENDER
+		                      	, VSP.GENDER
+		                  		)                         					AS		GENDER
           			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  				AS 		BIRTH_DAY
 					,	VSP.COHORT											AS		COHORT
 					,	DECODE
@@ -48,8 +52,8 @@
 								)											AS		DEGREE_NAME
 					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
 					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO')			AS		ADVISOR01_EMP_NAME
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO')			AS		ADVISOR02_EMP_NAME
+					,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO'))		AS		ADVISOR01_EMP_NAME
+					,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO'))		AS		ADVISOR02_EMP_NAME
 					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
 					,	VSP.ACTIVE											AS		ACTIVE
 			FROM
@@ -67,7 +71,11 @@
 						VSP.STD_ID											AS		STD_ID
 					,	VSP.STDNO											AS		STDNO
 					,	VSP.STDSTATCD										AS		STDSTATCD				
-					,	VSP.GENDER											AS		GENDER
+ 		            , 	DECODE (
+		                        	:paramLocale
+		                      	, 'ar', VSP.A_GENDER
+		                      	, VSP.GENDER
+		                  		)                         					AS		GENDER
           			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  				AS 		BIRTH_DAY
 					,	VSP.COHORT											AS		COHORT
 					,	DECODE
@@ -117,8 +125,8 @@
 								)											AS		DEGREE_NAME
 					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
 					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO')			AS		ADVISOR01_EMP_NAME
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO')			AS		ADVISOR02_EMP_NAME
+					,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO'))		AS		ADVISOR01_EMP_NAME
+					,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO'))		AS		ADVISOR02_EMP_NAME
 					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
 			        , 	DECODE (
 			                    	:paramLocale
@@ -166,12 +174,23 @@
                   		)                       							AS		STD_LOAD_STAT 
 					,	NVL(SC2.CODENM, ' ') 								AS		HON_DIST
 					,	NVL(SC3.CODENM, ' ') 								AS		EXCLIST 
-					,	MISC_PKG.STD_DEGREE_HISTORY(
+					,	DECODE(
+									:paramLocale
+									, 'en', MISC_PKG.STD_DEGREE_HISTORY(
+																				SSS.STDSTATCD
+																			, 	SSS.CCYRCD
+																			, 	SSS.SEMCD
+																			, 	:paramCollegeName
+																		)
+									,	MISC_PKG.STD_DEGREE_HISTORY(
 															SSS.STDSTATCD
 														, 	SSS.CCYRCD
 														, 	SSS.SEMCD
 														, 	:paramCollegeName
-													) 						AS		HISTORY
+														,	'A'
+													) 
+								)											AS		HISTORY
+
 			FROM 
 						STD_STATUS_SEM SSS
 					,	SEM

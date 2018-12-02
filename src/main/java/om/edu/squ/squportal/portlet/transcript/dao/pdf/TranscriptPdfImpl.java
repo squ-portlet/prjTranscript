@@ -207,7 +207,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 									/* Major Display */
 									if(null != stdStatus.getHistory() && !stdStatus.getHistory().trim().equals(""))
 									{
-										PdfPCell	cellStatusHistory	=	setTableCell(stdStatus.getHistory(),Rectangle.NO_BORDER,setFont_02());
+										PdfPCell	cellStatusHistory	=	setTableCell(stdStatus.getHistory(),Rectangle.NO_BORDER,setFont_03());
 												cellStatusHistory.setColspan(5);
 										tableSemester.addCell(cellStatusHistory);
 										tableSemester.completeRow();
@@ -359,12 +359,12 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				
 
 				
-				PdfPCell	cellTotalGradePoints = setTableCell(UtilProperty.getMessage("prop.transcript.total.grade.points.text", null, locale)+gradePointCommulative,Rectangle.NO_BORDER,setFont_04());
+				PdfPCell	cellTotalGradePoints = setTableCell(UtilProperty.getMessage("prop.transcript.total.grade.points.text", null, locale)+gradePointCommulative,Rectangle.NO_BORDER,setFont_01());
 							cellTotalGradePoints.setBorder(PdfPCell.BOTTOM);
 							cellTotalGradePoints.setColspan(2);
 							tableSemester.addCell(cellTotalGradePoints);
 				
-				PdfPCell	cellTotalCreditsAttemped = setTableCell(student.getTotalCreditTaken()+"\n"+UtilProperty.getMessage("prop.transcript.total.credits.attempted.text", null, locale),Rectangle.NO_BORDER,setFont_04());
+				PdfPCell	cellTotalCreditsAttemped = setTableCell(student.getTotalCreditTaken()+"\n"+UtilProperty.getMessage("prop.transcript.total.credits.attempted.text", null, locale),Rectangle.NO_BORDER,setFont_01());
 							if(locale.getLanguage().equals("en"))
 							{
 								cellTotalCreditsAttemped.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -372,7 +372,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 							cellTotalCreditsAttemped.setBorder(PdfPCell.BOTTOM);
 							tableSemester.addCell(cellTotalCreditsAttemped);
 							
-				PdfPCell	cellTotalCreditsEarned = setTableCell(student.getTotalCreditEarned()+"\n"+UtilProperty.getMessage("prop.transcript.total.credits.earned.text", null, locale),Rectangle.NO_BORDER,setFont_04());
+				PdfPCell	cellTotalCreditsEarned = setTableCell(student.getTotalCreditEarned()+"\n"+UtilProperty.getMessage("prop.transcript.total.credits.earned.text", null, locale),Rectangle.NO_BORDER,setFont_01());
 							if(locale.getLanguage().equals("en"))
 							{
 								cellTotalCreditsEarned.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -392,7 +392,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				tableSemester.completeRow();
 				
 				
-				PdfPCell	cellTextNoGradeEntry = setTableCell(UtilProperty.getMessage("prop.transcript.no.grade.entries.after.text", null, locale),Rectangle.NO_BORDER,setFont_02());
+				PdfPCell	cellTextNoGradeEntry = setTableCell(UtilProperty.getMessage("prop.transcript.no.grade.entries.after.text", null, locale),Rectangle.NO_BORDER,setFont_03());
 							cellTextNoGradeEntry.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cellTextNoGradeEntry.setColspan(5);
 				tableSemester.addCell(cellTextNoGradeEntry);
@@ -468,7 +468,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				tableSemester.addCell(cellBlankNoBorder);
 				tableSemester.completeRow();
 				
-				PdfPCell	cellTextStudentStatus = setTableCell(UtilProperty.getMessage("prop.transcript.student.status.text", null, locale),Rectangle.NO_BORDER,setFont_04());
+				PdfPCell	cellTextStudentStatus = setTableCell(UtilProperty.getMessage("prop.transcript.student.status.text", null, locale),Rectangle.NO_BORDER,setFont_01());
 							cellTextStudentStatus.setColspan(2);
 							tableSemester.addCell(cellTextStudentStatus);
 
@@ -489,7 +489,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				tableSemester.addCell(cellBlankNoBorder);
 				tableSemester.completeRow();
 
-				PdfPCell	cellTextEndOfTranscript = setTableCell(UtilProperty.getMessage("prop.transcript.end.transcript.text", null, locale),Rectangle.NO_BORDER,setFont_04());
+				PdfPCell	cellTextEndOfTranscript = setTableCell(UtilProperty.getMessage("prop.transcript.end.transcript.text", null, locale),Rectangle.NO_BORDER,setFont_01());
 				cellTextEndOfTranscript.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cellTextEndOfTranscript.setColspan(5);
 				tableSemester.addCell(cellTextEndOfTranscript);
@@ -502,7 +502,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 
 				
 /******* KEY  ****/	
-				PdfPCell	cellTextKeys = setTableCell(UtilProperty.getMessage("prop.transcript.key.text", null, locale),Rectangle.NO_BORDER,setFont_04());
+				PdfPCell	cellTextKeys = setTableCell(UtilProperty.getMessage("prop.transcript.key.text", null, locale),Rectangle.NO_BORDER,setFont_01());
 							cellTextKeys.setColspan(5);
 							tableSemester.addCell(cellTextKeys);
 							tableSemester.completeRow();
@@ -657,7 +657,15 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
             ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_03, x, y-30, 0);
             
             PdfPTable			tableHeader_01		=	new	PdfPTable(6);
-    		tableHeader_01.setWidths(new int[]{3,7,3,7,3,7});
+            tableHeader_01.setWidths(new int[]{3,7,3,7,3,7});
+            if(!locale.getLanguage().equals("en"))
+            {
+            	tableHeader_01.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+            	tableHeader_01.setWidths(new int[]{7,3,7,3,7,3});
+            }
+            
+    		
+    		
     		Rectangle recHeaderSize_01 = new Rectangle(0,650,600,725);
    		
             
@@ -753,7 +761,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
             ColumnText.showTextAligned(	
             									stamper.getOverContent(i)
             								, 	Element.ALIGN_CENTER
-            								, 	new Phrase(UtilProperty.getMessage("prop.transcript.footer.page.number", null, locale)+i+"/"+reader.getNumberOfPages(), new Font(bFontReg, 8))
+            								, 	new Phrase(UtilProperty.getMessage("prop.transcript.footer.page.number", null, locale)+" "+i+"/"+reader.getNumberOfPages(), new Font(bFontReg, 8))
             								, 	x
             								, 	y
             								, 	0
