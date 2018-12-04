@@ -35,9 +35,11 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceResponse;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
 
 import com.itextpdf.text.DocumentException;
 
@@ -98,4 +100,18 @@ public interface TranscriptServiceDao
 	 * Date    		:	Sep 5, 2018 4:12:09 PM
 	 */
 	public Student getStudent(String stdStatCode, Locale locale);
+	
+	/**
+	 * 
+	 * method name  : getUser
+	 * @param request
+	 * @return
+	 * TranscriptServiceImpl
+	 * return type  : User
+	 * 
+	 * purpose		:  Get User
+	 *
+	 * Date    		:	Dec 3, 2018 12:46:39 PM
+	 */
+	public User getUser(PortletRequest request);
 }

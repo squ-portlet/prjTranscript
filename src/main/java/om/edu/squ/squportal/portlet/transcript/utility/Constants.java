@@ -35,6 +35,12 @@ package om.edu.squ.squportal.portlet.transcript.utility;
  */
 public interface Constants
 {
+	/************* USER TYPE ******************************/
+	public static String	USER_TYPE_STUDENT									=	"student";
+	public static String	USER_TYPE_EMPLOYEE									=	"employee";
+	/******************************************************/
+	
+	
 	/**********LDAP***************************************/
 	public	static	String	LDAP_COMMON_NAME									=	"cn";
 	public	static	String	LDAP_EMPLOYEE_NUMBER								=	"employeenumber"; 

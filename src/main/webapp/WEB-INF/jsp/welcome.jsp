@@ -60,7 +60,7 @@
     		<div class="form-group">
     			<c:set var="varTxtStdId" value='<spring:message code="prop.transcript.label.stdudent.id" />'></c:set>
     			<label for="exampleInputName2"><spring:message code="prop.transcript.label.stdudent.id" /></label>
-    			<form:input path="stdId" placeholder='${varTxtStdId}' class="form-control" />
+    			<form:input path="stdId" class="form-control" />
 <!--     			<input type="text" class="form-control" id="stdId" placeholder="Student Id"> -->
   			</div>
     		<button type="submit" id="bttnSearch" class="btn btn-default">

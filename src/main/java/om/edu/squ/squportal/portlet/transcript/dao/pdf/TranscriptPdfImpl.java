@@ -138,7 +138,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				pdfStamper.getAcroFields().setField("lblFirstMajor", UtilProperty.getMessage("prop.transcript.label.stdudent.major", null, locale));
 				pdfStamper.getAcroFields().setField("lblSchoolCertificateType", UtilProperty.getMessage("prop.transcript.label.stdudent.school.certificate", null, locale));
 				pdfStamper.getAcroFields().setField("lblDegreeName", UtilProperty.getMessage("prop.transcript.label.stdudent.degree.name", null, locale));
-				pdfStamper.getAcroFields().setField("lblDegreeName", UtilProperty.getMessage("prop.transcript.label.stdudent.degree.stream", null, locale));
+				pdfStamper.getAcroFields().setField("lblStream", UtilProperty.getMessage("prop.transcript.label.stdudent.degree.stream", null, locale));
 				pdfStamper.getAcroFields().setField("lblAdvisor", UtilProperty.getMessage("prop.transcript.label.stdudent.advisor", null, locale));
 
 				pdfStamper.getAcroFields().setField("lblCourseNo", UtilProperty.getMessage("prop.transcript.label.course", null, locale));
