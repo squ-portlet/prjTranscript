@@ -32,7 +32,6 @@ package om.edu.squ.squportal.portlet.transcript.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,8 +41,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
