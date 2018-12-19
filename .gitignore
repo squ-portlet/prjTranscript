@@ -1,3 +1,5 @@
 /target/*
 /target/m2e-wtp/web-resources/META-INF/maven/prjTranscript/prjTranscript/pom.xml
 /target/m2e-wtp/web-resources/META-INF/maven/prjTranscript/prjTranscript/pom.properties
+/src/main/webapp/ui/js/download.js
+/target/*
