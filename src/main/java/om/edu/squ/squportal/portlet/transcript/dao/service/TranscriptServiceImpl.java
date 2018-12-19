@@ -36,13 +36,18 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceResponse;
 
+
+
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
 import om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao;
 import om.edu.squ.squportal.portlet.transcript.dao.pdf.TranscriptPdfDao;
 import om.edu.squ.squportal.portlet.transcript.dao.pdf.TranscriptPdfImpl;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
+import om.edu.squ.squportal.portlet.transcript.utility.UtilService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +70,9 @@ public class TranscriptServiceImpl implements TranscriptServiceDao
 	
 	@Autowired
 	TranscriptPdfDao	transcriptPdf;
+	
+	@Autowired
+	UtilService			utilService;
 
 	
 	/*
@@ -106,6 +114,15 @@ public class TranscriptServiceImpl implements TranscriptServiceDao
 	public Student getStudent(String stdStatCode, Locale locale)
 	{
 		return transcriptDbDao.getStudent(stdStatCode, locale);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao#getUser(javax.portlet.PortletRequest)
+	 */
+	public User getUser(PortletRequest request)
+	{
+		return utilService.getUser(request.getRemoteUser());
 	}
 	
 }

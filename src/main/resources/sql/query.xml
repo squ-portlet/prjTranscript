@@ -4,54 +4,66 @@
     <comment>Transcript Queries</comment>
     <entry key="transcript.select.student.details.list">
 		    SELECT
-						VSP.STD_ID											AS		STD_ID
-					,	VSP.STDNO											AS		STDNO
-					,	VSP.STDSTATCD										AS		STDSTATCD				
-					,	VSP.GENDER											AS		GENDER
-          			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  				AS 		BIRTH_DAY
-					,	VSP.COHORT											AS		COHORT
+						VSP.STD_ID																	AS		STD_ID
+					,	VSP.STDNO																	AS		STDNO
+					,	VSP.STDSTATCD																AS		STDSTATCD				
+ 		            , 	DECODE (
+		                        	:paramLocale
+		                      	, 'ar', VSP.A_GENDER
+		                      	, VSP.GENDER
+		                  		)                         											AS		GENDER
+          			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  										AS 		BIRTH_DAY
+					,	VSP.COHORT																	AS		COHORT
 					,	DECODE
 								(
 									:paramLocale
 									,	'ar',	VSP.A_STD_NAME
 									,	VSP.STD_NAME
-								)											AS		STD_NAME
-					,	VSP.COLLEGE_CODE									AS		COLLEGE_CODE
+								)																	AS		STD_NAME
+					,	VSP.COLLEGE_CODE															AS		COLLEGE_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_COLLEGENM
 									,	VSP.COLLEGENM
-								)											AS		COLLEGE_NAME
-					,	VSP.MAJOR_CODE										AS		MAJOR_CODE
+								)																	AS		COLLEGE_NAME
+					,	VSP.MAJOR_CODE																AS		MAJOR_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_MAJORNAME
 									,	VSP.MAJORNAME
-								)											AS		MAJOR_NAME
-					,	VSP.MINOR_CODE										AS		MINOR_CODE
+								)																	AS		MAJOR_NAME
+					,	VSP.MINOR_CODE																AS		MINOR_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_MINORNAME
 									,	VSP.MINORNAME
-								)											AS		MINOR_NAME
-					,	VSP.SPEC_CODE										AS		SPEC_CODE
+								)																	AS		MINOR_NAME
+					,	VSP.SPEC_CODE																AS		SPEC_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_SPECNAME
 									,	VSP.SPECNAME
-								)											AS		SPEC_NAME
-					,	VSP.DEG_NUMBER										AS		DEGREE_NUMBER
+								)																	AS		SPEC_NAME
+					,	VSP.DEG_NUMBER																AS		DEGREE_NUMBER
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_DEGREE_NAME
 									,	VSP.DEGREE_NAME
-								)											AS		DEGREE_NAME
-					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
-					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO')			AS		ADVISOR01_EMP_NAME
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO')			AS		ADVISOR02_EMP_NAME
-					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
-					,	VSP.ACTIVE											AS		ACTIVE
+								)																	AS		DEGREE_NAME
+					,	VSP.ADVISOR																	AS		ADVISOR01_EMP_NO
+					,	VSP.ADVISOR1																AS		ADVISOR02_EMP_NO
+					,	DECODE	(
+										:paramLocale
+									,	'ar', TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO', 'A'))	
+									,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO'))
+								)																	AS		ADVISOR01_EMP_NAME
+					,	DECODE	(
+										:paramLocale
+									,	'ar', TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO', 'A'))	
+									,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO'))
+								)																	AS		ADVISOR02_EMP_NAME	
+					,	VSP.L_ABR_STATUS															AS		L_ABR_STATUS
+					,	VSP.ACTIVE																	AS		ACTIVE
 			FROM
               V_STDINFO_PORTAL    VSP
             , STD                 STD
@@ -64,70 +76,91 @@
     </entry>
     <entry key="transcript.select.student.details">
 		    SELECT
-						VSP.STD_ID											AS		STD_ID
-					,	VSP.STDNO											AS		STDNO
-					,	VSP.STDSTATCD										AS		STDSTATCD				
-					,	VSP.GENDER											AS		GENDER
-          			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  				AS 		BIRTH_DAY
-					,	VSP.COHORT											AS		COHORT
+						VSP.STD_ID																	AS		STD_ID
+					,	VSP.STDNO																	AS		STDNO
+					,	VSP.STDSTATCD																AS		STDSTATCD				
+ 		            , 	DECODE (
+		                        	:paramLocale
+		                      	, 'ar', VSP.A_GENDER
+		                      	, VSP.GENDER
+		                  		)                         											AS		GENDER
+          			, 	TO_CHAR(STD.BIRTHDTE,'DD/MM/YYYY')  										AS 		BIRTH_DAY
+					,	VSP.COHORT																	AS		COHORT
 					,	DECODE
 								(
 									:paramLocale
 									,	'ar',	VSP.A_STD_NAME
 									,	VSP.STD_NAME
-								)											AS		STD_NAME
-					,	VSP.COLLEGE_CODE									AS		COLLEGE_CODE
+								)																	AS		STD_NAME
+					,	VSP.COLLEGE_CODE															AS		COLLEGE_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_COLLEGENM
 									,	VSP.COLLEGENM
-								)											AS		COLLEGE_NAME
-					,	VSP.MAJOR_CODE										AS		MAJOR_CODE
+								)																	AS		COLLEGE_NAME
+					,	VSP.MAJOR_CODE																AS		MAJOR_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_MAJORNAME
 									,	VSP.MAJORNAME
-								)											AS		MAJOR_NAME
-					,	MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'COL') 		AS		FIRST_COL
-					, 	MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'MAJ') 		AS		FIRST_MAJ								
-					,	VSP.MINOR_CODE										AS		MINOR_CODE
+								)																	AS		MAJOR_NAME
+
+					,	DECODE (
+									:paramLocale
+									,	'ar', MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'COL', 'A')
+									,	MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'COL') 
+								)																	AS		FIRST_COL
+					,	DECODE (
+									:paramLocale
+									,	'ar', MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'MAJ', 'A')
+									,	MISC_PKG.FIRST_ADMITTED(VSP.STDSTATCD, 'MAJ') 
+								)																	AS		FIRST_MAJ
+					,	VSP.MINOR_CODE																AS		MINOR_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_MINORNAME
 									,	VSP.MINORNAME
-								)											AS		MINOR_NAME
-					,	VSP.SPEC_CODE										AS		SPEC_CODE
+								)																	AS		MINOR_NAME
+					,	VSP.SPEC_CODE																AS		SPEC_CODE
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_SPECNAME
 									,	VSP.SPECNAME
-								)											AS		SPEC_NAME
-					,	MISC_PKG.CERT_INFO(VSP.STDNO,'CERTTYPE')			AS		SCHOOL_CERT_TYPE	
-					,	MISC_PKG.CERT_INFO(VSP.STDNO,'STREAM')				AS		SCHOOL_STREAM
+								)																	AS		SPEC_NAME
+					,	MISC_PKG.CERT_INFO(VSP.STDNO,'CERTTYPE')									AS		SCHOOL_CERT_TYPE	
+					,	MISC_PKG.CERT_INFO(VSP.STDNO,'STREAM')										AS		SCHOOL_STREAM
 					,	NVL(
 							TO_CHAR(
 									MISC_PKG.STD_SCH_PERCENT(VSP.STDNO,'PERC')
 									)
-							,	' ')										AS		SCHOOL_PERC												
-					,	VSP.DEG_NUMBER										AS		DEGREE_NUMBER
+							,	' ')																AS		SCHOOL_PERC												
+					,	VSP.DEG_NUMBER																AS		DEGREE_NUMBER
 					,	DECODE	(
 									:paramLocale
 									,	'ar',	VSP.A_DEGREE_NAME
 									,	VSP.DEGREE_NAME
-								)											AS		DEGREE_NAME
-					,	VSP.ADVISOR											AS		ADVISOR01_EMP_NO
-					,	VSP.ADVISOR1										AS		ADVISOR02_EMP_NO
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO')			AS		ADVISOR01_EMP_NAME
-					,	MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO')			AS		ADVISOR02_EMP_NAME
-					,	VSP.L_ABR_STATUS									AS		L_ABR_STATUS
+								)																	AS		DEGREE_NAME
+					,	VSP.ADVISOR																	AS		ADVISOR01_EMP_NO
+					,	VSP.ADVISOR1																AS		ADVISOR02_EMP_NO
+					,	DECODE	(
+										:paramLocale
+									,	'ar', TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO', 'A'))	
+									,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR, 'EMPNO'))
+								)																	AS		ADVISOR01_EMP_NAME
+					,	DECODE	(
+										:paramLocale
+									,	'ar', TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO', 'A'))	
+									,	TRIM(MISC_PKG.FAC_NAMES(VSP.ADVISOR1, 'EMPNO'))
+								)																	AS		ADVISOR02_EMP_NAME					
+					,	VSP.L_ABR_STATUS															AS		L_ABR_STATUS
 			        , 	DECODE (
 			                    	:paramLocale
 			                    	, 'ar', VSP.A_STATUS_NAME
 			                    	, VSP.STATUS_NAME
-			          			)                                 			AS    	STATUS_NAME					
-					,	VSP.ACTIVE											AS		ACTIVE
-					, NVL(STATUS.CREDITSTAKEN,0)      						AS    	TOTAL_CREDITS_TAKEN
-          			, NVL(STATUS.CREDITSEARNED,0)     						AS    	TOTAL_CREDITS_EARNED
+			          			)                                 									AS    	STATUS_NAME					
+					,	VSP.ACTIVE																	AS		ACTIVE
+					, NVL(STATUS.CREDITSTAKEN,0)      												AS    	TOTAL_CREDITS_TAKEN
+          			, NVL(STATUS.CREDITSEARNED,0)     												AS    	TOTAL_CREDITS_EARNED
 			FROM
               			V_STDINFO_PORTAL    VSP
             		, 	STD                 STD
@@ -140,38 +173,49 @@
 
 	<entry key="transcript.select.student.status.list">
 			SELECT 
-						TO_CHAR(SSS.SEMGPA,'0.00') 							AS		SEM_GPA
-					,	TO_CHAR(SSS.CUMGPA,'0.00') 							AS		CUM_GPA
-					,	SSS.CREDITSEARNED									AS		CREDITS_EARNED
-					,	SSS.CREDITSTAKEN									AS		CREDITS_TAKEN
-					,	SSS.CCYRCD											AS		CCYRCD
-					,	SSS.SEMCD											AS		SEMCD
-					,	SSS.GRADEPTS										AS		GRADE_PTS								
-					,	SSS.CUMGRADEPTS										AS		CUM_GRADE_PTS
+						TO_CHAR(SSS.SEMGPA,'0.00') 													AS		SEM_GPA
+					,	TO_CHAR(SSS.CUMGPA,'0.00') 													AS		CUM_GPA
+					,	SSS.CREDITSEARNED															AS		CREDITS_EARNED
+					,	SSS.CREDITSTAKEN															AS		CREDITS_TAKEN
+					,	SSS.CCYRCD																	AS		CCYRCD
+					,	SSS.SEMCD																	AS		SEMCD
+					,	SSS.GRADEPTS																AS		GRADE_PTS								
+					,	SSS.CUMGRADEPTS																AS		CUM_GRADE_PTS
 		            ,	DECODE(
 		                        :paramLocale
 		                    ,   'en', SEM.SEMNM
 		                    ,   SEM.A_SEMNM
-		                  )                     							AS		SEMESTER_NAME
-					,	SSS.CUMCREDITSTAKEN									AS		CUM_CREDITS_TAKEN
+		                  )                     													AS		SEMESTER_NAME
+					,	SSS.CUMCREDITSTAKEN															AS		CUM_CREDITS_TAKEN
 					, 	DECODE(
                         	:paramLocale
                      		,  'en', SC.CODENM
                      		,  SC.A_CODENM
-                  		)                       							AS		SEMESTER_LOAD_STATUS  			
+                  		)                       													AS		SEMESTER_LOAD_STATUS  			
 					 , DECODE(
                         	:paramLocale
                      		,  'en', SC1.CODENM
                      		,  SC1.A_CODENM
-                  		)                       							AS		STD_LOAD_STAT 
-					,	NVL(SC2.CODENM, ' ') 								AS		HON_DIST
-					,	NVL(SC3.CODENM, ' ') 								AS		EXCLIST 
-					,	MISC_PKG.STD_DEGREE_HISTORY(
+                  		)                       													AS		STD_LOAD_STAT 
+					,	NVL(SC2.CODENM, ' ') 														AS		HON_DIST
+					,	NVL(SC3.CODENM, ' ') 														AS		EXCLIST 
+					,	DECODE(
+									:paramLocale
+									, 'en', MISC_PKG.STD_DEGREE_HISTORY(
+																				SSS.STDSTATCD
+																			, 	SSS.CCYRCD
+																			, 	SSS.SEMCD
+																			, 	:paramCollegeName
+																		)
+									,	MISC_PKG.STD_DEGREE_HISTORY(
 															SSS.STDSTATCD
 														, 	SSS.CCYRCD
 														, 	SSS.SEMCD
 														, 	:paramCollegeName
-													) 						AS		HISTORY
+														,	'A'
+													) 
+								)																	AS		HISTORY
+
 			FROM 
 						STD_STATUS_SEM SSS
 					,	SEM
@@ -192,13 +236,13 @@
 	    
 	<entry key="transcript.select.student.grade.list">
 			SELECT 
-						  SG.L_ABR_CRSNO									AS		COURSE_NO
+						  SG.L_ABR_CRSNO															AS		COURSE_NO
 					  ,   DECODE(
                     		    	  	:paramLocale
                       				,   'en', RTRIM(CRS.CRSLNM, '       ') 					
                       				,   TRIM(CRS.A_CRSLNM)
-                      			)                       					AS 		COURSE_NAME
-						, 	CRS.CRSCRED										AS		COURSE_CREDIT
+                      			)                       											AS 		COURSE_NAME
+						, 	CRS.CRSCRED																AS		COURSE_CREDIT
 						,   REG_PKG.WAS_FSP(
 													:paramStdNo
 												, 	SG.CCYRCD
@@ -206,16 +250,16 @@
 												, 	SG.L_ABR_CRSNO
 												, 	SG.GRADECD
 												, 	GV.L_ABR_GVAL
-											) 								AS		COURSE_CREDIT_VALUE
-						, 	CRS.CRSCRED	*	GV.GRADEPOINTS 					AS		COURSE_GRADE_POINT
-						, 	SG.PREV_L_ABR_CRSNO								AS		PREVIOUS_COURSE_NO
-						, 	SG.PREV_CCYRCD									AS		PREVIOUS_COURSE_YEAR
-						,   SG.PREV_SEMCD									AS		PREVIOUS_SEM_CODE
+											) 														AS		COURSE_CREDIT_VALUE
+						, 	CRS.CRSCRED	*	GV.GRADEPOINTS 											AS		COURSE_GRADE_POINT
+						, 	SG.PREV_L_ABR_CRSNO														AS		PREVIOUS_COURSE_NO
+						, 	SG.PREV_CCYRCD															AS		PREVIOUS_COURSE_YEAR
+						,   SG.PREV_SEMCD															AS		PREVIOUS_SEM_CODE
 						, 	SG.PREV_L_ABR_CRSNO 
 							||' '|| 
 							SG.PREV_CCYRCD 
 							||' '|| 
-							SEM.L_ABR_SEM 									AS		REPEATED 
+							SEM.L_ABR_SEM 															AS		REPEATED 
 			FROM 
 						STD_GRADES SG
 					, 	GRADE_VAL GV
@@ -234,18 +278,18 @@
 	<entry key="transcript.select.student.registration">
 			SELECT 
 					DISTINCT 
-							SEM.SEMNM 										AS		SEMESTER_NAME
-						,	CYS.CCYRCD 										AS		CCYRCD
-						,	VS.L_ABR_STATUS 								AS		L_ABR_STATUS
-						,	SS.L_ABR_CRSNO 									AS		COURSE_NO
-						,	CB.CRSLNM 										AS		COURSE_NAME
-						,	CB.CRSCRED 										AS		COURSE_CREDIT
+							SEM.SEMNM 																AS		SEMESTER_NAME
+						,	CYS.CCYRCD 																AS		CCYRCD
+						,	VS.L_ABR_STATUS 														AS		L_ABR_STATUS
+						,	SS.L_ABR_CRSNO 															AS		COURSE_NO
+						,	CB.CRSLNM 																AS		COURSE_NAME
+						,	CB.CRSCRED 																AS		COURSE_CREDIT
 						,	MISC_PKG.STD_DEGREE_HISTORY(
 																VS.STDSTATCD
 															, 	CYS.CCYRCD
 															, 	CYS.SEMCD
 															, 	:paramCollegeName
-														) 					AS		HISTORY
+														) 											AS		HISTORY
 			FROM 
 						SCHED_STD 			SS
 					,	SECT 				S
@@ -268,9 +312,9 @@
 	
 	<entry key="transcript.select.student.postpone.list">
 			SELECT  
-						 SUBSTR(SP.FROMCCYRCD,3,2) ||' '||S1.L_ABR_SEM 		FROM_YRSEM
-					, 	 SUBSTR(SP.TOCCYRCD,3,2) ||' '||S2.L_ABR_SEM 		TO_YRSEM
-					,	 TO_CHAR(SP.UPDDTE, 'DD/MM/YYYY') 					PST_DATE 
+						 SUBSTR(SP.FROMCCYRCD,3,2) ||' '||S1.L_ABR_SEM 								AS		FROM_YRSEM
+					, 	 SUBSTR(SP.TOCCYRCD,3,2) ||' '||S2.L_ABR_SEM 								AS		TO_YRSEM
+					,	 TO_CHAR(SP.UPDDTE, 'DD/MM/YYYY') 											AS		PST_DATE 
 			FROM 
 						STD_POSTPONE 	SP
 					, 	SEM 			S1

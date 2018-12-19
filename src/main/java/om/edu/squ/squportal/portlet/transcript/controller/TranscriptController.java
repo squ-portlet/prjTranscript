@@ -32,7 +32,6 @@ package om.edu.squ.squportal.portlet.transcript.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +43,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
 import om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao;
 import om.edu.squ.squportal.portlet.transcript.model.TranscriptModel;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
@@ -76,11 +76,37 @@ public class TranscriptController
 	@Autowired
 	TranscriptServiceDao	transcriptService;
 	
+	/**
+	 * 
+	 * method name  : welcome
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param locale
+	 * @return
+	 * TranscriptController
+	 * return type  : String
+	 * 
+	 * purpose		: Default render
+	 *
+	 * Date    		:	Dec 3, 2018 12:52:56 PM
+	 */
 	@RequestMapping
-	private String welcome(PortletRequest request, Model model)
+	private String welcome(PortletRequest request, PortletResponse response, Model model, Locale locale)
 	{
 		model.addAttribute("transcriptModel", new TranscriptModel());
-		return "welcome";
+		
+		User	user	=	transcriptService.getUser(request);
+		
+		if(user.getUserType().equals(Constants.USER_TYPE_STUDENT))
+		{
+			return studentDetails(user.getUserId(), request, response, model, locale);
+		}
+		else
+		{
+			return "welcome";
+		}
+
 		
 	}
 
@@ -113,7 +139,7 @@ public class TranscriptController
 	 * TranscriptController
 	 * return type  : String
 	 * 
-	 * purpose		:
+	 * purpose		: Render to student details
 	 *
 	 * Date    		:	Oct 10, 2018 11:23:56 AM
 	 */
@@ -162,7 +188,6 @@ public class TranscriptController
 		List<Student>  	studentSummaryList	=	transcriptService.getStudentList(studentId, locale);
 		response.getWriter().print(gson.toJson(studentSummaryList));
 		
-		logger.info("student list : "+gson.toJson(studentSummaryList));
 	}
 	
 	/**
