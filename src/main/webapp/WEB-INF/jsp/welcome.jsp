@@ -41,8 +41,9 @@
 <portlet:resourceURL id="resSummary" var="urlSummary"></portlet:resourceURL>
 
 <%@include file="ui/cssWelcome.jsp" %>
-<%-- 
+ 
 <%@include file="ui/js/jsCode.js" %>
+<%--
 <%@include file="ui/js/transcript.hb.js" %>
  --%>
 

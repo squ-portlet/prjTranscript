@@ -44,5 +44,16 @@
 		<portlet-info>
 			<title>TODO - Test Message</title>
 		</portlet-info>
+
+		<!--  Publish event -  Notify others about particular event / happening  -->
+		<supported-publishing-event>
+			<qname xmlns:n="http://www.sisnamespace.com">n:sisEvent</qname>
+		</supported-publishing-event>	
+		
 	</portlet>
+	
+	<event-definition>
+			<qname xmlns:n="http://www.sisnamespace.com">n:sisEvent</qname>
+			<value-type>java.lang.String</value-type>
+	</event-definition>	
 </portlet-app>
