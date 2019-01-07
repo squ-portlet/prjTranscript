@@ -45,6 +45,14 @@
 <%@include file="ui/js/jsCode.js" %>
 <%@include file="ui/js/transcript.hb.js" %>
 
+<portlet:renderURL var="urlBack">
+	<portlet:param name="action" value="back2main"/>
+</portlet:renderURL>
+
+<c:if test="${not empty eventForStudentId}">
+	<a href="${urlBack}"><spring:message code="prop.transcript.back"/></a>
+</c:if>
+
 <div class="panel panel-default container-fluid">
   <div class="panel-heading">
     <h3 class="panel-title"><spring:message code="prop.transcript.header.academic.transcript.text"/></h3>

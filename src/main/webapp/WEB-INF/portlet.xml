@@ -45,15 +45,15 @@
 			<title>TODO - Test Message</title>
 		</portlet-info>
 
-		<!--  Publish event -  Notify others about particular event / happening  -->
-		<supported-publishing-event>
-			<qname xmlns:n="http://www.sisnamespace.com">n:sisEvent</qname>
-		</supported-publishing-event>	
+		<!-- Process event - normally listning and understand who the other portlet is talking and then processing -->
+		<supported-processing-event>
+			<qname xmlns:n="http://www.sistranscript.com">n:sisTranscriptEvent</qname>
+		</supported-processing-event>
 		
 	</portlet>
 	
 	<event-definition>
-			<qname xmlns:n="http://www.sisnamespace.com">n:sisEvent</qname>
-			<value-type>java.lang.String</value-type>
+			<qname xmlns:n="http://www.sistranscript.com">n:sisTranscriptEvent</qname>
+			<value-type>om.edu.squ.squportal.portlet.sisgeneraldept.bo.Student</value-type>
 	</event-definition>	
 </portlet-app>

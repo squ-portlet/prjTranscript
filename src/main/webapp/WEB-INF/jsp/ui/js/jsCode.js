@@ -41,15 +41,33 @@ $(function() {
 //	$('#linkServiceOthers').click();
 	$('#linkCourseWise').click();
 	
+	
+	$('#idDownloadCourseTxt').hide();
+	$('#idFormGroupFilterType').hide();
 	$('#form-group-deptId').hide();
+	$('#idDivCourses').hide();
+	$('#idFormCheckChkSimpleSearch').hide();
+	
 	$('#form-group-majorId').show();
+	$('#form-group-DegreeId').show();
+	$('#form-group-statusId').show();
+	$('#majorSubmitBttnId').show();
+	
 });
+
+
 
 $(function() {
 	/* Hide the common control portlet */
-	//$('.portlet-boundary_prjSISGeneralDept_WAR_prjSISDeptGeneral_').hide();
+		<c:if test="${not empty studentSummaryList}">
+			$('.portlet-boundary_prjSISGeneralDept_WAR_prjSISDeptGeneral_').hide();
+		</c:if>
 	
-	
+	$(document).on('click','.bttnClsTranscriptDownload',function(event){
+		$('#idIfrTranscript').contents().find('body').html('<h3>Please Wait ..</h3>');
+		$('#idIfrTranscript').show();
+		$('#idIfrTranscript').attr('src',this.getAttribute("aurl"));
+	});
 	
 });
 
