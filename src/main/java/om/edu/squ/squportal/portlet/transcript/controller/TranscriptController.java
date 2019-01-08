@@ -128,6 +128,31 @@ public class TranscriptController
 
 	/**
 	 * 
+	 * method name  : getAccessPermission
+	 * @param studentId
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * TranscriptController
+	 * return type  : void
+	 * 
+	 * purpose		: Find eligibility of an academics to view transcript
+	 *
+	 * Date    		:	Jan 8, 2019 12:36:40 PM
+	 */
+	@ResourceMapping(value="resAccessPermissionForStudent")
+	private	void getAccessPermission(	@RequestParam("studentId") String studentId
+										,	ResourceRequest	request
+										, 	ResourceResponse	response) throws IOException
+	{
+			boolean	isElligible	=	false;
+					isElligible	=	transcriptService.isEligibleToViewTranscript(studentId, request);
+			Gson	gson		=	new Gson();
+			response.getWriter().print(gson.toJson(isElligible));
+	}
+
+	/**
+	 * 
 	 * method name  : submitStudentId
 	 * @param request
 	 * @param response
@@ -137,7 +162,7 @@ public class TranscriptController
 	 * TranscriptController
 	 * return type  : void
 	 * 
-	 * purpose		:
+	 * purpose		: Submit Student Id by Academics
 	 *
 	 * Date    		:	Jan 7, 2019 12:07:41 PM
 	 */

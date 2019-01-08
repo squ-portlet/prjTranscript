@@ -143,5 +143,20 @@ public interface TranscriptDbDao
 	 * Date    		:	Nov 13, 2018 12:51:26 PM
 	 */
 	public List<Postpone>  getPostponeList(String stdStatCode);
+	
+	/**
+	 * 
+	 * method name  : isEligibleToViewTranscript
+	 * @param studentId
+	 * @param empNumber
+	 * @return
+	 * TranscriptDbDao
+	 * return type  : boolean
+	 * 
+	 * purpose		:	Find eligibility of faculty to see student's transcript
+	 *
+	 * Date    		:	Jan 8, 2019 12:26:31 PM
+	 */
+	public boolean isEligibleToViewTranscript(String studentId, String empNumber);
 
 }

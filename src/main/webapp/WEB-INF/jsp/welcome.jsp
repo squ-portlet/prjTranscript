@@ -39,6 +39,7 @@
 </portlet:resourceURL>
 
 <portlet:resourceURL id="resSummary" var="urlSummary"></portlet:resourceURL>
+<portlet:resourceURL id="resAccessPermissionForStudent" var="urlResAccessPermissionForStudent"></portlet:resourceURL>
 
 <%@include file="ui/cssWelcome.jsp" %>
  
@@ -57,6 +58,9 @@
   </div>
   <div class="panel-body">
     <div class="row">
+  			<div id="idDivAlert" class="alert alert-warning" role="alert" style="display: none;">
+  					<font color="red"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></font>  <spring:message code="warn.transcript.no.access"/>
+  			</div>
     	<form:form modelAttribute="transcriptModel" action="${varSubmitStudentInfo}" htmlEscape="false" method="post" class="form-inline container-fluid" >
     		<div class="form-group">
     			<c:set var="varTxtStdId" value='<spring:message code="prop.transcript.label.stdudent.id" />'></c:set>
@@ -64,7 +68,8 @@
     			<form:input path="stdId" class="form-control" />
 <!--     			<input type="text" class="form-control" id="stdId" placeholder="Student Id"> -->
   			</div>
-    		<button type="submit" id="bttnSearch" class="btn btn-default">
+
+    		<button  type="button" id="bttnSearch" class="btn btn-default">
   				<span class="glyphicon glyphicon-search" aria-hidden="true"></span> <spring:message code="prop.transcript.button.search" />
 			</button>
 		</form:form>

@@ -63,11 +63,44 @@ $(function() {
 			$('.portlet-boundary_prjSISGeneralDept_WAR_prjSISDeptGeneral_').hide();
 		</c:if>
 	
+		/* PDF view of transcript*/
 	$(document).on('click','.bttnClsTranscriptDownload',function(event){
 		$('#idIfrTranscript').contents().find('body').html('<h3>Please Wait ..</h3>');
 		$('#idIfrTranscript').show();
 		$('#idIfrTranscript').attr('src',this.getAttribute("aurl"));
 	});
+	
+		/* Check elibility of faculty to view individual student's transcript using inputing student's Id */
+	$(document).on('click','#bttnSearch',function(event){
+		var studentId =	$('#stdId').val();
+		$.ajax({
+				url 	: '${urlResAccessPermissionForStudent}',
+				type	:	'POST',
+				cache	:	false,
+				data	:	{'studentId':studentId},
+				success	:	function(data)
+				{
+					var	result	=	data;
+					if(data == 'true')
+					{
+						$('#idDivAlert').hide();
+						$('#transcriptModel').submit();
+					}
+					else
+						{
+							$('#idDivAlert').show();
+						}
+					
+				},
+				error	:	function(xhr, status)
+				{
+					
+				}
+		});
+	
+	});
+
+	
 	
 });
 

@@ -324,5 +324,29 @@
 					AND SP.TOSEMCD		=	S2.SEMCD 
 					AND SP.STDSTATCD 	=  :paramStdStatCode
 	</entry>
+	<entry key="sql.select.access.permission">
+			SELECT
+		      COUNT(*)     																			AS 		COUNTS
+			FROM
+		      V_STDINFO_PORTAL  PORTAL
+			WHERE
+		        	    PORTAL.STD_ID=:paramStudentId
+		    	  AND   WEB_PKG.SIS_Web_access(PORTAL.STDNO,PORTAL.STDSTATCD,PORTAL.COLLEGE_CODE,:paramEmpNumber,:paramAccessDomain,PORTAL.DEG_NUMBER,PORTAL.ADVISOR,PORTAL.ADVISOR1) = 'Y'
+	</entry>
+	<entry key="sql.select.access.level">
+		SELECT 
+		    	SC.L_ABR_CODE														AS	ROLE_ABR_CODE
+		    , 	SU.STATUSACTIVE
+		    ,	UC.ACCESSDOMAIN														AS	ACCESS_DOMAIN	
+		    , 	SUBSTR(UC.ACCESSDOMAIN,0,3) 										AS 	ACCESS_LEVEL
+		FROM
+		      USER_CATEGORY UC
+		    , SIS_USERS SU
+		    , SIS_CODES SC
+		WHERE
+		       			SU.USERNAME 	=	:paramUserName
+		       and	    SC.SISCODECD    = 	SU.USERCATEGORY
+		       and  	UC.category     = 	SC.L_ABR_CODE 	
+	</entry>	
 		    
 </properties>
