@@ -184,7 +184,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				else
 				{
 					tableSemester.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
-					tableSemester.setWidths(new int[]{8,5,5,7,4});
+					tableSemester.setWidths(new int[]{12,5,5,7,4});
 				}
 									
 				pdfStamper.getAcroFields().setField("tblCourseNo", UtilProperty.getMessage("prop.transcript.label.course", null, locale));
@@ -275,7 +275,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 															cellGradeCourseCredit.setHorizontalAlignment(Element.ALIGN_LEFT);
 														}
 														tableSemester.addCell(cellGradeCourseCredit);
-											PdfPCell	cellGradeCourseCreditValue	=	setTableCell(grade.getCourseCreditValue(),PdfPCell.NO_BORDER,setFont_01());
+											PdfPCell	cellGradeCourseCreditValue	=	setTableCell(String.format("%1$2s", grade.getCourseCreditValue()),PdfPCell.NO_BORDER,setFont_01());
 														if(locale.getLanguage().equals("en"))
 														{
 															cellGradeCourseCreditValue.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -424,7 +424,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				
 
 				
-				PdfPCell	cellTotalGradePoints = setTableCell(UtilProperty.getMessage("prop.transcript.total.grade.points.text", null, locale)+gradePointCommulative,Rectangle.NO_BORDER,setFont_01());
+				PdfPCell	cellTotalGradePoints = setTableCell(UtilProperty.getMessage("prop.transcript.total.grade.points.text", null, locale)+" "+gradePointCommulative,Rectangle.NO_BORDER,setFont_01());
 							cellTotalGradePoints.setBorder(PdfPCell.BOTTOM);
 							cellTotalGradePoints.setColspan(2);
 							tableSemester.addCell(cellTotalGradePoints);
@@ -576,6 +576,7 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 				ColumnText	columnSemester		=	new ColumnText(pdfStamper.getOverContent(1));
 				Rectangle	rectangleSemester	=	new Rectangle(0,35,600,520);
 				Rectangle	rectangleNewPage	=	new Rectangle(0,35,600,675);
+				rectangleNewPage.setBorder(0);
 				columnSemester.setSimpleColumn(rectangleSemester);
 				columnSemester.addElement(tableSemester);
 				int status = columnSemester.go();
@@ -590,6 +591,8 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 
 				
 				pdfStamper.getAcroFields().setGenerateAppearances(true);
+				
+				
 				
 				pdfStamper.setFormFlattening(true);
 				pdfStamper.close();
@@ -684,10 +687,16 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 	 * Date    		:	Nov 13, 2018 12:53:44 PM
 	 */
 	private int triggerNewPage(PdfStamper stamper, Rectangle pagesize, ColumnText column, Rectangle rect, int pagecount) throws DocumentException {
-	    stamper.insertPage(pagecount, pagesize);
+
+		
+		stamper.insertPage(pagecount, pagesize);
 	    PdfContentByte canvas = stamper.getOverContent(pagecount);
+	    
+	    canvas.rectangle(pagesize.getLeft()-50, pagesize.getBottom(), pagesize.getWidth()+50, pagesize.getHeight());
+	    
 	    column.setCanvas(canvas);
 	    column.setSimpleColumn(rect);
+
 	    return column.go();
 	}
 
@@ -717,16 +726,28 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 		for (int i = 2; i <= reader.getNumberOfPages(); i++) {
             float x = reader.getPageSize(i).getWidth() / 2;
             float y = reader.getPageSize(i).getTop(30);
-            ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_01, x, y, 0);
-            ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_02, x, y-15, 0);
-            ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_03, x, y-30, 0);
+            
+            if(!locale.getLanguage().equals("en"))
+            {
+            	ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_01, x, y, 0,PdfWriter.RUN_DIRECTION_RTL,0);
+                ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_02, x, y-15, 0,PdfWriter.RUN_DIRECTION_RTL,0);
+                ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_03, x, y-30, 0,PdfWriter.RUN_DIRECTION_RTL,0);
+            }
+            else{
+            	ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_01, x, y, 0);
+                ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_02, x, y-15, 0);
+                ColumnText.showTextAligned(	stamper.getOverContent(i), Element.ALIGN_CENTER, header_03, x, y-30, 0);
+            }
+            
+            
+            
             
             PdfPTable			tableHeader_01		=	new	PdfPTable(6);
             tableHeader_01.setWidths(new int[]{3,7,1,7,3,7});
             if(!locale.getLanguage().equals("en"))
             {
             	tableHeader_01.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
-            	tableHeader_01.setWidths(new int[]{7,3,7,1,7,3});
+            	tableHeader_01.setWidths(new int[]{7,3,7,3,7,3});
             }
             
     		
