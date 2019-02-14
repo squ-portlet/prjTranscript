@@ -41,6 +41,10 @@ import javax.portlet.ResourceResponse;
 
 
 
+
+
+
+import om.edu.squ.portal.common.EmpCommon;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
 import om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao;
@@ -123,6 +127,49 @@ public class TranscriptServiceImpl implements TranscriptServiceDao
 	public User getUser(PortletRequest request)
 	{
 		return utilService.getUser(request.getRemoteUser());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao#isEligibleToViewTranscript(java.lang.String, javax.portlet.PortletRequest)
+	 */
+	public boolean isEligibleToViewTranscript(String studentId, PortletRequest request)
+	{
+		String empNumber	=	Constants.COST_COL_EMPLOYEE_PREFIX+getEmpNumber(request);
+		return transcriptDbDao.isEligibleToViewTranscript(studentId, empNumber);
+	}
+	
+	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao#getEmpNumber(javax.portlet.PortletRequest)
+	 */
+	public  String getEmpNumber(PortletRequest request)
+	{
+
+	    if(request.getRemoteUser()==null || request.getRemoteUser()=="")
+	    {		    return null;
+	    }
+	    else 
+	    {
+			String strEmpNumber=null;
+			try
+			{
+				EmpCommon	empCommon	=	new EmpCommon();
+						strEmpNumber 	= 	empCommon.getEmployeeNumber(request.getRemoteUser());
+			}
+			catch(Exception ex)
+			{
+				logger.info("******* exception while getting emp no: " + ex.getMessage());
+			}
+			if(strEmpNumber==null || strEmpNumber=="")
+			{
+				return null;	
+			}
+			else return strEmpNumber;
+			    
+	    }
+	    
 	}
 	
 }

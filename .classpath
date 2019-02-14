@@ -31,5 +31,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/om-edu-squ-portal-common"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/Student.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

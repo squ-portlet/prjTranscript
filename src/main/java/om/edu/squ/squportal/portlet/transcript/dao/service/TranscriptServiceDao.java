@@ -114,4 +114,33 @@ public interface TranscriptServiceDao
 	 * Date    		:	Dec 3, 2018 12:46:39 PM
 	 */
 	public User getUser(PortletRequest request);
+	
+	/**
+	 * 
+	 * method name  : isEligibleToViewTranscript
+	 * @param studentId
+	 * @param request
+	 * @return
+	 * TranscriptServiceDao
+	 * return type  : boolean
+	 * 
+	 * purpose		: Find eligibility of an academics to view transcript
+	 *
+	 * Date    		:	Jan 8, 2019 12:32:41 PM
+	 */
+	boolean isEligibleToViewTranscript(String studentId, PortletRequest request);
+	
+	/**
+	 * 
+	 * method name  : getEmpNumber
+	 * @param request
+	 * @return
+	 * TranscriptServiceDao
+	 * return type  : String
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Jan 8, 2019 11:50:34 AM
+	 */
+	public  String getEmpNumber(PortletRequest request);
 }

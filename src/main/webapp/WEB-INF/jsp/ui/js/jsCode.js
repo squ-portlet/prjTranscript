@@ -31,225 +31,77 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-
-
 <script type="text/javascript">
 
-	$(function(){
-		
-
-		
-		
-		$(document).on('click','#bttnSearch',function(event){
-			event.preventDefault();
-			var varStudentId			=	$('#txtStudentId').val();
-			var	varStudentDTO	 		=	{studentId :  varStudentId };
-			
-			
-			
-			
-			
-			$.ajax({
-				url		:	"${urlSummary}",
-				type	:	'POST',
-				cache	:	false,
-				data	:	varStudentDTO,
-				success	:	function(data)
-				{
-					
-					var htmlData='';
-					var students = JSON.parse(data);
-					var student;
-					
-					var i = 1;
-					for (var key in students)
-					{
-
-						student={student:students[key],countDegree:i++};
-
-						htmlData = htmlData +  dataLoadHtml(student,'#hbSummary');
-						
-					}
-					
-					dataLoad(student, '#hbStudentDetail', '#divStudentDetail');
-					$('#divStdSummary').html(htmlData);
-
-				},
-				error	:	function(xhr, status, error)
-				{
-
-				}
-			});
-			
-			
-			
-		});
-
-
-$(document).on('click','.bttnClsTranscriptDownload',function(event){
-	$('#idIfrTranscript').contents().find('body').html('<h3>Please Wait ..</h3>');
-	$('#idIfrTranscript').show();
-	$('#idIfrTranscript').attr('src',this.getAttribute("aurl"));
+$(function() {
+	/* Following code address to SIS common control portlet */
+	$('#linkStudent').hide();	
+	$('#linkEmployee').hide();
+	$('#linkServiceOthers').hide();
+//	$('#linkServiceOthers').click();
+	$('#linkCourseWise').click();
+	
+	
+	$('#idDownloadCourseTxt').hide();
+	$('#idFormGroupFilterType').hide();
+	$('#form-group-deptId').hide();
+	$('#idDivCourses').hide();
+	$('#idFormCheckChkSimpleSearch').hide();
+	
+	$('#form-group-majorId').show();
+	$('#form-group-DegreeId').show();
+	$('#form-group-statusId').show();
+	$('#majorSubmitBttnId').show();
+	
 });
 
 
 
-		/* Transcript  - idIfrTranscript*/
-/*
-		$(document).on('click','.bttnClsTranscriptDownload',function(event){
-
-			var	varStdStatCode		=	this.getAttribute("stdStatCode");
-			var varStudentDTO		= 	JSON.stringify({stdStatCode:varStdStatCode});
-			console.log ("varStudentDTO : "+varStudentDTO);
-			var student					=	{
-					stdStatCode:varStdStatCode
-				};
-			
-			console.log ("student : "+student);
-			
-			 var oReq = new XMLHttpRequest();
-			    oReq.open('POST', '${urlPdfTranscript}', true);
-			    oReq.setRequestHeader("Content-Type", "application/json");
-			    oReq.setRequestHeader("Content-length", varStudentDTO.length);
-			    oReq.setRequestHeader("Connection", "close");
-			    
-			    oReq.responseType = "blob";
-			    
-			    oReq.onload = function(oEvent) {
-			        var blob = oReq.response;
-			        console.log
-			        var link=document.createElement('a');
-			        link.href=window.URL.createObjectURL(blob);
-			        link.download="transcript.pdf";
-			        link.click();
-			    };
-
-			    oReq.send(varStudentDTO);
-
-		});
-		
-*/		
-		
-
-		/* Transcript */
-		$(document).on('click','.bttnClsTranscriptDownload_TODO',function(event){
-			//event.preventDefault();
-			var	varStdStatCode		=	this.getAttribute("stdStatCode");
-			var varStudentDTO		= 	{stdStatCode:varStdStatCode};
-			console.log ("statcode : "+varStdStatCode);
-			
-			var student					=	{
-					stdStatCode:varStdStatCode
-				};
-			$.ajaxSetup({
-					beforeSend:function(jqHHR, settings)
-					{
-						//settings.xhr().responseType='arraybuffer';
-						settings.xhr().responseType='blob';
-						settings.processData=false;
-					}
-				
-			});
-			
-			
-			$.ajax({
-				url		:	"${urlPdfTranscript}",
-				type	:	'GET',
+$(function() {
+	/* Hide the common control portlet */
+		<c:if test="${not empty studentSummaryList}">
+			$('.portlet-boundary_prjSISGeneralDept_WAR_prjSISDeptGeneral_').hide();
+		</c:if>
+	
+		/* PDF view of transcript*/
+	$(document).on('click','.bttnClsTranscriptDownload',function(event){
+		$('#idIfrTranscript').contents().find('body').html('<h3>Please Wait ..</h3>');
+		$('#idIfrTranscript').show();
+		$('#idIfrTranscript').attr('src',this.getAttribute("aurl"));
+	});
+	
+		/* Check elibility of faculty to view individual student's transcript using inputing student's Id */
+	$(document).on('click','#bttnSearch',function(event){
+		var studentId =	$('#stdId').val();
+		$.ajax({
+				url 	: '${urlResAccessPermissionForStudent}',
+				type	:	'POST',
 				cache	:	false,
-				data	:	varStudentDTO,
-				//dataType:	"binary",
+				data	:	{'studentId':studentId},
 				success	:	function(data)
 				{
-					console.log('Inside success');
-					 console.log("data : "+data); //ArrayBuffer
-					 console.log("Blob : "+new Blob([data])) // Blob
-					/* 
-					 * https://stackoverflow.com/questions/1999607/download-and-open-pdf-file-using-ajax
-					 * 
-					 * http://danml.com/download.html
-					 * 
-					 */
-					 
-					  
-				//	 var blob=new Blob([data], {type: 'application/pdf'}) ;
-				   /*
-					 var link=document.createElement('a');
-				    link.href=window.URL.createObjectURL(blob);
-				    link.download="transcript"+ new Date() +".pdf";
-				    link.click();
-				    */
-			/*		 
-					 var fileURL = URL.createObjectURL(blob);
-					 console.log("fileURL : "+fileURL);
-	                    var newWin = window.open(fileURL);
-	                    newWin.focus();
-	                    newWin.reload();
-	         */
-				    
+					var	result	=	data;
+					if(data == 'true')
+					{
+						$('#idDivAlert').hide();
+						$('#transcriptModel').submit();
+					}
+					else
+						{
+							$('#idDivAlert').show();
+						}
+					
 				},
-				error : function(xhr, status, error)
+				error	:	function(xhr, status)
 				{
-					console.log('Inside error : xhr : '+xhr);
-					console.log('Inside error : status : '+status);
-					console.log('Inside error : error : '+error);
+					
 				}
-			});
-			
 		});
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		
-		var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-xmlhttp.open("POST", "/json-handler");
-xmlhttp.setRequestHeader("Content-Type", "application/json");
-xmlhttp.send(JSON.stringify({name:"John Rambo", time:"2pm"}));
-		
-		
-		*/
-		
-		
-		
-		
-		
-		
-		
-		
-		/* Handlebar data load */		
-		function dataLoad(dataJson, hbTemplateId, tableId)
-		{
-			//event.preventDefault();
-			if ($.trim(dataJson))
-			{
-				var theAlertTemplate=$(hbTemplateId).html();
-				var template = Handlebars.compile(theAlertTemplate);
-				$(tableId).html(template(dataJson));
-			}
-			return true;
-		}
-		
-		
-		/* Handlebar data load */		
-		function dataLoadHtml(dataJson, hbTemplateId)
-		{
-			//event.preventDefault();
-			if ($.trim(dataJson))
-			{
-				var theAlertTemplate=$(hbTemplateId).html();
-				var template = Handlebars.compile(theAlertTemplate);
-				return template(dataJson);
-			}
-			return true;
-		}
-		
+	
 	});
+
+	
+	
+});
 
 </script>
