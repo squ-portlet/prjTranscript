@@ -236,21 +236,29 @@
 	    
 	<entry key="transcript.select.student.grade.list">
 			SELECT 
-						  SG.L_ABR_CRSNO															AS		COURSE_NO
+						  DECODE(
+					                  :paramLocale
+					                  , 'ar',CRS.A_ABR_CRSNO
+					                  , CRS.L_ABR_CRSNO
+					              )																	AS		COURSE_NO
 					  ,   DECODE(
                     		    	  	:paramLocale
                       				,   'en', RTRIM(CRS.CRSLNM, '       ') 					
                       				,   TRIM(CRS.A_CRSLNM)
                       			)                       											AS 		COURSE_NAME
 						, 	CRS.CRSCRED																AS		COURSE_CREDIT
-						,   REG_PKG.WAS_FSP(
-													:paramStdNo
-												, 	SG.CCYRCD
-												, 	SG.SEMCD
-												, 	SG.L_ABR_CRSNO
-												, 	SG.GRADECD
-												, 	GV.L_ABR_GVAL
-											) 														AS		COURSE_CREDIT_VALUE
+			            ,   DECODE(
+			                              :paramLocale
+			                            , 'ar' , GV.A_ABR_GVAL
+			                            ,   REG_PKG.WAS_FSP(
+			                                                    :paramStdNo
+			                                                  , 	SG.CCYRCD
+			                                                  , 	SG.SEMCD
+			                                                  , 	SG.L_ABR_CRSNO
+			                                                  , 	SG.GRADECD
+			                                                  , 	GV.L_ABR_GVAL
+			                                                ) 
+			                      )                                   								AS		COURSE_CREDIT_VALUE													
 						, 	CRS.CRSCRED	*	GV.GRADEPOINTS 											AS		COURSE_GRADE_POINT
 						, 	SG.PREV_L_ABR_CRSNO														AS		PREVIOUS_COURSE_NO
 						, 	SG.PREV_CCYRCD															AS		PREVIOUS_COURSE_YEAR
