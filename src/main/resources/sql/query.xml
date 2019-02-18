@@ -127,8 +127,16 @@
 									,	'ar',	VSP.A_SPECNAME
 									,	VSP.SPECNAME
 								)																	AS		SPEC_NAME
-					,	MISC_PKG.CERT_INFO(VSP.STDNO,'CERTTYPE')									AS		SCHOOL_CERT_TYPE	
-					,	MISC_PKG.CERT_INFO(VSP.STDNO,'STREAM')										AS		SCHOOL_STREAM
+		          	, 	DECODE	(
+		                        	:paramLocale
+		                    		,   'en', MISC_PKG.CERT_INFO(VSP.STDNO,'CERTTYPE')
+		                    		,   MISC_PKG.CERT_INFO(VSP.STDNO,'CERTTYPE','A')
+		           				)                                        							AS		SCHOOL_CERT_TYPE	
+					, 	DECODE(
+                        			:paramLocale
+                    			,   'en', MISC_PKG.CERT_INFO(VSP.STDNO,'STREAM')
+                    			,   MISC_PKG.CERT_INFO(VSP.STDNO,'STREAM','A')
+          					  )                                        								AS		SCHOOL_STREAM   
 					,	NVL(
 							TO_CHAR(
 									MISC_PKG.STD_SCH_PERCENT(VSP.STDNO,'PERC')
