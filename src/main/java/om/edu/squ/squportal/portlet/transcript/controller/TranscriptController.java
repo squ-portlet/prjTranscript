@@ -214,7 +214,7 @@ public class TranscriptController
 		model.addAttribute("student", studentSummaryList.get(0));
 		return Constants.CONST_UI_STUDENT_INFO;
 	}
-
+	
 	/**
 	 * 
 	 * method name  : processEventTranscript
@@ -228,7 +228,7 @@ public class TranscriptController
 	 *
 	 * Date    		:	Jan 2, 2019 11:13:14 AM
 	 */
-	@EventMapping(value="{http://www.sistranscript.com}sisTranscriptEvent")
+	@EventMapping(value="{http://www.siscommoncontrol.com}sisCommonStudent")
 	public void processEventTranscript(EventRequest request, EventResponse response, Model model, Locale locale)
 	{
 		Event	eventTranscript	=	request.getEvent();
