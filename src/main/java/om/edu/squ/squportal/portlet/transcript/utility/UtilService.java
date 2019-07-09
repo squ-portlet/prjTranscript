@@ -36,6 +36,11 @@ import javax.portlet.PortletRequest;
 
 
 
+
+
+
+import om.edu.squ.portal.common.EmpCommon;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
 import om.edu.squ.squportal.portlet.transcript.dao.ldap.LdapDao;
 
 import org.slf4j.Logger;
@@ -52,6 +57,43 @@ private  final Logger logger = LoggerFactory.getLogger(UtilService.class);
 	
 	@Autowired
 	LdapDao	ldapDao;
+
+	/**
+	 * 
+	 * method name  : getUser
+	 * @param strUserName
+	 * @return
+	 * UtilService
+	 * return type  : User
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Dec 3, 2018 12:40:37 PM
+	 */
+	public User getUser(String strUserName)
+	{
+		User	user		=	new User();
+		try
+		{
+		if (isStudent(strUserName.toUpperCase()))
+		  {
+			  user.setUserId(getStudentId(strUserName));
+			  user.setUserType(Constants.USER_TYPE_STUDENT);
+		  }
+		  else
+		  {
+			EmpCommon	empCommon	=	new EmpCommon();
+			user.setUserId(empCommon.getEmployeeNumber(strUserName));
+			user.setUserType(Constants.USER_TYPE_EMPLOYEE);
+		  }
+		}
+		catch(NullPointerException nullEx)
+		{
+			logger.error("Error :: No valid user logged in :: ,{}", nullEx.getMessage());
+		}
+		return user;
+	}
+	
 	
 	public  String getEmployeeNumber(PortletRequest request)
 	{

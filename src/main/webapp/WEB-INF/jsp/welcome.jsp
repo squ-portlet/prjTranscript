@@ -39,10 +39,12 @@
 </portlet:resourceURL>
 
 <portlet:resourceURL id="resSummary" var="urlSummary"></portlet:resourceURL>
+<portlet:resourceURL id="resAccessPermissionForStudent" var="urlResAccessPermissionForStudent"></portlet:resourceURL>
 
 <%@include file="ui/cssWelcome.jsp" %>
-<%-- 
+ 
 <%@include file="ui/js/jsCode.js" %>
+<%--
 <%@include file="ui/js/transcript.hb.js" %>
  --%>
 
@@ -52,18 +54,23 @@
 
 <div class="panel panel-default container-fluid">
   <div class="panel-heading">
-    <h3 class="panel-title">Transcript Service</h3>
+    <h3 class="panel-title"><spring:message code="prop.transcript.header.academic.transcript.text"/></h3>
   </div>
   <div class="panel-body">
     <div class="row">
+  			<div id="idDivAlert" class="alert alert-warning" role="alert" style="display: none;">
+  					<font color="red"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></font>  <spring:message code="warn.transcript.no.access"/>
+  			</div>
     	<form:form modelAttribute="transcriptModel" action="${varSubmitStudentInfo}" htmlEscape="false" method="post" class="form-inline container-fluid" >
     		<div class="form-group">
-    			<label for="exampleInputName2">Student Id</label>
-    			<form:input path="stdId" placeholder="Student Id" class="form-control" />
+    			<c:set var="varTxtStdId" value='<spring:message code="prop.transcript.label.stdudent.id" />'></c:set>
+    			<label for="exampleInputName2"><spring:message code="prop.transcript.label.stdudent.id" /></label>
+    			<form:input path="stdId" class="form-control" />
 <!--     			<input type="text" class="form-control" id="stdId" placeholder="Student Id"> -->
   			</div>
-    		<button type="submit" id="bttnSearch" class="btn btn-default">
-  				<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search Record
+
+    		<button  type="button" id="bttnSearch" class="btn btn-default">
+  				<span class="glyphicon glyphicon-search" aria-hidden="true"></span> <spring:message code="prop.transcript.button.search" />
 			</button>
 		</form:form>
 	</div>
@@ -74,8 +81,6 @@
 </div>
 
 <div id="divStdSummary" class="container-fluid"/>
-<a href="${urlPdfTranscriptTest}">test only</a>
-<%-- <div class="col-xs-2"><a href="${urlPdfTranscript}"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Transcript</a></div> --%>
 
 
 

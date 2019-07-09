@@ -29,12 +29,20 @@
  */
 package om.edu.squ.squportal.portlet.transcript.utility;
 
+
+
 /**
  * @author Bhabesh
  *
  */
 public interface Constants
 {
+	/************* USER TYPE ******************************/
+	public static String	USER_TYPE_STUDENT									=	"student";
+	public static String	USER_TYPE_EMPLOYEE									=	"employee";
+	/******************************************************/
+	
+	
 	/**********LDAP***************************************/
 	public	static	String	LDAP_COMMON_NAME									=	"cn";
 	public	static	String	LDAP_EMPLOYEE_NUMBER								=	"employeenumber"; 
@@ -54,6 +62,8 @@ public interface Constants
 	public	static	final	String	CONST_SQL_STUDENT_GRADE_LIST				=	"transcript.select.student.grade.list";
 	public	static	final	String	CONST_SQL_STUDENT_REG_LIST					=	"transcript.select.student.registration";
 	public static	final	String	CONST_SQL_STUDENT_POSTPONE_LIST				=	"transcript.select.student.postpone.list";
+	public	static	final	String	CONST_SQL_ACCESS_LIST						=	"sql.select.access.level";
+	public	static	final	String	CONST_SQL_ACCESS_TRANSCRIPT					=	"sql.select.access.permission";
 	
 	/******************************************************/
 	
@@ -125,7 +135,10 @@ public interface Constants
 	public static final	String	COST_COL_TO_YRSEM								=	"TO_YRSEM";
 	public static final	String	COST_COL_PST_DATE								=	"PST_DATE";
 	
-	
+	public static final	String	COST_COL_EMPLOYEE_PREFIX						=	"e";
+	public static final	String	COST_COL_ROLE_ABR_CODE							=	"ROLE_ABR_CODE";
+	public static final	String	COST_COL_ACCESS_DOMAIN							=	"ACCESS_DOMAIN";
+	public static final	String	COST_COL_ACCESS_LEVEL							=	"ACCESS_LEVEL";	
 	
 	
 	/******************************************************/

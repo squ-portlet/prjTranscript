@@ -37,6 +37,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+
+
+import om.edu.squ.squportal.portlet.transcript.dao.bo.AccessDTO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Postpone;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.RegistrationBO;
@@ -352,5 +355,68 @@ public class TranscriptDbImpl implements TranscriptDbDao
 		
 		return namedParameterJdbcTemplate.query(SQL_STUDENT_POSTPONE_LIST, paramMap, rowMapper);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see om.edu.squ.squportal.portlet.transcript.dao.db.TranscriptDbDao#isEligibleToViewTranscript(java.lang.String, java.lang.String)
+	 */
+	public boolean isEligibleToViewTranscript(String studentId, String empNumber)
+	{
+		String		SQL_ACCESS_TRANSCRIPT		=	queryProps.getProperty(Constants.CONST_SQL_ACCESS_TRANSCRIPT);
+		int			result						=	0;
+		Map<String, String> paramMap					=	new HashMap<String, String>();
+		paramMap.put("paramEmpNumber", empNumber);
+		paramMap.put("paramStudentId", studentId);
+		paramMap.put("paramAccessDomain", getAccessLevel(empNumber).getAccessDomain());
+		
+		result	=	this.namedParameterJdbcTemplate.queryForInt(SQL_ACCESS_TRANSCRIPT, paramMap);
+		
+		if(result>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * method name  : getAccessLevel
+	 * @param empNumber
+	 * @return
+	 * TranscriptDbImpl
+	 * return type  : AccessDTO
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Jan 8, 2019 10:16:41 AM
+	 */
+	private AccessDTO getAccessLevel(String empNumber)
+	{
+		String				CONST_SQL_ACCESS_LIST		=	queryProps.getProperty(Constants.CONST_SQL_ACCESS_LIST);
+		
+		RowMapper<AccessDTO> rowMapper	=	new RowMapper<AccessDTO>()
+		{
+			
+			@Override
+			public AccessDTO mapRow(ResultSet rs, int rowNum) throws SQLException
+			{
+				AccessDTO	accessDTO	=	new AccessDTO();
+				accessDTO.setRoleAbrCode(rs.getString(Constants.COST_COL_ROLE_ABR_CODE));
+				accessDTO.setAccessDomain(rs.getString(Constants.COST_COL_ACCESS_DOMAIN));
+				accessDTO.setAccessLevel(rs.getString(Constants.COST_COL_ACCESS_LEVEL));
+				
+				return accessDTO;
+			}
+		};
+		
+		Map<String, String> paramMap					=	new HashMap<String, String>();
+		paramMap.put("paramUserName", empNumber);
+		
+		return this.namedParameterJdbcTemplate.queryForObject(CONST_SQL_ACCESS_LIST, paramMap, rowMapper);
+	}
+	
 	
 }

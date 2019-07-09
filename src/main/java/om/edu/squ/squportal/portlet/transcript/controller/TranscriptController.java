@@ -32,18 +32,24 @@ package om.edu.squ.squportal.portlet.transcript.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Event;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.ProcessEvent;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
+import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
 import om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao;
 import om.edu.squ.squportal.portlet.transcript.model.TranscriptModel;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
@@ -57,6 +63,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.portlet.bind.annotation.EventMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 
 import com.google.gson.Gson;
@@ -76,15 +83,89 @@ public class TranscriptController
 	@Autowired
 	TranscriptServiceDao	transcriptService;
 	
+	/**
+	 * 
+	 * method name  : welcome
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param locale
+	 * @return
+	 * TranscriptController
+	 * return type  : String
+	 * 
+	 * purpose		: Default render
+	 *
+	 * Date    		:	Dec 3, 2018 12:52:56 PM
+	 */
 	@RequestMapping
-	private String welcome(PortletRequest request, Model model)
+	private String welcome(RenderRequest request, RenderResponse response, Model model, Locale locale)
 	{
+		Gson	gson	= new Gson();
 		model.addAttribute("transcriptModel", new TranscriptModel());
-		return "welcome";
+		
+		User	user	=	transcriptService.getUser(request);
+		
+		if(user.getUserType().equals(Constants.USER_TYPE_STUDENT))
+		{
+			return studentDetails(user.getUserId(), request, response, model, locale);
+		}
+		else
+		{
+			if(null ==request.getAttribute("student"))
+				{
+					return "welcome";
+				}
+			else
+			{
+					om.edu.squ.squportal.portlet.sisgeneraldept.bo.Student student	=	(om.edu.squ.squportal.portlet.sisgeneraldept.bo.Student)request.getAttribute("student");
+					return studentDetails(student.getStudentId(), request,response,model,locale);
+			}
+		}
+
 		
 	}
 
-	
+	/**
+	 * 
+	 * method name  : getAccessPermission
+	 * @param studentId
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * TranscriptController
+	 * return type  : void
+	 * 
+	 * purpose		: Find eligibility of an academics to view transcript
+	 *
+	 * Date    		:	Jan 8, 2019 12:36:40 PM
+	 */
+	@ResourceMapping(value="resAccessPermissionForStudent")
+	private	void getAccessPermission(	@RequestParam("studentId") String studentId
+										,	ResourceRequest	request
+										, 	ResourceResponse	response) throws IOException
+	{
+			boolean	isElligible	=	false;
+					isElligible	=	transcriptService.isEligibleToViewTranscript(studentId, request);
+			Gson	gson		=	new Gson();
+			response.getWriter().print(gson.toJson(isElligible));
+	}
+
+	/**
+	 * 
+	 * method name  : submitStudentId
+	 * @param request
+	 * @param response
+	 * @param transcriptModel
+	 * @param result
+	 * @param model
+	 * TranscriptController
+	 * return type  : void
+	 * 
+	 * purpose		: Submit Student Id by Academics
+	 *
+	 * Date    		:	Jan 7, 2019 12:07:41 PM
+	 */
 	@RequestMapping(params="action=submitStudentInfo")
 	private void submitStudentId(
 										ActionRequest request
@@ -98,9 +179,10 @@ public class TranscriptController
 				stdId	=	transcriptModel.getStdId();
 		
 				response.setRenderParameter("studentId", stdId);
-				response.setRenderParameter("action", "studentDetails");
+				response.setRenderParameter("action", "eventStudentDetails");
 		
 	}
+
 	
 	/**
 	 * 
@@ -113,7 +195,7 @@ public class TranscriptController
 	 * TranscriptController
 	 * return type  : String
 	 * 
-	 * purpose		:
+	 * purpose		: Render to student details
 	 *
 	 * Date    		:	Oct 10, 2018 11:23:56 AM
 	 */
@@ -121,8 +203,8 @@ public class TranscriptController
 	private	String	studentDetails(
 										@RequestParam("studentId") 
 										String 				studentId
-									,	PortletRequest		request
-									,	PortletResponse		response
+									,	RenderRequest		request
+									,	RenderResponse		response
 									,	Model				model
 									,	Locale				locale
 								  )
@@ -132,6 +214,31 @@ public class TranscriptController
 		model.addAttribute("student", studentSummaryList.get(0));
 		return Constants.CONST_UI_STUDENT_INFO;
 	}
+	
+	/**
+	 * 
+	 * method name  : processEventTranscript
+	 * @param request
+	 * @param response
+	 * @param model
+	 * TranscriptController
+	 * return type  : void
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Jan 2, 2019 11:13:14 AM
+	 */
+	@EventMapping(value="{http://www.siscommoncontrol.com}sisCommonStudent")
+	public void processEventTranscript(EventRequest request, EventResponse response, Model model, Locale locale)
+	{
+		Event	eventTranscript	=	request.getEvent();
+		om.edu.squ.squportal.portlet.sisgeneraldept.bo.Student	student			=	(om.edu.squ.squportal.portlet.sisgeneraldept.bo.Student) eventTranscript.getValue();
+		
+		response.setRenderParameter("studentId", student.getStudentId());
+		response.setRenderParameter("action", "eventStudentDetails");
+		request.setAttribute("student", student);
+	}
+
 	
 	
 	/**
@@ -162,7 +269,6 @@ public class TranscriptController
 		List<Student>  	studentSummaryList	=	transcriptService.getStudentList(studentId, locale);
 		response.getWriter().print(gson.toJson(studentSummaryList));
 		
-		logger.info("student list : "+gson.toJson(studentSummaryList));
 	}
 	
 	/**
@@ -200,30 +306,60 @@ public class TranscriptController
 		response.setProperty(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=\"" + "Transcript.pdf" + "\"");
 	
 		httpHeaders.setContentDispositionFormData("Transcript", "Transcript.pdf");
-
-		
-		
 		byos.writeTo(outputStream);
-		
-		//outputStream.write(byos.toByteArray());
-	
-
-		//logger.info("byte stream : {}",byos);
-		//Gson	gson	=	new Gson();
-		//logger.info("byte stream json : {}", gson.toJson(byos));
-		
-		//response.getWriter().print(gson.toJson(outputStream));
-		
 		outputStream.flush();
 		outputStream.close();
-		
-		
-	     //response.setContentType("application/json");
-	     //response.setCharacterEncoding("UTF-8");
-	     //response.getWriter().write("success....");
-		//response.setContentType("application/json");
-		//response.getWriter().write("testing ");
-	     
+	}
+
+	/**
+	 * 
+	 * method name  : back2main
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param locale
+	 * @return
+	 * TranscriptController
+	 * return type  : String
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Jan 7, 2019 12:08:02 PM
+	 */
+	@RequestMapping(params="action=back2main")
+	private String back2main(RenderRequest request,RenderResponse response, Model model, Locale locale)
+	{
+		return welcome(request, response, model, locale);
+	}
+
+	/**
+	 * 
+	 * method name  : eventStudentDetails
+	 * @param studentId
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @param locale
+	 * @return
+	 * TranscriptController
+	 * return type  : String
+	 * 
+	 * purpose		:
+	 *
+	 * Date    		:	Jan 2, 2019 1:31:48 PM
+	 */
+	@RequestMapping(params="action=eventStudentDetails")
+	private String eventStudentDetails(@RequestParam("studentId")String studentId, RenderRequest request,RenderResponse response, Model model, Locale locale)
+	{
+
+		model.addAttribute("eventForStudentId", studentId);
+		return studentDetails(
+				studentId
+			,	request
+			,	response
+			,	model
+			,	locale
+		  );
 	}
 	
 }

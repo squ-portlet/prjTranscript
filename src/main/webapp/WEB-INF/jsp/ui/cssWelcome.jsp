@@ -234,5 +234,10 @@
 		    border-radius: 50%;
 		    display: inline-block;
 	}
+
+/* Reduce hight of panel header  */ 
+ .panel-heading {
+    padding: 0px;
+}
  
  </style>

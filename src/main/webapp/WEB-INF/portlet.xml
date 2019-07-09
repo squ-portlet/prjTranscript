@@ -42,7 +42,19 @@
         <supported-locale>ar</supported-locale>		
 		<resource-bundle>messages</resource-bundle>
 		<portlet-info>
-			<title>TODO - Test Message</title>
+			<title>Student Transcript</title>
 		</portlet-info>
+
+		<!-- Process event - normally listning and understand who the other portlet is talking and then processing -->
+		<supported-processing-event>
+			<qname xmlns:n="http://www.siscommoncontrol.com">n:sisCommonStudent</qname>
+		</supported-processing-event>		
+		
 	</portlet>
+
+	<event-definition>
+			<qname xmlns:n="http://www.siscommoncontrol.com">n:sisCommonStudent</qname>
+			<value-type>om.edu.squ.squportal.portlet.sisgeneraldept.bo.Student</value-type>
+	</event-definition>		
+	
 </portlet-app>
