@@ -435,32 +435,40 @@ public class TranscriptPdfImpl implements TranscriptPdfDao
 									
 				}
 				
-
-				
-				PdfPCell	cellTotalGradePoints = setTableCell(UtilProperty.getMessage("prop.transcript.total.grade.points.text", null, locale)+" "+gradePointCommulative,Rectangle.NO_BORDER,setFont_01());
-							cellTotalGradePoints.setBorder(PdfPCell.BOTTOM);
-							cellTotalGradePoints.setColspan(2);
-							tableSemester.addCell(cellTotalGradePoints);
-				
-				PdfPCell	cellTotalCreditsAttemped = setTableCell(student.getTotalCreditTaken()+"\n"+UtilProperty.getMessage("prop.transcript.total.credits.attempted.text", null, locale),Rectangle.NO_BORDER,setFont_01());
-							if(locale.getLanguage().equals("en"))
-							{
-								cellTotalCreditsAttemped.setHorizontalAlignment(Element.ALIGN_RIGHT);
-							}
+				PdfPCell	cellTotalCreditsAttemped = setTableCell(
+																	UtilProperty.getMessage("prop.transcript.total.grade.points.text", null, locale)
+																+	" "
+																+	gradePointCommulative	
+																+	"      "
+																+	UtilProperty.getMessage("prop.transcript.total.credits.attempted.text", null, locale)
+																+	" : "
+																+	 student.getTotalCreditTaken()
+																,Rectangle.NO_BORDER
+																,setFont_01()
+																);
 							cellTotalCreditsAttemped.setBorder(PdfPCell.BOTTOM);
+							cellTotalCreditsAttemped.setColspan(2);
 							tableSemester.addCell(cellTotalCreditsAttemped);
 							
-				PdfPCell	cellTotalCreditsEarned = setTableCell(student.getTotalCreditEarned()+"\n"+UtilProperty.getMessage("prop.transcript.total.credits.earned.text", null, locale),Rectangle.NO_BORDER,setFont_01());
-							if(locale.getLanguage().equals("en"))
-							{
-								cellTotalCreditsEarned.setHorizontalAlignment(Element.ALIGN_RIGHT);
-							}
-							cellTotalCreditsEarned.setBorder(PdfPCell.BOTTOM);
-							tableSemester.addCell(cellTotalCreditsEarned);
 							
-							cellBlankNoBorder.setColspan(2);
+							cellBlankNoBorder.setColspan(1);
 							cellBlankNoBorder.setBorder(PdfPCell.BOTTOM);
 							tableSemester.addCell(cellBlankNoBorder);
+							
+				PdfPCell	cellTotalCreditsEarned = setTableCell(
+																	UtilProperty.getMessage("prop.transcript.total.credits.earned.text", null, locale)
+																	+ " : "
+																	+	student.getTotalCreditEarned()
+																	,	Rectangle.NO_BORDER,setFont_01()
+																	);
+							if(locale.getLanguage().equals("en"))
+							{
+								cellTotalCreditsEarned.setHorizontalAlignment(Element.ALIGN_LEFT);
+							}
+
+							cellTotalCreditsEarned.setColspan(2);
+							cellTotalCreditsEarned.setBorder(PdfPCell.BOTTOM);
+							tableSemester.addCell(cellTotalCreditsEarned);
 
 				tableSemester.completeRow();
 				
