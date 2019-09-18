@@ -66,6 +66,8 @@ public class Student
 	private	String	schoolStream;
 	private	String	schoolPercentage;
 	private	boolean	active;
+	private	String	salt;
+	private	String	iv;
 	/**
 	 * Getter Method	: getStudentId
 	 * @return the studentId
@@ -691,6 +693,47 @@ public class Student
 	{
 		this.active = active;
 	}
+	
+	/**
+	 * Getter Method	: getSalt
+	 * @return the salt
+	 * 
+	 * Date				: Sep 18, 2019
+	 */
+	public String getSalt()
+	{
+		return this.salt;
+	}
+	/**
+	 * Setter method : setSalt
+	 * @param salt the salt to set
+	 * 
+	 * Date          : Sep 18, 2019 3:07:38 PM
+	 */
+	public void setSalt(String salt)
+	{
+		this.salt = salt;
+	}
+	/**
+	 * Getter Method	: getIv
+	 * @return the iv
+	 * 
+	 * Date				: Sep 18, 2019
+	 */
+	public String getIv()
+	{
+		return this.iv;
+	}
+	/**
+	 * Setter method : setIv
+	 * @param iv the iv to set
+	 * 
+	 * Date          : Sep 18, 2019 3:07:38 PM
+	 */
+	public void setIv(String iv)
+	{
+		this.iv = iv;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -719,7 +762,8 @@ public class Student
 				+ this.totalCreditEarned + ", schoolCertificateType="
 				+ this.schoolCertificateType + ", schoolStream="
 				+ this.schoolStream + ", schoolPercentage="
-				+ this.schoolPercentage + ", active=" + this.active + "]";
+				+ this.schoolPercentage + ", active=" + this.active + ", salt="
+				+ this.salt + ", iv=" + this.iv + "]";
 	}
 	
 	
