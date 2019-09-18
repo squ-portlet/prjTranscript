@@ -52,6 +52,7 @@ import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.User;
 import om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceDao;
 import om.edu.squ.squportal.portlet.transcript.model.TranscriptModel;
+import om.edu.squ.squportal.portlet.transcript.security.Crypto;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
 
 import org.slf4j.Logger;
@@ -82,6 +83,8 @@ public class TranscriptController
 	
 	@Autowired
 	TranscriptServiceDao	transcriptService;
+	@Autowired
+	Crypto		crypto;
 	
 	/**
 	 * 
@@ -300,7 +303,26 @@ public class TranscriptController
 		org.springframework.http.HttpHeaders	httpHeaders	=	new org.springframework.http.HttpHeaders();
 
 		ByteArrayOutputStream	byos			=	new ByteArrayOutputStream();
-		OutputStream			outputStream	=	transcriptService.getPdfTranscript(student.getStudentNo(), student.getStdStatCode(), student.getCollegeName(), byos, response, locale);
+		
+		String					studentNo		= 	null;
+		String					studentStatCode	=	null;
+		
+						try
+							{
+								studentNo		=	crypto.decrypt(student.getSalt(), student.getIv(), student.getStudentNo());
+								studentStatCode	=	crypto.decrypt(student.getSalt(), student.getIv(), student.getStdStatCode());
+							}
+						catch(Exception ex)
+						{
+							logger.error("Error in decryption. Actual error : ");
+							ex.printStackTrace();
+						}
+		
+		OutputStream			outputStream	=	transcriptService.getPdfTranscript(
+																							studentNo
+																						, 	studentStatCode
+																						, 	student.getCollegeName()
+																						, 	byos, response, locale);
 		response.setContentType("application/pdf");
 		response.setContentLength(byos.size());
 		response.setProperty(HttpHeaders.CONTENT_DISPOSITION, "inline;filename=\"" + "Transcript.pdf" + "\"");

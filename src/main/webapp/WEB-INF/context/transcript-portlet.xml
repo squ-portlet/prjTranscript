@@ -49,5 +49,8 @@
 	<bean id="transcriptService"	class="om.edu.squ.squportal.portlet.transcript.dao.service.TranscriptServiceImpl"/>
 	<bean id="transcriptPdf"	class="om.edu.squ.squportal.portlet.transcript.dao.pdf.TranscriptPdfImpl" scope="prototype" />
 	
+	<!-- Encryption -->
+	<bean id="crypto" class="om.edu.squ.squportal.portlet.transcript.security.CryptoAES"/>
+	
  </beans>
  

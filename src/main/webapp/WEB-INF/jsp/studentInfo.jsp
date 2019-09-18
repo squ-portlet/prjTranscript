@@ -85,6 +85,8 @@
 
 	<c:forEach items="${studentSummaryList}" var="student" varStatus="status">
        	<portlet:resourceURL id="pdfTranscript" var="urlPdfTranscript" escapeXml="false">
+			<portlet:param name="salt" value="${student.salt}"/>
+			<portlet:param name="iv" value="${student.iv}"/>
 			<portlet:param name="stdStatCode" value="${student.stdStatCode}"/>
 			<portlet:param name="studentNo" value="${student.studentNo}"/>
 			<portlet:param name="collegeName" value="${student.collegeName}"/>

@@ -39,16 +39,19 @@ import java.util.Properties;
 
 
 
+
 import om.edu.squ.squportal.portlet.transcript.dao.bo.AccessDTO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.GradeSemester;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Postpone;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.RegistrationBO;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.Student;
 import om.edu.squ.squportal.portlet.transcript.dao.bo.StudentStatus;
+import om.edu.squ.squportal.portlet.transcript.security.Crypto;
 import om.edu.squ.squportal.portlet.transcript.utility.Constants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -58,6 +61,10 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
  */
 public class TranscriptDbImpl implements TranscriptDbDao
 {
+	
+	@Autowired
+	Crypto			crypto;
+	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private	NamedParameterJdbcTemplate	namedParameterJdbcTemplate;
@@ -133,7 +140,9 @@ public class TranscriptDbImpl implements TranscriptDbDao
 						student.setEmpNameAdvisor2(rs.getString(Constants.COST_COL_ADVISOR02_EMP_NAME));
 						student.setlAbrStatus(rs.getString(Constants.COST_COL_L_ABR_STATUS));
 						
-				return student;
+						
+						
+				return crypto.setCryptEncode(student);
 			}
 		};
 		
